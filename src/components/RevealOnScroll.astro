@@ -1,11 +1,6 @@
 <script>
   const root = document;
 
-  const reduceMotion =
-    typeof window !== "undefined" &&
-    typeof window.matchMedia === "function" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
   const reveal = (el) => {
     if (!(el instanceof Element)) return;
     if (el.classList.contains("fib-reveal-visible")) return;
@@ -19,11 +14,7 @@
 
   const elements = Array.from(root.querySelectorAll(".fib-reveal"));
 
-  if (reduceMotion) {
-    elements.forEach((el) => {
-      if (el instanceof Element) el.classList.add("fib-reveal-visible");
-    });
-  } else if ("IntersectionObserver" in window) {
+  if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
