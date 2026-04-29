@@ -70,15 +70,39 @@ const revealStyle = revealDelay ? `transition-delay: ${Number(revealDelay)}ms;` 
       };
 
       let activeCard = null;
+      let lastClientX = 0;
+      let lastClientY = 0;
+      let idleResetTimer = null;
 
       const onEnter = (event) => {
         activeCard = getCardFromTarget(event.target) ?? getCardFromPoint(event.clientX, event.clientY);
+        lastClientX = event.clientX;
+        lastClientY = event.clientY;
+      };
+
+      const resetActiveIfPointerOutside = () => {
+        if (!activeCard) return;
+        const el = getCardFromPoint(lastClientX, lastClientY);
+        if (!el || el !== activeCard) {
+          resetCard(activeCard);
+          activeCard = null;
+        }
+      };
+
+      const scheduleIdleReset = () => {
+        if (idleResetTimer) window.clearTimeout(idleResetTimer);
+        idleResetTimer = window.setTimeout(() => {
+          resetActiveIfPointerOutside();
+        }, 90);
       };
 
       const onMove = (event) => {
         if ("pointerType" in event && event.pointerType && event.pointerType !== "mouse") return;
         const card = activeCard ?? getCardFromTarget(event.target) ?? getCardFromPoint(event.clientX, event.clientY);
         if (!card) return;
+
+        lastClientX = event.clientX;
+        lastClientY = event.clientY;
 
         if (activeCard) {
           const rect = activeCard.getBoundingClientRect();
@@ -95,6 +119,7 @@ const revealStyle = revealDelay ? `transition-delay: ${Number(revealDelay)}ms;` 
         }
 
         updateCard(card, event.clientX, event.clientY);
+        scheduleIdleReset();
       };
 
       const onLeave = (event) => {
@@ -112,6 +137,10 @@ const revealStyle = revealDelay ? `transition-delay: ${Number(revealDelay)}ms;` 
       document.addEventListener("mouseover", onEnter, true);
       document.addEventListener("mousemove", onMove, true);
       document.addEventListener("mouseout", onLeave, true);
+
+      window.addEventListener("blur", resetActiveIfPointerOutside);
+      document.addEventListener("visibilitychange", resetActiveIfPointerOutside);
+      window.addEventListener("scroll", resetActiveIfPointerOutside, true);
 
       document.querySelectorAll(".fib-card").forEach(resetCard);
   }
