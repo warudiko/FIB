@@ -31,13 +31,7 @@ const href = withBase(import.meta.env.BASE_URL, `/protocols/${slug}`);
   if (!(window).__fibCardTiltBound) {
     // If a page only renders protocol cards, the guard above would prevent any tilt binding.
     // So we mirror the binding here by importing the same behavior from the global guard.
-    const prefersReducedMotion =
-      typeof window !== "undefined" &&
-      typeof window.matchMedia === "function" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (!prefersReducedMotion) {
-      window.__fibCardTiltBound = true;
+    window.__fibCardTiltBound = true;
 
       const resetCard = (card) => {
         card.style.setProperty("--fib-rotate-x", "0deg");
@@ -102,6 +96,5 @@ const href = withBase(import.meta.env.BASE_URL, `/protocols/${slug}`);
       document.addEventListener("mouseout", onLeave, true);
 
       document.querySelectorAll(".fib-card").forEach(resetCard);
-    }
   }
 </script>

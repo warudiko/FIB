@@ -228,7 +228,6 @@ html {
   }
   .fib-card {
     transition: none;
-    transform: none !important;
   }
   .fib-card-glare {
     transition: none;

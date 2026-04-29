@@ -44,12 +44,7 @@ const href = withBase(import.meta.env.BASE_URL, `/divisions/${slug}`);
 <script>
   // Steam-like 3D parallax tilt + glare for `.fib-card`.
   // Bound once globally (even if many cards render).
-  const prefersReducedMotion =
-    typeof window !== "undefined" &&
-    typeof window.matchMedia === "function" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  if (!(window).__fibCardTiltBound && !prefersReducedMotion) {
+  if (!(window).__fibCardTiltBound) {
     window.__fibCardTiltBound = true;
 
     const resetCard = (card) => {
