@@ -1,0 +1,26 @@
+---
+import { getCollection } from "astro:content";
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import ProtocolCard from "../../components/ProtocolCard.astro";
+
+const protocols = (await getCollection("protocols"))
+  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
+  .map((entry) => ({ ...entry.data, slug: entry.slug }));
+---
+
+<BaseLayout title="Protocols - FIB" description="Browse operational protocols.">
+  <SectionHeading title="Protocols" />
+
+  <div class="grid gap-5 md:grid-cols-2">
+    {protocols.map((p) => (
+      <ProtocolCard
+        title={p.title}
+        short={p.short}
+        slug={p.slug}
+        heroTagline={p.heroTagline}
+      />
+    ))}
+  </div>
+</BaseLayout>

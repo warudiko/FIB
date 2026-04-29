@@ -4,7 +4,7 @@ const baseRaw = import.meta.env.BASE_URL ?? "/";
 const baseNoSlash = baseRaw === "/" ? "" : baseRaw.endsWith("/") ? baseRaw.slice(0, -1) : baseRaw;
 const titleWords = typeof title === "string" ? title.split(" ") : [];
 
-const href = `${baseNoSlash}/divisions/${slug}`;
+const href = `${baseNoSlash}/protocols/${slug}`;
 ---
 
 <a
@@ -12,32 +12,24 @@ const href = `${baseNoSlash}/divisions/${slug}`;
   class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 shadow-sm"
 >
   <span aria-hidden="true" class="fib-card-glare"></span>
-  <div>
-    <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white">
-      {titleWords.length
-        ? titleWords.map((word, index) => (
-            <>
-              <span class="fib-accent">{word.charAt(0)}</span>{word.slice(1)}
-              {index < titleWords.length - 1 ? " " : ""}
-            </>
-          ))
-        : title}
-    </h3>
-  </div>
 
-  {heroTagline ? (
-    <p class="mt-4 text-sm text-white/80">{heroTagline}</p>
-  ) : null}
+  <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white">
+    {titleWords.length
+      ? titleWords.map((word, index) => (
+          <>
+            <span class="fib-accent">{word.charAt(0)}</span>{word.slice(1)}
+            {index < titleWords.length - 1 ? " " : ""}
+          </>
+        ))
+      : title}
+  </h3>
 
-  {short ? (
-    <p class="mt-2 text-sm text-white/65">{short}</p>
-  ) : null}
+  {heroTagline ? <p class="mt-4 text-sm text-white/80">{heroTagline}</p> : null}
+  {short ? <p class="mt-2 text-sm text-white/65">{short}</p> : null}
 
   <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
     იხილეთ მეტი
-    <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">
-      →
-    </span>
+    <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
   </div>
 </a>
 
@@ -87,4 +79,3 @@ const href = `${baseNoSlash}/divisions/${slug}`;
     cards().forEach(resetCard);
   }
 </script>
-
