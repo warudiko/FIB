@@ -25,6 +25,10 @@ body {
     "Apple Color Emoji", "Segoe UI Emoji";
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .fib-focus-ring {
   outline: 2px solid transparent;
   outline-offset: 2px;

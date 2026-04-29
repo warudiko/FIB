@@ -9,6 +9,8 @@ const { eyebrow, title, description } = Astro.props;
     </p>
   ) : null}
   <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">{title}</h2>
-  {description ? <p class="mt-3 text-white/70">{description}</p> : null}
+  {description ? (
+    <p class="mt-3 max-w-2xl text-sm leading-relaxed text-white/75">{description}</p>
+  ) : null}
 </section>
 
