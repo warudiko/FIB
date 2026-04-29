@@ -6,12 +6,23 @@
     typeof window.matchMedia === "function" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const reveal = (el) => el.classList.add("fib-reveal-visible");
+  const reveal = (el) => {
+    if (!(el instanceof Element)) return;
+    if (el.classList.contains("fib-reveal-visible")) return;
+
+    // Ensure the browser paints the "hidden" state first, otherwise the
+    // transition can be skipped and it looks like reveal is "not working".
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => el.classList.add("fib-reveal-visible"));
+    });
+  };
 
   const elements = Array.from(root.querySelectorAll(".fib-reveal"));
 
   if (reduceMotion) {
-    elements.forEach(reveal);
+    elements.forEach((el) => {
+      if (el instanceof Element) el.classList.add("fib-reveal-visible");
+    });
   } else if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver(
       (entries) => {
