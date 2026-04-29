@@ -41,3 +41,83 @@ const href = withBase(import.meta.env.BASE_URL, `/divisions/${slug}`);
   </div>
 </a>
 
+<script>
+  // Steam-like 3D parallax tilt + glare for `.fib-card`.
+  // Bound once globally (even if many cards render).
+  const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!(window).__fibCardTiltBound && !prefersReducedMotion) {
+    window.__fibCardTiltBound = true;
+
+    const resetCard = (card) => {
+      card.style.setProperty("--fib-rotate-x", "0deg");
+      card.style.setProperty("--fib-rotate-y", "0deg");
+      card.style.setProperty("--fib-glare-x", "50%");
+      card.style.setProperty("--fib-glare-y", "50%");
+    };
+
+    const updateCard = (card, clientX, clientY) => {
+      const rect = card.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
+      const px = Math.min(1, Math.max(0, x / rect.width));
+      const py = Math.min(1, Math.max(0, y / rect.height));
+      const rotateY = (px - 0.5) * 12;
+      const rotateX = (0.5 - py) * 10;
+
+      card.style.setProperty("--fib-rotate-x", `${rotateX.toFixed(2)}deg`);
+      card.style.setProperty("--fib-rotate-y", `${rotateY.toFixed(2)}deg`);
+      card.style.setProperty("--fib-glare-x", `${(px * 100).toFixed(2)}%`);
+      card.style.setProperty("--fib-glare-y", `${(py * 100).toFixed(2)}%`);
+    };
+
+    const getCardFromTarget = (target) => {
+      if (target instanceof Element) return target.closest(".fib-card");
+      const parent = target?.parentElement;
+      return parent instanceof Element ? parent.closest(".fib-card") : null;
+    };
+
+    const getCardFromPoint = (x, y) => {
+      const el = typeof document.elementFromPoint === "function" ? document.elementFromPoint(x, y) : null;
+      return el instanceof Element ? el.closest(".fib-card") : null;
+    };
+
+    let activeCard = null;
+
+    const onEnter = (event) => {
+      activeCard = getCardFromTarget(event.target) ?? getCardFromPoint(event.clientX, event.clientY);
+    };
+
+    const onMove = (event) => {
+      // Only tilt for mouse pointers (Steam-like desktop behavior).
+      if ("pointerType" in event && event.pointerType && event.pointerType !== "mouse") return;
+      const card = activeCard ?? getCardFromTarget(event.target) ?? getCardFromPoint(event.clientX, event.clientY);
+      if (!card) return;
+      updateCard(card, event.clientX, event.clientY);
+    };
+
+    const onLeave = (event) => {
+      const card = getCardFromTarget(event.target);
+      if (!card) return;
+      const to = event.relatedTarget;
+      if (to instanceof Node && card.contains(to)) return;
+      if (activeCard === card) activeCard = null;
+      resetCard(card);
+    };
+
+    // Use both pointer + mouse events for maximum compatibility.
+    document.addEventListener("pointerover", onEnter, true);
+    document.addEventListener("pointermove", onMove, true);
+    document.addEventListener("pointerout", onLeave, true);
+    document.addEventListener("mouseover", onEnter, true);
+    document.addEventListener("mousemove", onMove, true);
+    document.addEventListener("mouseout", onLeave, true);
+
+    // Initialize cards currently in DOM.
+    document.querySelectorAll(".fib-card").forEach(resetCard);
+  }
+</script>
+
