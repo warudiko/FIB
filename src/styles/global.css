@@ -77,15 +77,38 @@ html {
 
 /* Subtle 3D hover for cards */
 .fib-card {
+  --fib-rotate-x: 0deg;
+  --fib-rotate-y: 0deg;
+  --fib-glare-x: 50%;
+  --fib-glare-y: 50%;
   transform-style: preserve-3d;
-  transform: perspective(900px) translateY(0) rotateX(0) rotateY(0);
-  transition: transform 180ms ease-out, box-shadow 180ms ease-out, border-color 180ms ease-out;
+  transform: perspective(900px) translateY(0) rotateX(var(--fib-rotate-x)) rotateY(var(--fib-rotate-y));
+  transition: transform 120ms ease-out, box-shadow 180ms ease-out, border-color 180ms ease-out;
+  will-change: transform;
 }
 
 .fib-card:hover {
-  transform: perspective(900px) translateY(-4px) rotateX(3deg);
+  transform: perspective(900px) translateY(-6px) rotateX(var(--fib-rotate-x)) rotateY(var(--fib-rotate-y));
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.7),
     0 0 32px rgba(245, 200, 75, 0.16);
   border-color: rgba(245, 200, 75, 0.4);
+}
+
+.fib-card-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    circle at var(--fib-glare-x) var(--fib-glare-y),
+    rgba(255, 255, 255, 0.18),
+    rgba(245, 200, 75, 0.1) 18%,
+    transparent 42%
+  );
+  transition: opacity 160ms ease-out;
+}
+
+.fib-card:hover .fib-card-glare {
+  opacity: 1;
 }
 
