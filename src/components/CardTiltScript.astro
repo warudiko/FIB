@@ -1,11 +1,12 @@
 <script>
   // Lightweight card tilt/glare effect, delegated from the document.
-  // Disabled for reduced motion and coarse pointers (touch).
-  if (
-    !(window).__fibCardTiltBound &&
-    !window.matchMedia?.("(prefers-reduced-motion: reduce)").matches &&
-    !window.matchMedia?.("(pointer: coarse)").matches
-  ) {
+  // Disabled for reduced motion.
+  const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!(window).__fibCardTiltBound && !prefersReducedMotion) {
     window.__fibCardTiltBound = true;
 
     const resetCard = (card) => {
@@ -33,8 +34,20 @@
     const getCardFromEventTarget = (target) =>
       target instanceof Element ? target.closest(".fib-card") : null;
 
+    let activeCard = null;
+
+    document.addEventListener(
+      "pointerover",
+      (event) => {
+        const card = getCardFromEventTarget(event.target);
+        if (!card) return;
+        activeCard = card;
+      },
+      true
+    );
+
     document.addEventListener("pointermove", (event) => {
-      const card = getCardFromEventTarget(event.target);
+      const card = activeCard ?? getCardFromEventTarget(event.target);
       if (!card) return;
       updateCard(card, event);
     });
@@ -46,11 +59,13 @@
         if (!card) return;
         const to = event.relatedTarget;
         if (to instanceof Node && card.contains(to)) return;
+        if (activeCard === card) activeCard = null;
         resetCard(card);
       },
       true
     );
 
+    // Initialize any cards already on the page.
     document.querySelectorAll(".fib-card").forEach(resetCard);
   }
 </script>
