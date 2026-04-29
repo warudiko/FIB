@@ -52,3 +52,40 @@ html {
   color: var(--fib-text);
 }
 
+.prose-fib p {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.7;
+}
+
+.prose-fib h2,
+.prose-fib h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.prose-fib ul {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  padding-left: 1.25rem;
+}
+
+.prose-fib li + li {
+  margin-top: 0.4rem;
+}
+
+/* Subtle 3D hover for cards */
+.fib-card {
+  transform-style: preserve-3d;
+  transform: perspective(900px) translateY(0) rotateX(0) rotateY(0);
+  transition: transform 180ms ease-out, box-shadow 180ms ease-out, border-color 180ms ease-out;
+}
+
+.fib-card:hover {
+  transform: perspective(900px) translateY(-4px) rotateX(3deg);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.7),
+    0 0 32px rgba(245, 200, 75, 0.16);
+  border-color: rgba(245, 200, 75, 0.4);
+}
+
