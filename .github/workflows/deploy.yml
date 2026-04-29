@@ -20,10 +20,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: "22"
 
@@ -34,7 +34,8 @@ jobs:
         run: npm run build
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4
+        # Pin to a node24 runtime version to avoid Node 20 warnings.
+        uses: peaceiris/actions-gh-pages@980b4978e3d397cf8f2126e181e9e53354e87023
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: dist
