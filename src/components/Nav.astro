@@ -5,10 +5,7 @@ const baseNoSlash = baseRaw === "/" ? "" : baseRaw.endsWith("/") ? baseRaw.slice
 
 const items = [
   { label: "Home", href: `${baseNoSlash}/` },
-  { label: "About", href: `${baseNoSlash}/about` },
   { label: "Divisions", href: `${baseNoSlash}/divisions` },
-  { label: "Organization", href: `${baseNoSlash}/organization` },
-  { label: "Sources", href: `${baseNoSlash}/sources` },
 ];
 
 const currentPath = Astro.url.pathname;
