@@ -29,10 +29,6 @@ const protocols = (await getCollection("protocols"))
     </div>
 
     <div class="relative">
-      <p class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs font-semibold tracking-widest text-white/70 uppercase">
-        Federal Investigation Department
-      </p>
-
       <h1 class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
         <span class="fib-accent">F</span>ederal{" "}
         <span class="fib-accent">I</span>nvestigation{" "}
@@ -44,23 +40,13 @@ const protocols = (await getCollection("protocols"))
         სამსახურებრივი მოვალეობის შესრულებისას არიან ხელისუფლების წარმომადგენლები და
         იმყოფებიან სახელმწიფოს დაცვის ქვეშ.
       </p>
-
-      <div class="mt-7 flex flex-wrap items-center gap-3">
-        <ButtonLink href={withBase(import.meta.env.BASE_URL, "/divisions")}>
-          Browse divisions
-          <span aria-hidden="true">→</span>
-        </ButtonLink>
-        <ButtonLink variant="secondary" href={withBase(import.meta.env.BASE_URL, "/protocols")}>
-          View protocols
-        </ButtonLink>
-      </div>
     </div>
   </section>
 
   <section class="mt-10">
     <div class="flex items-start justify-between gap-6">
       <SectionHeading
-        eyebrow="Divisions"
+        eyebrow="დივიზიები"
         title="დივიზიების მიმოხილვა"
         description="გაეცანით სპეციალიზებულ დივიზიებს და მათ საჯარო პასუხისმგებლობებს."
         accentInitials={false}
@@ -92,7 +78,7 @@ const protocols = (await getCollection("protocols"))
   <section class="mt-10">
     <div class="flex items-start justify-between gap-6">
       <SectionHeading
-        eyebrow="Protocols"
+        eyebrow="პროტოკოლები"
         title="ოპერაციული პროტოკოლები"
         description="სწრაფი წვდომა სცენარზე დაფუძნებულ პროცედურებსა და კოდურ დანიშნულებებზე."
         accentInitials={false}

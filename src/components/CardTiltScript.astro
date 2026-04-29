@@ -36,34 +36,38 @@
 
     let activeCard = null;
 
-    document.addEventListener(
-      "pointerover",
-      (event) => {
-        const card = getCardFromEventTarget(event.target);
-        if (!card) return;
-        activeCard = card;
-      },
-      true
-    );
+    const onEnter = (event) => {
+      const card = getCardFromEventTarget(event.target);
+      if (!card) return;
+      activeCard = card;
+    };
 
-    document.addEventListener("pointermove", (event) => {
+    const onMove = (event) => {
       const card = activeCard ?? getCardFromEventTarget(event.target);
       if (!card) return;
+      // Ignore touch/pen moves (keeps effect desktop-focused, avoids weird scroll interactions).
+      if ("pointerType" in event && event.pointerType && event.pointerType !== "mouse") return;
       updateCard(card, event);
-    });
+    };
 
-    document.addEventListener(
-      "pointerout",
-      (event) => {
-        const card = getCardFromEventTarget(event.target);
-        if (!card) return;
-        const to = event.relatedTarget;
-        if (to instanceof Node && card.contains(to)) return;
-        if (activeCard === card) activeCard = null;
-        resetCard(card);
-      },
-      true
-    );
+    const onLeave = (event) => {
+      const card = getCardFromEventTarget(event.target);
+      if (!card) return;
+      const to = event.relatedTarget;
+      if (to instanceof Node && card.contains(to)) return;
+      if (activeCard === card) activeCard = null;
+      resetCard(card);
+    };
+
+    // Pointer events (modern browsers).
+    document.addEventListener("pointerover", onEnter, true);
+    document.addEventListener("pointermove", onMove, true);
+    document.addEventListener("pointerout", onLeave, true);
+
+    // Mouse events fallback (some environments throttle/disable pointer events).
+    document.addEventListener("mouseover", onEnter, true);
+    document.addEventListener("mousemove", onMove, true);
+    document.addEventListener("mouseout", onLeave, true);
 
     // Initialize any cards already on the page.
     document.querySelectorAll(".fib-card").forEach(resetCard);
