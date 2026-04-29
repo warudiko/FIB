@@ -31,19 +31,36 @@
       card.style.setProperty("--fib-glare-y", `${(py * 100).toFixed(2)}%`);
     };
 
-    const getCardFromEventTarget = (target) =>
-      target instanceof Element ? target.closest(".fib-card") : null;
+    const getCardFromAnyTarget = (target) => {
+      if (target instanceof Element) return target.closest(".fib-card");
+      if (target && typeof target === "object" && "parentElement" in target) {
+        const parent = target.parentElement;
+        if (parent instanceof Element) return parent.closest(".fib-card");
+      }
+      return null;
+    };
+
+    const getCardFromPoint = (x, y) => {
+      if (typeof document.elementFromPoint !== "function") return null;
+      const el = document.elementFromPoint(x, y);
+      return el instanceof Element ? el.closest(".fib-card") : null;
+    };
 
     let activeCard = null;
 
     const onEnter = (event) => {
-      const card = getCardFromEventTarget(event.target);
+      const card =
+        getCardFromAnyTarget(event.target) ??
+        getCardFromPoint(event.clientX, event.clientY);
       if (!card) return;
       activeCard = card;
     };
 
     const onMove = (event) => {
-      const card = activeCard ?? getCardFromEventTarget(event.target);
+      const card =
+        activeCard ??
+        getCardFromAnyTarget(event.target) ??
+        getCardFromPoint(event.clientX, event.clientY);
       if (!card) return;
       // Ignore touch/pen moves (keeps effect desktop-focused, avoids weird scroll interactions).
       if ("pointerType" in event && event.pointerType && event.pointerType !== "mouse") return;
@@ -51,7 +68,7 @@
     };
 
     const onLeave = (event) => {
-      const card = getCardFromEventTarget(event.target);
+      const card = getCardFromAnyTarget(event.target);
       if (!card) return;
       const to = event.relatedTarget;
       if (to instanceof Node && card.contains(to)) return;
