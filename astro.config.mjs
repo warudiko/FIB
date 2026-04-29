@@ -1,7 +1,6 @@
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import mdx from "@astrojs/mdx";
-import sitemap from "@astrojs/sitemap";
 import robots from "astro-robots";
 
 export default defineConfig({
@@ -10,9 +9,9 @@ export default defineConfig({
   integrations: [
     tailwind(),
     mdx(),
-    sitemap(),
     robots({
-      host: "https://warudiko.github.io",
+      // `astro-robots` expects a bare hostname (no scheme).
+      host: "warudiko.github.io",
       policy: [
         {
           userAgent: "*",
