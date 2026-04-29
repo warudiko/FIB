@@ -19,6 +19,8 @@ if (!entry) {
   // Astro 4-compatible 404 handling for dynamic routes.
   return Astro.rewrite("/404");
 }
+
+const { Content } = await entry.render();
 ---
 
 <BaseLayout
@@ -34,7 +36,7 @@ if (!entry) {
 
     <div class="prose-fib max-w-3xl">
       <article>
-        <entry.render />
+        <Content />
       </article>
     </div>
   </div>
