@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --fib-bg: #07070a;
+  --fib-panel: #0f1017;
+  --fib-text: #e8e9f1;
+  --fib-muted: #a1a3b1;
+  --fib-gold: #f5c84b;
+  --fib-gold-deep: #d8a72f;
+  --fib-ring: rgba(245, 200, 75, 0.35);
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: radial-gradient(1200px 600px at 15% 0%, rgba(245, 200, 75, 0.08), transparent 60%),
+    radial-gradient(900px 500px at 85% 10%, rgba(216, 167, 47, 0.07), transparent 55%),
+    var(--fib-bg);
+  color: var(--fib-text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+.fib-focus-ring {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px var(--fib-ring);
+}
+
+.fib-border {
+  border: 1px solid rgba(245, 200, 75, 0.18);
+}
+
+.fib-accent {
+  color: var(--fib-gold);
+}
+
+.fib-muted {
+  color: var(--fib-muted);
+}
+
+/* Better typography for long informational copy */
+.prose-fib {
+  color: var(--fib-text);
+}
+

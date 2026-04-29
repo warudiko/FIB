@@ -1,0 +1,57 @@
+---
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+
+import "../styles/global.css";
+
+const {
+  title = "Federal Investigation Bureau (FIB)",
+  description = "Informational overview of FIB divisions and public resources.",
+} = Astro.props;
+
+const site = (Astro.site ?? "https://warudiko.github.io/FIB/").toString();
+const base = import.meta.env.BASE_URL ?? "/";
+
+const canonicalHref = new URL(Astro.url.pathname, site).toString();
+const ogImageHref = new URL(`${base}og-fib-card.svg`, site).toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <link rel="canonical" href={canonicalHref} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalHref} />
+    <meta property="og:image" content={ogImageHref} />
+
+    <link rel="icon" href={`${base}favicon.svg`} />
+  </head>
+
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only fib-focus-ring fib-border rounded-md px-3 py-2"
+      >Skip to content</a
+    >
+
+    <div class="min-h-screen">
+      <Nav />
+
+      <main id="main" class="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+        <slot />
+      </main>
+
+      <Footer />
+    </div>
+  </body>
+</html>
+

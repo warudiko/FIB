@@ -1,0 +1,79 @@
+---
+import { getCollection } from "astro:content";
+
+import BaseLayout from "../layouts/BaseLayout.astro";
+import DivisionCard from "../components/DivisionCard.astro";
+
+const divisions = (await getCollection("divisions"))
+  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
+  .map((entry) => entry.data);
+
+const baseRaw = import.meta.env.BASE_URL ?? "/";
+const baseNoSlash =
+  baseRaw === "/" ? "" : baseRaw.endsWith("/") ? baseRaw.slice(0, -1) : baseRaw;
+---
+
+<BaseLayout
+  title="FIB - Informational Overview"
+  description="Explore FIB divisions and official public-facing information."
+>
+  <section class="relative overflow-hidden rounded-3xl border border-white/10 bg-black/25 p-8 sm:p-10">
+    <div class="absolute inset-0 bg-gradient-to-b from-fibGold/10 via-transparent to-transparent" />
+    <div class="relative">
+      <div class="text-xs font-semibold tracking-widest text-fibGoldDeep uppercase">
+        Federal Investigation Bureau
+      </div>
+      <h1 class="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
+        A structured informational hub
+      </h1>
+      <p class="mt-5 max-w-2xl text-white/70">
+        This site is an informational directory designed to present FIB divisions
+        in a clean, future-proof structure. Replace placeholder content with
+        the official descriptions you provide.
+      </p>
+
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a
+          href={`${baseNoSlash}/divisions`}
+          class="fib-focus-ring inline-flex items-center justify-center rounded-xl bg-fibGoldDeep px-5 py-3 text-sm font-semibold text-black transition hover:bg-fibGold"
+        >
+          Explore divisions
+        </a>
+        <a
+          href={`${baseNoSlash}/about`}
+          class="fib-focus-ring inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
+        >
+          About this directory
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-10">
+    <div class="mb-6 flex items-end justify-between gap-4">
+      <div>
+        <p class="text-xs font-semibold tracking-widest text-fibGoldDeep uppercase">
+          Divisions
+        </p>
+        <h2 class="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
+          Select a division to view details
+        </h2>
+      </div>
+      <div class="hidden text-sm text-white/60 sm:block">
+        {divisions.length} divisions listed
+      </div>
+    </div>
+
+    <div class="grid gap-5 md:grid-cols-2">
+      {divisions.map((d) => (
+        <DivisionCard
+          title={d.title}
+          short={d.short}
+          slug={d.slug}
+          heroTagline={d.heroTagline}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+

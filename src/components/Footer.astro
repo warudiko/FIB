@@ -1,0 +1,39 @@
+---
+const baseRaw = import.meta.env.BASE_URL ?? "/";
+const baseNoSlash = baseRaw === "/" ? "" : baseRaw.endsWith("/") ? baseRaw.slice(0, -1) : baseRaw;
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-14 border-t border-white/5 bg-black/20">
+  <div class="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+    <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+      <div>
+        <div class="text-sm text-white/70">
+          <span class="fib-accent font-semibold">FIB</span> informational site
+        </div>
+        <div class="mt-2 text-xs text-white/50">
+          © {year} FIB. All information presented is for demonstration and public reference.
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4 text-sm">
+        <a
+          href={`${baseNoSlash}/sources`}
+          class="text-white/75 hover:text-white"
+          >References</a
+        >
+        <a
+          href={`${baseNoSlash}/organization`}
+          class="text-white/75 hover:text-white"
+          >Organization</a
+        >
+        <a
+          href={`${baseNoSlash}/divisions`}
+          class="text-white/75 hover:text-white"
+          >Divisions</a
+        >
+      </div>
+    </div>
+  </div>
+</footer>
+

@@ -1,0 +1,31 @@
+---
+import { getCollection } from "astro:content";
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import DivisionCard from "../../components/DivisionCard.astro";
+
+const divisions = (await getCollection("divisions"))
+  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
+  .map((entry) => entry.data);
+---
+
+<BaseLayout title="Divisions - FIB" description="Browse all FIB divisions.">
+  <SectionHeading
+    eyebrow="Divisions"
+    title="Divisions directory"
+    description="Select a division to open its dedicated information page."
+  />
+
+  <div class="grid gap-5 md:grid-cols-2">
+    {divisions.map((d) => (
+      <DivisionCard
+        title={d.title}
+        short={d.short}
+        slug={d.slug}
+        heroTagline={d.heroTagline}
+      />
+    ))}
+  </div>
+</BaseLayout>
+

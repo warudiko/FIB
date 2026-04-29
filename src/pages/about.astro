@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+---
+
+<BaseLayout
+  title="About FIB - Informational Overview"
+  description="An informational overview page for FIB."
+>
+  <SectionHeading
+    eyebrow="Overview"
+    title="What this site covers"
+    description="This informational directory is structured to make it easy to maintain clean, public-facing descriptions for FIB and its divisions."
+  />
+
+  <div class="prose-fib max-w-3xl">
+    <p>
+      Add your official division descriptions, missions, and public resources
+      here. The layout is designed so future updates remain low-effort: you
+      can edit content files while keeping the UI consistent.
+    </p>
+
+    <p class="mt-4">
+      Placeholders are used initially. Once you provide the official
+      descriptions, I’ll wire them into each division page.
+    </p>
+  </div>
+</BaseLayout>
+

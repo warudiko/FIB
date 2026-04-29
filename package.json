@@ -1,0 +1,25 @@
+{
+  "name": "fib-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@astrojs/mdx": "^3.0.0",
+    "@astrojs/robots": "^1.0.0",
+    "@astrojs/sitemap": "^3.0.0",
+    "@astrojs/tailwind": "^5.0.0",
+    "astro": "^4.0.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15",
+    "typescript": "^5.6.3"
+  }
+}

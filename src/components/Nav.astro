@@ -1,0 +1,78 @@
+---
+const baseRaw = import.meta.env.BASE_URL ?? "/";
+// `BASE_URL` typically ends with a `/` for project-pages; we normalize it so we never create `//`.
+const baseNoSlash = baseRaw === "/" ? "" : baseRaw.endsWith("/") ? baseRaw.slice(0, -1) : baseRaw;
+
+const items = [
+  { label: "Home", href: `${baseNoSlash}/` },
+  { label: "About", href: `${baseNoSlash}/about` },
+  { label: "Divisions", href: `${baseNoSlash}/divisions` },
+  { label: "Organization", href: `${baseNoSlash}/organization` },
+  { label: "Sources", href: `${baseNoSlash}/sources` },
+];
+
+const currentPath = Astro.url.pathname;
+
+function normalize(path) {
+  if (!path) return "/";
+  // Collapse trailing slash for stable comparisons.
+  return path.length > 1 && path.endsWith("/") ? path.slice(0, -1) : path;
+}
+
+const current = normalize(currentPath);
+---
+
+<nav class="sticky top-0 z-50 border-b border-white/5 bg-black/35 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+    <a href={`${baseNoSlash}/`} class="flex items-center gap-3">
+      <span class="text-fibGoldDeep font-semibold tracking-wider">FIB</span>
+      <span class="hidden text-sm text-white/70 sm:block">Federal Investigation Bureau</span>
+    </a>
+
+    <ul class="hidden items-center gap-6 text-sm text-white/75 lg:flex">
+      {items.map((item) => {
+        const href = normalize(item.href);
+        const active = current === href;
+        return (
+          <li>
+            <a
+              href={item.href}
+              class={`transition-colors hover:text-white ${active
+                ? "text-white"
+                : ""}`}
+            >
+              <span class={active ? "fib-accent" : ""}>{item.label}</span>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+
+    <details class="lg:hidden">
+      <summary class="cursor-pointer list-none rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80">
+        Menu
+      </summary>
+      <div class="mt-3 rounded-lg border border-white/10 bg-black/70 p-3 shadow-lg">
+        <ul class="flex flex-col gap-2">
+          {items.map((item) => {
+            const href = normalize(item.href);
+            const active = current === href;
+            return (
+              <li>
+                <a
+                  href={item.href}
+                  class={`block rounded-md px-3 py-2 text-sm transition-colors hover:bg-white/5 ${
+                    active ? "bg-white/5 text-white" : "text-white/75"
+                  }`}
+                >
+                  {item.label}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </details>
+  </div>
+</nav>
+
