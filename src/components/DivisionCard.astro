@@ -1,15 +1,17 @@
 ---
 import { withBase } from "../utils/urls";
 
-const { title, short, slug, heroTagline } = Astro.props;
+const { title, short, slug, heroTagline, revealDelay = 0 } = Astro.props;
 const titleWords = typeof title === "string" ? title.split(" ") : [];
 
 const href = withBase(import.meta.env.BASE_URL, `/divisions/${slug}`);
+const revealStyle = revealDelay ? `transition-delay: ${Number(revealDelay)}ms;` : undefined;
 ---
 
 <a
   href={href}
-  class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 shadow-sm"
+  class="fib-reveal fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 shadow-sm"
+  style={revealStyle}
 >
   <span aria-hidden="true" class="fib-card-glare"></span>
   <div>

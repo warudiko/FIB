@@ -27,14 +27,14 @@ const { Content } = await entry.render();
   pageTitle={entry.data.title}
   description={entry.data.short ?? "FIB division information."}
 >
-  <div class="rounded-3xl border border-white/10 bg-black/35 px-5 py-6 shadow-lg shadow-black/40 sm:px-8 sm:py-8 lg:px-10 lg:py-10">
+  <div class="fib-reveal rounded-3xl border border-white/10 bg-black/35 px-5 py-6 shadow-lg shadow-black/40 sm:px-8 sm:py-8 lg:px-10 lg:py-10">
     <SectionHeading
       title={entry.data.title}
       description={entry.data.heroTagline ?? entry.data.short ?? ""}
     />
 
     <div class="prose-fib max-w-3xl">
-      <article class="space-y-4">
+      <article class="fib-reveal space-y-4">
         <Content />
       </article>
     </div>

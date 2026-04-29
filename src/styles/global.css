@@ -53,6 +53,24 @@ html {
   background-clip: content-box;
 }
 
+/* Scroll reveal */
+.fib-reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  filter: blur(2px);
+  transition:
+    opacity 520ms ease,
+    transform 760ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 680ms ease;
+  will-change: opacity, transform, filter;
+}
+
+.fib-reveal.fib-reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
 .fib-focus-ring {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -225,6 +243,12 @@ html {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .fib-reveal {
+    transition: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
   }
   .fib-card {
     transition: none;

@@ -5,8 +5,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import DivisionCard from "../components/DivisionCard.astro";
 import ProtocolCard from "../components/ProtocolCard.astro";
 import SectionHeading from "../components/SectionHeading.astro";
-import ButtonLink from "../components/ButtonLink.astro";
-import { withBase } from "../utils/urls";
 
 const divisions = (await getCollection("divisions"))
   .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
@@ -21,7 +19,7 @@ const protocols = (await getCollection("protocols"))
   title="FIB - Federal Investigation Department"
   description="Explore FIB divisions and official public-facing information."
 >
-  <section class="relative overflow-hidden rounded-3xl border border-white/10 bg-black/25 p-8 sm:p-10">
+  <section class="fib-reveal relative overflow-hidden rounded-3xl border border-white/10 bg-black/25 p-8 sm:p-10">
     <div class="pointer-events-none absolute inset-0 opacity-90">
       <div class="absolute -top-24 left-10 h-56 w-56 rounded-full bg-fibGold/10 blur-3xl"></div>
       <div class="absolute -bottom-28 right-8 h-72 w-72 rounded-full bg-fibGoldDeep/10 blur-3xl"></div>
@@ -51,25 +49,16 @@ const protocols = (await getCollection("protocols"))
         description="გაეცანით სპეციალიზებულ დივიზიებს და მათ საჯარო პასუხისმგებლობებს."
         accentInitials={false}
       />
-      <div class="pt-1">
-        <ButtonLink
-          variant="ghost"
-          class="px-3 py-2 text-sm"
-          href={withBase(import.meta.env.BASE_URL, "/divisions")}
-        >
-          იხილეთ ყველა
-          <span aria-hidden="true">→</span>
-        </ButtonLink>
-      </div>
     </div>
 
     <div class="grid gap-5 md:grid-cols-2">
-      {divisions.map((d) => (
+      {divisions.map((d, index) => (
         <DivisionCard
           title={d.title}
           short={d.short}
           slug={d.slug}
           heroTagline={d.heroTagline}
+          revealDelay={index * 70}
         />
       ))}
     </div>
@@ -83,25 +72,16 @@ const protocols = (await getCollection("protocols"))
         description="სწრაფი წვდომა სცენარზე დაფუძნებულ პროცედურებსა და კოდურ დანიშნულებებზე."
         accentInitials={false}
       />
-      <div class="pt-1">
-        <ButtonLink
-          variant="ghost"
-          class="px-3 py-2 text-sm"
-          href={withBase(import.meta.env.BASE_URL, "/protocols")}
-        >
-          იხილეთ ყველა
-          <span aria-hidden="true">→</span>
-        </ButtonLink>
-      </div>
     </div>
 
     <div class="grid gap-5 md:grid-cols-2">
-      {protocols.map((p) => (
+      {protocols.map((p, index) => (
         <ProtocolCard
           title={p.title}
           short={p.short}
           slug={p.slug}
           heroTagline={p.heroTagline}
+          revealDelay={index * 70}
         />
       ))}
     </div>

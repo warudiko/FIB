@@ -19,12 +19,13 @@ const protocols = (await getCollection("protocols"))
   />
 
   <div class="grid gap-5 md:grid-cols-2">
-    {protocols.map((p) => (
+    {protocols.map((p, index) => (
       <ProtocolCard
         title={p.title}
         short={p.short}
         slug={p.slug}
         heroTagline={p.heroTagline}
+        revealDelay={index * 70}
       />
     ))}
   </div>

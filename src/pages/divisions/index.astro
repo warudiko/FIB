@@ -19,12 +19,13 @@ const divisions = (await getCollection("divisions"))
   />
 
   <div class="grid gap-5 md:grid-cols-2">
-    {divisions.map((d) => (
+    {divisions.map((d, index) => (
       <DivisionCard
         title={d.title}
         short={d.short}
         slug={d.slug}
         heroTagline={d.heroTagline}
+        revealDelay={index * 70}
       />
     ))}
   </div>

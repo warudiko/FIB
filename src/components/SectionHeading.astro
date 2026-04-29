@@ -3,7 +3,7 @@ const { eyebrow, title, description, accentInitials = true } = Astro.props;
 const titleWords = typeof title === "string" ? title.split(" ") : [];
 ---
 
-<section class="mb-8">
+<section class="fib-reveal mb-8">
   {eyebrow ? (
     <p class="mb-2 text-xs font-semibold tracking-widest text-fibGoldDeep uppercase">
       {eyebrow}
