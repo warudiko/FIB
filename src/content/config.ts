@@ -3,7 +3,6 @@ import { defineCollection, z } from "astro:content";
 const divisions = defineCollection({
   schema: z.object({
     title: z.string(),
-    slug: z.string(),
     order: z.number().optional(),
     short: z.string().optional(),
     heroTagline: z.string().optional(),

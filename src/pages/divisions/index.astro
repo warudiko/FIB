@@ -7,7 +7,7 @@ import DivisionCard from "../../components/DivisionCard.astro";
 
 const divisions = (await getCollection("divisions"))
   .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
-  .map((entry) => entry.data);
+  .map((entry) => ({ ...entry.data, slug: entry.slug }));
 ---
 
 <BaseLayout title="Divisions - FIB" description="Browse all FIB divisions.">

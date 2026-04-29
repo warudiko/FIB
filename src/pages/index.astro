@@ -6,7 +6,7 @@ import DivisionCard from "../components/DivisionCard.astro";
 
 const divisions = (await getCollection("divisions"))
   .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
-  .map((entry) => entry.data);
+  .map((entry) => ({ ...entry.data, slug: entry.slug }));
 
 const baseRaw = import.meta.env.BASE_URL ?? "/";
 const baseNoSlash =
