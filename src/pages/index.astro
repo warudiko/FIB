@@ -59,7 +59,12 @@ const protocols = (await getCollection("protocols"))
 
   <section class="mt-10">
     <div class="flex items-start justify-between gap-6">
-      <SectionHeading eyebrow="Divisions" title="Divisions overview" description="Explore specialized divisions and their public-facing responsibilities." />
+      <SectionHeading
+        eyebrow="Divisions"
+        title="დივიზიების მიმოხილვა"
+        description="გაეცანით სპეციალიზებულ დივიზიებს და მათ საჯარო პასუხისმგებლობებს."
+        accentInitials={false}
+      />
       <div class="pt-1">
         <ButtonLink
           variant="ghost"
@@ -88,8 +93,8 @@ const protocols = (await getCollection("protocols"))
     <div class="flex items-start justify-between gap-6">
       <SectionHeading
         eyebrow="Protocols"
-        title="Operational protocols"
-        description="Quick access to scenario-based procedures and code designations."
+        title="ოპერაციული პროტოკოლები"
+        description="სწრაფი წვდომა სცენარზე დაფუძნებულ პროცედურებსა და კოდურ დანიშნულებებზე."
         accentInitials={false}
       />
       <div class="pt-1">
