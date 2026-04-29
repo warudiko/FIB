@@ -1,9 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-const baseRaw = import.meta.env.BASE_URL ?? "/";
-const baseNoSlash =
-  baseRaw === "/" ? "" : baseRaw.endsWith("/") ? baseRaw.slice(0, -1) : baseRaw;
+import { withBase } from "../utils/urls";
+import ButtonLink from "../components/ButtonLink.astro";
 ---
 
 <BaseLayout pageTitle="Not Found" description="The requested page does not exist.">
@@ -13,12 +11,9 @@ const baseNoSlash =
       This page doesn’t exist (yet). Use the navigation above to find what
       you need.
     </p>
-    <a
-      href={`${baseNoSlash}/`}
-      class="fib-focus-ring mt-6 inline-flex items-center justify-center rounded-xl bg-fibGoldDeep px-5 py-3 text-sm font-semibold text-black transition hover:bg-fibGold"
-    >
-      Back to home
-    </a>
+    <div class="mt-6">
+      <ButtonLink href={withBase(import.meta.env.BASE_URL, "/")}>Back to home</ButtonLink>
+    </div>
   </section>
 </BaseLayout>
 

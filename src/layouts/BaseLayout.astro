@@ -1,6 +1,7 @@
 ---
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
+import CardTiltScript from "../components/CardTiltScript.astro";
 
 import "../styles/global.css";
 
@@ -30,6 +31,7 @@ const ogImageHref = new URL(`${base}og-fib-card.svg`, site).toString();
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#07070a" />
 
     <title>{resolvedTitle}</title>
     <meta name="description" content={description} />
@@ -64,6 +66,8 @@ const ogImageHref = new URL(`${base}og-fib-card.svg`, site).toString();
 
       <Footer />
     </div>
+
+    <CardTiltScript />
   </body>
 </html>
 

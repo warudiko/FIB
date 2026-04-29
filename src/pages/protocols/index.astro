@@ -11,7 +11,12 @@ const protocols = (await getCollection("protocols"))
 ---
 
 <BaseLayout pageTitle="Protocols" description="Browse operational protocols.">
-  <SectionHeading eyebrow="Protocols" accentInitials={false} />
+  <SectionHeading
+    eyebrow="Protocols"
+    title="All protocols"
+    description="Scenario-based procedures and code designations."
+    accentInitials={false}
+  />
 
   <div class="grid gap-5 md:grid-cols-2">
     {protocols.map((p) => (

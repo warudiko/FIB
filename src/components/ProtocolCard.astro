@@ -1,9 +1,9 @@
 ---
-const { title, short, slug, heroTagline } = Astro.props;
-const baseRaw = import.meta.env.BASE_URL ?? "/";
-const baseNoSlash = baseRaw === "/" ? "" : baseRaw.endsWith("/") ? baseRaw.slice(0, -1) : baseRaw;
+import { withBase } from "../utils/urls";
 
-const href = `${baseNoSlash}/protocols/${slug}`;
+const { title, short, slug, heroTagline } = Astro.props;
+
+const href = withBase(import.meta.env.BASE_URL, `/protocols/${slug}`);
 ---
 
 <a
@@ -24,50 +24,3 @@ const href = `${baseNoSlash}/protocols/${slug}`;
     <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
   </div>
 </a>
-
-<script>
-  if (!(window).__fibCardTiltBound) {
-    window.__fibCardTiltBound = true;
-
-    const cards = () => document.querySelectorAll(".fib-card");
-
-    const resetCard = (card) => {
-      card.style.setProperty("--fib-rotate-x", "0deg");
-      card.style.setProperty("--fib-rotate-y", "0deg");
-      card.style.setProperty("--fib-glare-x", "50%");
-      card.style.setProperty("--fib-glare-y", "50%");
-    };
-
-    const updateCard = (card, event) => {
-      const rect = card.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-      const px = x / rect.width;
-      const py = y / rect.height;
-      const rotateY = (px - 0.5) * 12;
-      const rotateX = (0.5 - py) * 10;
-
-      card.style.setProperty("--fib-rotate-x", `${rotateX.toFixed(2)}deg`);
-      card.style.setProperty("--fib-rotate-y", `${rotateY.toFixed(2)}deg`);
-      card.style.setProperty("--fib-glare-x", `${(px * 100).toFixed(2)}%`);
-      card.style.setProperty("--fib-glare-y", `${(py * 100).toFixed(2)}%`);
-    };
-
-    document.addEventListener("pointermove", (event) => {
-      const card = event.target instanceof Element ? event.target.closest(".fib-card") : null;
-      if (!card) return;
-      updateCard(card, event);
-    });
-
-    document.addEventListener(
-      "pointerleave",
-      (event) => {
-        const card = event.target instanceof Element ? event.target.closest(".fib-card") : null;
-        if (card) resetCard(card);
-      },
-      true
-    );
-
-    cards().forEach(resetCard);
-  }
-</script>

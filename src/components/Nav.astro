@@ -1,12 +1,12 @@
 ---
-const baseRaw = import.meta.env.BASE_URL ?? "/";
-// `BASE_URL` typically ends with a `/` for project-pages; we normalize it so we never create `//`.
-const baseNoSlash = baseRaw === "/" ? "" : baseRaw.endsWith("/") ? baseRaw.slice(0, -1) : baseRaw;
+import { withBase } from "../utils/urls";
+
+const baseRaw = import.meta.env.BASE_URL;
 
 const items = [
-  { label: "Home", href: `${baseNoSlash}/` },
-  { label: "Divisions", href: `${baseNoSlash}/divisions` },
-  { label: "Protocols", href: `${baseNoSlash}/protocols` },
+  { label: "Home", href: withBase(baseRaw, "/") },
+  { label: "Divisions", href: withBase(baseRaw, "/divisions") },
+  { label: "Protocols", href: withBase(baseRaw, "/protocols") },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -22,7 +22,7 @@ const current = normalize(currentPath);
 
 <nav class="sticky top-0 z-50 border-b border-white/5 bg-black/40 backdrop-blur">
   <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-    <a href={`${baseNoSlash}/`} class="flex items-center gap-3">
+    <a href={withBase(baseRaw, "/")} class="flex items-center gap-3">
       <span class="text-fibGoldDeep font-semibold tracking-[0.18em] uppercase">FIB</span>
       <span class="hidden text-xs font-medium text-white/60 sm:block">
         Federal Investigation Department

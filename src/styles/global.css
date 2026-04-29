@@ -32,6 +32,27 @@ html {
   scrollbar-gutter: stable;
 }
 
+::selection {
+  background: rgba(245, 200, 75, 0.25);
+  color: var(--fib-text);
+}
+
+/* Subtle scrollbar styling (Chromium/WebKit). */
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
 .fib-focus-ring {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -199,5 +220,18 @@ html {
 
 .fib-card:hover .fib-card-glare {
   opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .fib-card {
+    transition: none;
+    transform: none !important;
+  }
+  .fib-card-glare {
+    transition: none;
+  }
 }
 

@@ -4,6 +4,9 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import DivisionCard from "../components/DivisionCard.astro";
 import ProtocolCard from "../components/ProtocolCard.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import ButtonLink from "../components/ButtonLink.astro";
+import { withBase } from "../utils/urls";
 
 const divisions = (await getCollection("divisions"))
   .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
@@ -12,10 +15,6 @@ const divisions = (await getCollection("divisions"))
 const protocols = (await getCollection("protocols"))
   .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
   .map((entry) => ({ ...entry.data, slug: entry.slug }));
-
-const baseRaw = import.meta.env.BASE_URL ?? "/";
-const baseNoSlash =
-  baseRaw === "/" ? "" : baseRaw.endsWith("/") ? baseRaw.slice(0, -1) : baseRaw;
 ---
 
 <BaseLayout
@@ -23,8 +22,18 @@ const baseNoSlash =
   description="Explore FIB divisions and official public-facing information."
 >
   <section class="relative overflow-hidden rounded-3xl border border-white/10 bg-black/25 p-8 sm:p-10">
+    <div class="pointer-events-none absolute inset-0 opacity-90">
+      <div class="absolute -top-24 left-10 h-56 w-56 rounded-full bg-fibGold/10 blur-3xl"></div>
+      <div class="absolute -bottom-28 right-8 h-72 w-72 rounded-full bg-fibGoldDeep/10 blur-3xl"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.08)_1px,transparent_0)] [background-size:26px_26px] opacity-20"></div>
+    </div>
+
     <div class="relative">
-      <h1 class="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
+      <p class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs font-semibold tracking-widest text-white/70 uppercase">
+        Federal Investigation Department
+      </p>
+
+      <h1 class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
         <span class="fib-accent">F</span>ederal{" "}
         <span class="fib-accent">I</span>nvestigation{" "}
         <span class="fib-accent">B</span>ureau
@@ -36,15 +45,30 @@ const baseNoSlash =
         იმყოფებიან სახელმწიფოს დაცვის ქვეშ.
       </p>
 
+      <div class="mt-7 flex flex-wrap items-center gap-3">
+        <ButtonLink href={withBase(import.meta.env.BASE_URL, "/divisions")}>
+          Browse divisions
+          <span aria-hidden="true">→</span>
+        </ButtonLink>
+        <ButtonLink variant="secondary" href={withBase(import.meta.env.BASE_URL, "/protocols")}>
+          View protocols
+        </ButtonLink>
+      </div>
     </div>
   </section>
 
   <section class="mt-10">
-    <div class="mb-6 flex items-end justify-between gap-4">
-      <div>
-        <p class="text-xs font-semibold tracking-widest text-fibGoldDeep uppercase">
-          Divisions
-        </p>
+    <div class="flex items-start justify-between gap-6">
+      <SectionHeading eyebrow="Divisions" title="Divisions overview" description="Explore specialized divisions and their public-facing responsibilities." />
+      <div class="pt-1">
+        <ButtonLink
+          variant="ghost"
+          class="px-3 py-2 text-sm"
+          href={withBase(import.meta.env.BASE_URL, "/divisions")}
+        >
+          View all
+          <span aria-hidden="true">→</span>
+        </ButtonLink>
       </div>
     </div>
 
@@ -61,11 +85,22 @@ const baseNoSlash =
   </section>
 
   <section class="mt-10">
-    <div class="mb-6 flex items-end justify-between gap-4">
-      <div>
-        <p class="text-xs font-semibold tracking-widest text-fibGoldDeep uppercase">
-          Protocols
-        </p>
+    <div class="flex items-start justify-between gap-6">
+      <SectionHeading
+        eyebrow="Protocols"
+        title="Operational protocols"
+        description="Quick access to scenario-based procedures and code designations."
+        accentInitials={false}
+      />
+      <div class="pt-1">
+        <ButtonLink
+          variant="ghost"
+          class="px-3 py-2 text-sm"
+          href={withBase(import.meta.env.BASE_URL, "/protocols")}
+        >
+          View all
+          <span aria-hidden="true">→</span>
+        </ButtonLink>
       </div>
     </div>
 

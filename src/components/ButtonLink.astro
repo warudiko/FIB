@@ -1,0 +1,30 @@
+---
+type Variant = "primary" | "secondary" | "ghost";
+
+const {
+  href,
+  variant = "primary",
+  class: className = "",
+  target,
+  rel,
+} = Astro.props as {
+  href: string;
+  variant?: Variant;
+  class?: string;
+  target?: string;
+  rel?: string;
+};
+
+const base =
+  "inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition focus-visible:fib-focus-ring";
+const variants: Record<Variant, string> = {
+  primary: "bg-fibGoldDeep text-black hover:bg-fibGold",
+  secondary: "border border-white/12 bg-white/5 text-white/90 hover:bg-white/8",
+  ghost: "text-white/80 hover:text-white hover:bg-white/5",
+};
+---
+
+<a href={href} target={target} rel={rel} class={`${base} ${variants[variant]} ${className}`}>
+  <slot />
+</a>
+
