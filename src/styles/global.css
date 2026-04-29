@@ -56,18 +56,18 @@ html {
 /* Scroll reveal */
 .fib-reveal {
   opacity: 0;
-  translate: 0 14px;
+  transform: translateY(14px);
   filter: blur(2px);
   transition:
     opacity 520ms ease,
-    translate 760ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 760ms cubic-bezier(0.2, 0.8, 0.2, 1),
     filter 680ms ease;
-  will-change: opacity, translate, filter;
+  will-change: opacity, transform, filter;
 }
 
 .fib-reveal.fib-reveal-visible {
   opacity: 1;
-  translate: 0 0;
+  transform: translateY(0);
   filter: blur(0);
 }
 
@@ -216,9 +216,8 @@ html {
     box-shadow 180ms ease-out,
     border-color 180ms ease-out,
     opacity 520ms ease,
-    translate 760ms cubic-bezier(0.2, 0.8, 0.2, 1),
     filter 680ms ease;
-  will-change: transform, opacity, translate, filter;
+  will-change: transform, opacity, filter;
 }
 
 .fib-card:hover {

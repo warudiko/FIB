@@ -7,25 +7,26 @@ const href = withBase(import.meta.env.BASE_URL, `/protocols/${slug}`);
 const revealStyle = revealDelay ? `transition-delay: ${Number(revealDelay)}ms;` : undefined;
 ---
 
-<a
-  href={href}
-  class="fib-reveal fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 shadow-sm"
-  style={revealStyle}
->
-  <span aria-hidden="true" class="fib-card-glare"></span>
+<div class="fib-reveal h-full" style={revealStyle}>
+  <a
+    href={href}
+    class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 shadow-sm"
+  >
+    <span aria-hidden="true" class="fib-card-glare"></span>
 
-  <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white">
-    {title}
-  </h3>
+    <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white">
+      {title}
+    </h3>
 
-  {heroTagline ? <p class="mt-4 text-sm text-white/80">{heroTagline}</p> : null}
-  {short ? <p class="mt-2 text-sm text-white/65">{short}</p> : null}
+    {heroTagline ? <p class="mt-4 text-sm text-white/80">{heroTagline}</p> : null}
+    {short ? <p class="mt-2 text-sm text-white/65">{short}</p> : null}
 
-  <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
-    იხილეთ მეტი
-    <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
-  </div>
-</a>
+    <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+      იხილეთ მეტი
+      <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
+    </div>
+  </a>
+</div>
 
 <script>
   // Intentionally empty: tilt script is bound in `DivisionCard.astro` (guarded by `window.__fibCardTiltBound`).
@@ -78,6 +79,21 @@ const revealStyle = revealDelay ? `transition-delay: ${Number(revealDelay)}ms;` 
         if ("pointerType" in event && event.pointerType && event.pointerType !== "mouse") return;
         const card = activeCard ?? getCardFromTarget(event.target) ?? getCardFromPoint(event.clientX, event.clientY);
         if (!card) return;
+
+        if (activeCard) {
+          const rect = activeCard.getBoundingClientRect();
+          const outside =
+            event.clientX < rect.left ||
+            event.clientX > rect.right ||
+            event.clientY < rect.top ||
+            event.clientY > rect.bottom;
+          if (outside) {
+            resetCard(activeCard);
+            activeCard = null;
+            return;
+          }
+        }
+
         updateCard(card, event.clientX, event.clientY);
       };
 
