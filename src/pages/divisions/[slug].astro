@@ -1,6 +1,5 @@
 ---
 import { getEntryBySlug } from "astro:content";
-import { notFound } from "astro:content";
 
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
@@ -9,7 +8,8 @@ const slug = Astro.params.slug;
 const entry = await getEntryBySlug("divisions", slug);
 
 if (!entry) {
-  return notFound();
+  // Astro 4-compatible 404 handling for dynamic routes.
+  return Astro.rewrite("/404");
 }
 ---
 
