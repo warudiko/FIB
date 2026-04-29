@@ -10,8 +10,8 @@ const protocols = (await getCollection("protocols"))
   .map((entry) => ({ ...entry.data, slug: entry.slug }));
 ---
 
-<BaseLayout title="Protocols - FIB" description="Browse operational protocols.">
-  <SectionHeading eyebrow="Protocols" title="Protocols" accentInitials={false} />
+<BaseLayout pageTitle="Protocols" description="Browse operational protocols.">
+  <SectionHeading eyebrow="Protocols" accentInitials={false} />
 
   <div class="grid gap-5 md:grid-cols-2">
     {protocols.map((p) => (

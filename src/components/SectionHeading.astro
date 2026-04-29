@@ -9,18 +9,23 @@ const titleWords = typeof title === "string" ? title.split(" ") : [];
       {eyebrow}
     </p>
   ) : null}
-  <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
-    {!accentInitials ? (
-      title
-    ) : titleWords.length
-      ? titleWords.map((word, index) => (
+  {title ? (
+    <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+      {!accentInitials ? (
+        title
+      ) : titleWords.length ? (
+        titleWords.map((word, index) => (
           <>
-            <span class="fib-accent">{word.charAt(0)}</span>{word.slice(1)}
+            <span class="fib-accent">{word.charAt(0)}</span>
+            {word.slice(1)}
             {index < titleWords.length - 1 ? " " : ""}
           </>
         ))
-      : title}
-  </h2>
+      ) : (
+        title
+      )}
+    </h2>
+  ) : null}
   {description ? (
     <p class="mt-3 max-w-2xl text-sm leading-relaxed text-white/75">{description}</p>
   ) : null}

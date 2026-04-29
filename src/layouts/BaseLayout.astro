@@ -5,9 +5,18 @@ import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 
 const {
-  title = "FIB - Federal Investigation Department",
+  pageTitle,
+  title,
   description = "Informational overview of FIB divisions and public resources.",
 } = Astro.props;
+
+const baseTitle = "FIB";
+const resolvedTitle =
+  typeof title === "string"
+    ? title
+    : typeof pageTitle === "string" && pageTitle.trim().length
+      ? `${baseTitle} - ${pageTitle}`
+      : "FIB - Federal Investigation Department";
 
 const site = (Astro.site ?? "https://warudiko.github.io/FIB/").toString();
 const base = import.meta.env.BASE_URL ?? "/";
@@ -22,12 +31,12 @@ const ogImageHref = new URL(`${base}og-fib-card.svg`, site).toString();
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>{title}</title>
+    <title>{resolvedTitle}</title>
     <meta name="description" content={description} />
 
     <link rel="canonical" href={canonicalHref} />
 
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={resolvedTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalHref} />

@@ -10,10 +10,9 @@ const divisions = (await getCollection("divisions"))
   .map((entry) => ({ ...entry.data, slug: entry.slug }));
 ---
 
-<BaseLayout title="Divisions - FIB" description="Browse all FIB divisions.">
+<BaseLayout pageTitle="Divisions" description="Browse all FIB divisions.">
   <SectionHeading
     eyebrow="Divisions"
-    title="Divisions"
   />
 
   <div class="grid gap-5 md:grid-cols-2">
