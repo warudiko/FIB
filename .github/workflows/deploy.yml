@@ -34,8 +34,7 @@ jobs:
         run: npm run build
 
       - name: Deploy
-        # Pin to a node24 runtime version to avoid Node 20 warnings.
-        uses: peaceiris/actions-gh-pages@980b4978e3d397cf8f2126e181e9e53354e87023
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: dist
