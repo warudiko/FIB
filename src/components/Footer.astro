@@ -1,5 +1,22 @@
 ---
+import { execSync } from "node:child_process";
+
 const year = new Date().getFullYear();
+let lastUpdatedLabel: string | null = null;
+
+try {
+  const iso = execSync("git log -1 --format=%cI", { encoding: "utf8" }).trim();
+  const date = new Date(iso);
+  if (!Number.isNaN(date.getTime())) {
+    lastUpdatedLabel = date.toLocaleDateString("en-GB", {
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+    });
+  }
+} catch {
+  lastUpdatedLabel = null;
+}
 ---
 
 <footer class="mt-14 border-t border-white/5 bg-black/40">
@@ -12,6 +29,9 @@ const year = new Date().getFullYear();
         <div class="mt-2 text-xs text-white/50">
           © {year} FIB. წარმოდგენილი ინფორმაცია განკუთვნილია დემონსტრაციისა და საჯარო ცნობარისთვის.
         </div>
+        {lastUpdatedLabel ? (
+          <div class="mt-1 text-xs text-white/45">Last updated: {lastUpdatedLabel}</div>
+        ) : null}
         <div class="mt-1 flex items-center gap-2 text-xs text-white/45">
           <svg
             aria-hidden="true"
