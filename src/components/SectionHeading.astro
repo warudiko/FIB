@@ -1,5 +1,5 @@
 ---
-const { eyebrow, title, description } = Astro.props;
+const { eyebrow, title, description, accentInitials = true } = Astro.props;
 const titleWords = typeof title === "string" ? title.split(" ") : [];
 ---
 
@@ -10,7 +10,9 @@ const titleWords = typeof title === "string" ? title.split(" ") : [];
     </p>
   ) : null}
   <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
-    {titleWords.length
+    {!accentInitials ? (
+      title
+    ) : titleWords.length
       ? titleWords.map((word, index) => (
           <>
             <span class="fib-accent">{word.charAt(0)}</span>{word.slice(1)}

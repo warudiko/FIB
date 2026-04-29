@@ -17,6 +17,8 @@ html {
 }
 
 body {
+  /* Keep layout width stable between short/long pages (prevents horizontal nudge). */
+  overflow-y: scroll;
   background: radial-gradient(1200px 600px at 15% 0%, rgba(245, 200, 75, 0.08), transparent 60%),
     radial-gradient(900px 500px at 85% 10%, rgba(216, 167, 47, 0.07), transparent 55%),
     var(--fib-bg);
@@ -27,6 +29,7 @@ body {
 
 html {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
 }
 
 .fib-focus-ring {
@@ -71,8 +74,94 @@ html {
   padding-left: 1.25rem;
 }
 
+.prose-fib ol {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  padding-left: 1.35rem;
+}
+
+.prose-fib ul {
+  list-style: disc;
+}
+
+.prose-fib ol {
+  list-style: decimal;
+}
+
 .prose-fib li + li {
   margin-top: 0.4rem;
+}
+
+.prose-fib h2 {
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+.prose-fib h3 {
+  font-size: 1.1rem;
+  line-height: 1.45;
+  opacity: 0.95;
+}
+
+.prose-fib strong {
+  color: rgba(245, 200, 75, 0.92);
+  font-weight: 650;
+}
+
+.prose-fib a {
+  color: rgba(245, 200, 75, 0.92);
+  text-decoration: underline;
+  text-decoration-color: rgba(245, 200, 75, 0.35);
+  text-underline-offset: 3px;
+}
+
+.prose-fib a:hover {
+  color: rgba(255, 255, 255, 0.95);
+  text-decoration-color: rgba(245, 200, 75, 0.65);
+}
+
+.prose-fib hr {
+  margin: 1.5rem 0;
+  border: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.12),
+    transparent
+  );
+}
+
+.prose-fib blockquote {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid rgba(245, 200, 75, 0.35);
+  background: rgba(0, 0, 0, 0.22);
+  border-radius: 0.75rem;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.prose-fib code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.92em;
+}
+
+.prose-fib :not(pre) > code {
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.35);
+  color: rgba(245, 200, 75, 0.92);
+}
+
+.prose-fib pre {
+  margin: 1rem 0;
+  padding: 1rem;
+  overflow: auto;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.45);
 }
 
 /* Subtle 3D hover for cards */

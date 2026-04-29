@@ -24,7 +24,11 @@ const { Content } = await entry.render();
 
 <BaseLayout title={`${entry.data.title} - FIB`} description={entry.data.short ?? "Protocol details."}>
   <div class="rounded-3xl border border-white/10 bg-black/35 px-5 py-6 shadow-lg shadow-black/40 sm:px-8 sm:py-8 lg:px-10 lg:py-10">
-    <SectionHeading title={entry.data.title} description={entry.data.heroTagline ?? entry.data.short ?? ""} />
+    <SectionHeading
+      title={entry.data.title}
+      description={entry.data.heroTagline ?? entry.data.short ?? ""}
+      accentInitials={false}
+    />
 
     <div class="prose-fib max-w-3xl">
       <article class="space-y-4">
