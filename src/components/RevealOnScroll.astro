@@ -1,6 +1,4 @@
 <script>
-  const root = document;
-
   const reveal = (el) => {
     if (!(el instanceof Element)) return;
     if (el.classList.contains("fib-reveal-visible")) return;
@@ -12,9 +10,20 @@
     });
   };
 
-  const elements = Array.from(root.querySelectorAll(".fib-reveal"));
+  const initReveal = () => {
+    const root = document;
+    const elements = Array.from(root.querySelectorAll(".fib-reveal"));
 
-  if ("IntersectionObserver" in window) {
+    // Disconnect previous observer (page navigations).
+    if (window.__fibRevealObserver?.disconnect) {
+      window.__fibRevealObserver.disconnect();
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      elements.forEach(reveal);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -26,9 +35,18 @@
       { threshold: 0.18, rootMargin: "0px 0px -10% 0px" }
     );
 
+    window.__fibRevealObserver = observer;
     elements.forEach((el) => observer.observe(el));
-  } else {
-    elements.forEach(reveal);
+  };
+
+  // Run on first load.
+  initReveal();
+
+  // Re-run on Astro client-side navigations.
+  if (!(window).__fibRevealBound) {
+    window.__fibRevealBound = true;
+    document.addEventListener("astro:page-load", initReveal);
+    document.addEventListener("astro:after-swap", initReveal);
   }
 </script>
 
