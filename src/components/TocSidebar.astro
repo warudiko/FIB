@@ -1,0 +1,99 @@
+---
+const {
+  targetSelector = "article",
+  headingSelector = "h2, h3",
+  label = "On this page",
+} = Astro.props;
+---
+
+<aside class="fib-toc hidden lg:block">
+  <div class="sticky top-24 rounded-2xl border border-white/10 bg-black/25 p-4">
+    <div class="text-xs font-semibold tracking-widest text-fibGoldDeep uppercase">
+      {label}
+    </div>
+    <nav class="mt-3">
+      <ul class="fib-toc-list space-y-2 text-sm text-white/70"></ul>
+    </nav>
+  </div>
+</aside>
+
+<script>
+  const targetSelector = {JSON.stringify(targetSelector)};
+  const headingSelector = {JSON.stringify(headingSelector)};
+
+  const slugify = (text) =>
+    text
+      .toString()
+      .trim()
+      .toLowerCase()
+      .replace(/[^\p{L}\p{N}\s-]/gu, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-");
+
+  const root = document.querySelector(targetSelector);
+  const list = document.querySelector(".fib-toc-list");
+  if (!root || !list) return;
+
+  const headings = Array.from(root.querySelectorAll(headingSelector)).filter(
+    (h) => h.textContent && h.textContent.trim().length
+  );
+
+  if (headings.length < 2) {
+    // Hide ToC when there isn't enough structure.
+    const aside = document.querySelector(".fib-toc");
+    if (aside) aside.style.display = "none";
+    return;
+  }
+
+  const used = new Map();
+  for (const h of headings) {
+    if (!h.id) {
+      const base = slugify(h.textContent);
+      const n = (used.get(base) ?? 0) + 1;
+      used.set(base, n);
+      h.id = n === 1 ? base : `${base}-${n}`;
+    }
+    // Ensure headings aren't hidden under the sticky header.
+    h.style.scrollMarginTop = "96px";
+  }
+
+  const makeItem = (h) => {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = `#${h.id}`;
+    a.textContent = h.textContent.trim();
+    a.className =
+      "block rounded-md px-2 py-1 transition-colors hover:bg-white/5 hover:text-white";
+    if (h.tagName === "H3") {
+      a.classList.add("pl-5", "text-white/60");
+    }
+    li.appendChild(a);
+    return { li, a };
+  };
+
+  const links = headings.map((h) => {
+    const { li, a } = makeItem(h);
+    list.appendChild(li);
+    return { id: h.id, a };
+  });
+
+  const setActive = (id) => {
+    for (const l of links) {
+      if (l.id === id) l.a.classList.add("is-active");
+      else l.a.classList.remove("is-active");
+    }
+  };
+
+  // Highlight active section on scroll.
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const visible = entries
+        .filter((e) => e.isIntersecting)
+        .sort((a, b) => (a.boundingClientRect.top ?? 0) - (b.boundingClientRect.top ?? 0));
+      if (visible[0]?.target?.id) setActive(visible[0].target.id);
+    },
+    { rootMargin: "-20% 0px -70% 0px", threshold: [0, 1] }
+  );
+
+  headings.forEach((h) => observer.observe(h));
+</script>

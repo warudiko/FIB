@@ -3,8 +3,13 @@ import { getCollection } from "astro:content";
 
 import BaseLayout from "../layouts/BaseLayout.astro";
 import DivisionCard from "../components/DivisionCard.astro";
+import ProtocolCard from "../components/ProtocolCard.astro";
 
 const divisions = (await getCollection("divisions"))
+  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
+  .map((entry) => ({ ...entry.data, slug: entry.slug }));
+
+const protocols = (await getCollection("protocols"))
   .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
   .map((entry) => ({ ...entry.data, slug: entry.slug }));
 
@@ -20,9 +25,6 @@ const baseNoSlash =
   <section class="relative overflow-hidden rounded-3xl border border-white/10 bg-black/25 p-8 sm:p-10">
     <div class="absolute inset-0 bg-gradient-to-b from-fibGold/10 via-transparent to-transparent" />
     <div class="relative">
-      <div class="text-xs font-semibold tracking-widest text-fibGoldDeep uppercase">
-        Home
-      </div>
       <h1 class="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
         <span class="fib-accent">F</span>ederal{" "}
         <span class="fib-accent">I</span>nvestigation{" "}
@@ -54,6 +56,27 @@ const baseNoSlash =
           short={d.short}
           slug={d.slug}
           heroTagline={d.heroTagline}
+        />
+      ))}
+    </div>
+  </section>
+
+  <section class="mt-10">
+    <div class="mb-6 flex items-end justify-between gap-4">
+      <div>
+        <p class="text-xs font-semibold tracking-widest text-fibGoldDeep uppercase">
+          Protocols
+        </p>
+      </div>
+    </div>
+
+    <div class="grid gap-5 md:grid-cols-2">
+      {protocols.map((p) => (
+        <ProtocolCard
+          title={p.title}
+          short={p.short}
+          slug={p.slug}
+          heroTagline={p.heroTagline}
         />
       ))}
     </div>

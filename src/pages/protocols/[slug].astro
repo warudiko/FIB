@@ -3,6 +3,7 @@ import { getCollection, getEntryBySlug } from "astro:content";
 
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
+import TocSidebar from "../../components/TocSidebar.astro";
 
 export async function getStaticPaths() {
   const protocols = await getCollection("protocols");
@@ -30,10 +31,14 @@ const { Content } = await entry.render();
       accentInitials={false}
     />
 
-    <div class="prose-fib max-w-3xl">
-      <article class="space-y-4">
-        <Content />
-      </article>
+    <div class="lg:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-8">
+      <TocSidebar targetSelector="#doc" label="Sections" />
+
+      <div class="prose-fib max-w-3xl">
+        <article id="doc" class="space-y-4">
+          <Content />
+        </article>
+      </div>
     </div>
   </div>
 </BaseLayout>

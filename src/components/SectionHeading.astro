@@ -16,8 +16,7 @@ const titleWords = typeof title === "string" ? title.split(" ") : [];
       ) : titleWords.length ? (
         titleWords.map((word, index) => (
           <>
-            <span class="fib-accent">{word.charAt(0)}</span>
-            {word.slice(1)}
+            <span class="fib-accent">{word.charAt(0)}</span><span>{word.slice(1)}</span>
             {index < titleWords.length - 1 ? " " : ""}
           </>
         ))

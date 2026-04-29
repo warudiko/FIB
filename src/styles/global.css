@@ -201,3 +201,11 @@ html {
   opacity: 1;
 }
 
+/* Table of contents (Docs-style left nav) */
+.fib-toc a.is-active {
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.06);
+  border-left: 2px solid rgba(245, 200, 75, 0.75);
+  padding-left: calc(0.5rem - 2px);
+}
+
