@@ -17,9 +17,7 @@ const {
   </div>
 </aside>
 
-<script>
-  const targetSelector = {JSON.stringify(targetSelector)};
-  const headingSelector = {JSON.stringify(headingSelector)};
+<script define:vars={{ targetSelector, headingSelector }}>
 
   const slugify = (text) =>
     text
