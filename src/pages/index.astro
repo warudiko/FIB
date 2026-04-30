@@ -47,7 +47,14 @@ const actions = (await getCollection("actions"))
     </div>
   </section>
 
-  <section class="mt-10">
+  <SearchBar
+    scopeSelector="#home-search-scope"
+    placeholder="Search (Divisions, Protocols, Actions)…"
+    ariaLabel="Search site cards"
+  />
+
+  <div id="home-search-scope">
+  <section class="mt-10" data-search-section>
     <div class="flex items-start justify-between gap-6">
       <SectionHeading
         eyebrow="DIVISIONS"
@@ -56,8 +63,6 @@ const actions = (await getCollection("actions"))
         accentInitials={false}
       />
     </div>
-
-    <SearchBar targetId="home-divisions-grid" placeholder="Search divisions…" ariaLabel="Search divisions" />
 
     <div id="home-divisions-grid" class="grid gap-5 md:grid-cols-2">
       {divisions.map((d, index) => (
@@ -73,7 +78,7 @@ const actions = (await getCollection("actions"))
     </div>
   </section>
 
-  <section class="mt-10">
+  <section class="mt-10" data-search-section>
     <div class="flex items-start justify-between gap-6">
       <SectionHeading
         eyebrow="PROTOCOLS"
@@ -82,8 +87,6 @@ const actions = (await getCollection("actions"))
         accentInitials={false}
       />
     </div>
-
-    <SearchBar targetId="home-protocols-grid" placeholder="Search protocols…" ariaLabel="Search protocols" />
 
     <div id="home-protocols-grid" class="grid gap-5 md:grid-cols-2">
       {protocols.map((p, index) => (
@@ -99,7 +102,7 @@ const actions = (await getCollection("actions"))
     </div>
   </section>
 
-  <section class="mt-10">
+  <section class="mt-10" data-search-section>
     <div class="flex items-start justify-between gap-6">
       <SectionHeading
         eyebrow="ACTIONS"
@@ -108,8 +111,6 @@ const actions = (await getCollection("actions"))
         accentInitials={false}
       />
     </div>
-
-    <SearchBar targetId="home-actions-grid" placeholder="Search actions…" ariaLabel="Search actions" />
 
     <div id="home-actions-grid" class="grid gap-5 md:grid-cols-2">
       {actions.map((a, index) => (
@@ -124,5 +125,6 @@ const actions = (await getCollection("actions"))
       ))}
     </div>
   </section>
+  </div>
 </BaseLayout>
 

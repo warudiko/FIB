@@ -1,16 +1,23 @@
 ---
 const {
   targetId,
+  scopeSelector,
   placeholder = "Search…",
   ariaLabel = "Search",
 } = Astro.props as {
-  targetId: string;
+  targetId?: string;
+  scopeSelector?: string;
   placeholder?: string;
   ariaLabel?: string;
 };
 ---
 
-<div class="fib-search" data-fib-search data-target={targetId}>
+<div
+  class="fib-search fib-reveal"
+  data-fib-search
+  {...(targetId ? { "data-target": targetId } : {})}
+  {...(scopeSelector ? { "data-scope": scopeSelector } : {})}
+>
   <div class="fib-search-inputWrap">
     <svg
       class="fib-search-icon"
@@ -92,16 +99,30 @@ const {
       if (visible) shown += 1;
     }
 
+    const sections = Array.from(root.querySelectorAll("[data-search-section]"));
+    if (sections.length) {
+      const searching = tokens.length > 0;
+      for (const section of sections) {
+        const visibleInSection = section.querySelectorAll("[data-search]:not(.fib-search-hidden)").length;
+        section.classList.toggle("fib-search-hidden", searching && visibleInSection === 0);
+      }
+    }
+
     return { shown, total: cards.length };
   };
 
   const init = () => {
     document.querySelectorAll("[data-fib-search]").forEach((wrap) => {
       const targetId = wrap.getAttribute("data-target");
+      const scopeSelector = wrap.getAttribute("data-scope");
       const input = wrap.querySelector("input");
       const clearBtn = wrap.querySelector("button");
       const meta = wrap.querySelector(".fib-search-meta");
-      const root = targetId ? document.getElementById(targetId) : null;
+      const root = targetId
+        ? document.getElementById(targetId)
+        : scopeSelector
+          ? document.querySelector(scopeSelector)
+          : null;
       if (!(input instanceof HTMLInputElement) || !(clearBtn instanceof HTMLButtonElement) || !meta || !root) return;
 
       const refresh = () => {
