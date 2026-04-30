@@ -1,0 +1,33 @@
+---
+import { getCollection } from "astro:content";
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import ActionCard from "../../components/ActionCard.astro";
+
+const actions = (await getCollection("actions"))
+  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
+  .map((entry) => ({ ...entry.data, slug: entry.slug }));
+---
+
+<BaseLayout pageTitle="Actions" description="Browse actions (roleplay command sets).">
+  <SectionHeading
+    eyebrow="ACTIONS"
+    title="გათამაშებები"
+    description="მზად ქომანდ-შაბლონები სწრაფი შესრულებისთვის."
+    accentInitials={false}
+  />
+
+  <div class="grid gap-5 md:grid-cols-2">
+    {actions.map((a, index) => (
+      <ActionCard
+        title={a.title}
+        short={a.short}
+        slug={a.slug}
+        heroTagline={a.heroTagline}
+        revealDelay={index * 70}
+      />
+    ))}
+  </div>
+</BaseLayout>
+

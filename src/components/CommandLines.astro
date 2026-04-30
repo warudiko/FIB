@@ -1,0 +1,147 @@
+---
+type CommandKind = "do" | "me" | "try";
+
+type CommandLine = {
+  kind: CommandKind;
+  text: string;
+};
+
+type CommandGroup = {
+  heading: string;
+  lines: CommandLine[];
+};
+
+const {
+  title,
+  groups = [],
+  actorLabel = "უცნობი (0)",
+} = Astro.props as {
+  title?: string;
+  groups: CommandGroup[];
+  actorLabel?: string;
+};
+
+function previewText(line: CommandLine): string {
+  if (line.kind === "do") return `${line.text} (${actorLabel})`;
+  if (line.kind === "me") return `${actorLabel}: ${line.text}`;
+  return `${actorLabel}: ${line.text} | წარმატებულად / წარუმატებლად`;
+}
+
+function copyValue(line: CommandLine): string {
+  return `/${line.kind} ${line.text}`;
+}
+---
+
+<div class="fib-cmd">
+  {title ? <h3 class="not-prose text-xl font-semibold tracking-tight">{title}</h3> : null}
+
+  <div class="not-prose mt-5 space-y-6">
+    {groups.map((group) => (
+      <section class="rounded-2xl border border-white/10 bg-black/25 p-4 sm:p-5">
+        <h4 class="text-sm font-semibold tracking-wide text-white/85">{group.heading}</h4>
+
+        <div class="mt-3 space-y-2">
+          {group.lines.map((line) => (
+            <div class="fib-cmd-row">
+              <div class="fib-cmd-text">
+                {line.kind === "try" ? (
+                  <>
+                    <span>{`${actorLabel}: ${line.text} | `}</span>
+                    <span class="fib-cmd-ok">წარმატებულად</span>
+                    <span>{" / "}</span>
+                    <span class="fib-cmd-bad">წარუმატებლად</span>
+                  </>
+                ) : (
+                  <span>{previewText(line)}</span>
+                )}
+              </div>
+
+              <button
+                type="button"
+                class="fib-cmd-copy"
+                data-copy={copyValue(line)}
+                aria-label={`Copy /${line.kind} command`}
+              >
+                Copy
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</div>
+
+<script>
+  const TOAST_ID = "fib-cmd-toast";
+
+  const ensureToast = () => {
+    const existing = document.getElementById(TOAST_ID);
+    if (existing) return existing;
+
+    const toast = document.createElement("div");
+    toast.id = TOAST_ID;
+    toast.className = "fib-toast";
+    toast.setAttribute("role", "status");
+    toast.setAttribute("aria-live", "polite");
+    toast.innerHTML = `
+      <span class="fib-toast-icon" aria-hidden="true">✓</span>
+      <span>Copied</span>
+    `;
+    document.body.appendChild(toast);
+    return toast;
+  };
+
+  const showToast = () => {
+    const toast = ensureToast();
+    toast.classList.remove("fib-toast-show");
+    // Force reflow to restart animation reliably.
+    toast.offsetHeight;
+    toast.classList.add("fib-toast-show");
+  };
+
+  const fallbackCopy = (value) => {
+    const el = document.createElement("textarea");
+    el.value = value;
+    el.setAttribute("readonly", "");
+    el.style.position = "fixed";
+    el.style.left = "-9999px";
+    el.style.top = "0";
+    document.body.appendChild(el);
+    el.select();
+    try {
+      document.execCommand("copy");
+      return true;
+    } catch {
+      return false;
+    } finally {
+      document.body.removeChild(el);
+    }
+  };
+
+  const copyToClipboard = async (value) => {
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+      await navigator.clipboard.writeText(value);
+      return true;
+    }
+    return fallbackCopy(value);
+  };
+
+  document.addEventListener("click", async (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const btn = target.closest("[data-copy]");
+    if (!(btn instanceof HTMLElement)) return;
+
+    const value = btn.getAttribute("data-copy");
+    if (!value) return;
+
+    try {
+      const ok = await copyToClipboard(value);
+      if (ok) showToast();
+    } catch {
+      // Ignore copy failures silently.
+    }
+  });
+</script>
+

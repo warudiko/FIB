@@ -4,6 +4,7 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import DivisionCard from "../components/DivisionCard.astro";
 import ProtocolCard from "../components/ProtocolCard.astro";
+import ActionCard from "../components/ActionCard.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 
 const divisions = (await getCollection("divisions"))
@@ -11,6 +12,10 @@ const divisions = (await getCollection("divisions"))
   .map((entry) => ({ ...entry.data, slug: entry.slug }));
 
 const protocols = (await getCollection("protocols"))
+  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
+  .map((entry) => ({ ...entry.data, slug: entry.slug }));
+
+const actions = (await getCollection("actions"))
   .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
   .map((entry) => ({ ...entry.data, slug: entry.slug }));
 ---
@@ -81,6 +86,29 @@ const protocols = (await getCollection("protocols"))
           short={p.short}
           slug={p.slug}
           heroTagline={p.heroTagline}
+          revealDelay={index * 70}
+        />
+      ))}
+    </div>
+  </section>
+
+  <section class="mt-10">
+    <div class="flex items-start justify-between gap-6">
+      <SectionHeading
+        eyebrow="ACTIONS"
+        title="გათამაშებები"
+        description="მზად ქომანდ-შაბლონები სწრაფი შესრულებისთვის."
+        accentInitials={false}
+      />
+    </div>
+
+    <div class="grid gap-5 md:grid-cols-2">
+      {actions.map((a, index) => (
+        <ActionCard
+          title={a.title}
+          short={a.short}
+          slug={a.slug}
+          heroTagline={a.heroTagline}
           revealDelay={index * 70}
         />
       ))}

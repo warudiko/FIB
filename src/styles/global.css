@@ -245,6 +245,127 @@ html {
   opacity: 1;
 }
 
+/* Command line blocks (/do, /me, /try) */
+.fib-cmd-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.fib-cmd-text {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: rgb(185, 96, 214);
+  word-break: break-word;
+}
+
+.fib-cmd-ok {
+  color: rgba(34, 197, 94, 0.95);
+  font-weight: 600;
+}
+
+.fib-cmd-bad {
+  color: rgba(239, 68, 68, 0.95);
+  font-weight: 600;
+}
+
+.fib-cmd-copy {
+  flex: 0 0 auto;
+  border-radius: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.86);
+  padding: 0.45rem 0.7rem;
+  font-size: 0.82rem;
+  font-weight: 650;
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    transform 140ms ease;
+}
+
+.fib-cmd-copy:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(245, 200, 75, 0.25);
+}
+
+.fib-cmd-copy:active {
+  transform: translateY(1px);
+}
+
+.fib-cmd-copy:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px var(--fib-ring);
+}
+
+/* Copied toast */
+.fib-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  background: rgba(0, 0, 0, 0.68);
+  backdrop-filter: blur(10px);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.85rem;
+  opacity: 0;
+  pointer-events: none;
+  filter: blur(1px);
+}
+
+.fib-toast-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: rgba(34, 197, 94, 0.18);
+  color: rgba(34, 197, 94, 0.95);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.fib-toast.fib-toast-show {
+  animation: fibToastInOut 1400ms ease both;
+}
+
+@keyframes fibToastInOut {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px);
+    filter: blur(2px);
+  }
+  12% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    filter: blur(0);
+  }
+  80% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+    filter: blur(2px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
