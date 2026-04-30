@@ -4,6 +4,7 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
 import ActionCard from "../../components/ActionCard.astro";
+import SearchBar from "../../components/SearchBar.astro";
 
 const actions = (await getCollection("actions"))
   .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
@@ -18,13 +19,16 @@ const actions = (await getCollection("actions"))
     accentInitials={false}
   />
 
-  <div class="grid gap-5 md:grid-cols-2">
+  <SearchBar targetId="actions-grid" placeholder="Search actions…" ariaLabel="Search actions" />
+
+  <div id="actions-grid" class="grid gap-5 md:grid-cols-2">
     {actions.map((a, index) => (
       <ActionCard
         title={a.title}
         short={a.short}
         slug={a.slug}
         heroTagline={a.heroTagline}
+        searchText={[a.title, a.short, a.heroTagline, a.slug, ...(a.tags ?? [])].filter(Boolean).join(" • ")}
         revealDelay={index * 70}
       />
     ))}

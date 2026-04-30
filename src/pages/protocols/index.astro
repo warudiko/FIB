@@ -4,6 +4,7 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
 import ProtocolCard from "../../components/ProtocolCard.astro";
+import SearchBar from "../../components/SearchBar.astro";
 
 const protocols = (await getCollection("protocols"))
   .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
@@ -18,13 +19,16 @@ const protocols = (await getCollection("protocols"))
     accentInitials={false}
   />
 
-  <div class="grid gap-5 md:grid-cols-2">
+  <SearchBar targetId="protocols-grid" placeholder="Search protocols…" ariaLabel="Search protocols" />
+
+  <div id="protocols-grid" class="grid gap-5 md:grid-cols-2">
     {protocols.map((p, index) => (
       <ProtocolCard
         title={p.title}
         short={p.short}
         slug={p.slug}
         heroTagline={p.heroTagline}
+        searchText={[p.title, p.short, p.heroTagline, p.slug, ...(p.tags ?? [])].filter(Boolean).join(" • ")}
         revealDelay={index * 70}
       />
     ))}

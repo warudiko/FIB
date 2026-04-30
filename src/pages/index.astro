@@ -6,6 +6,7 @@ import DivisionCard from "../components/DivisionCard.astro";
 import ProtocolCard from "../components/ProtocolCard.astro";
 import ActionCard from "../components/ActionCard.astro";
 import SectionHeading from "../components/SectionHeading.astro";
+import SearchBar from "../components/SearchBar.astro";
 
 const divisions = (await getCollection("divisions"))
   .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
@@ -56,13 +57,16 @@ const actions = (await getCollection("actions"))
       />
     </div>
 
-    <div class="grid gap-5 md:grid-cols-2">
+    <SearchBar targetId="home-divisions-grid" placeholder="Search divisions…" ariaLabel="Search divisions" />
+
+    <div id="home-divisions-grid" class="grid gap-5 md:grid-cols-2">
       {divisions.map((d, index) => (
         <DivisionCard
           title={d.title}
           short={d.short}
           slug={d.slug}
           heroTagline={d.heroTagline}
+          searchText={[d.title, d.short, d.heroTagline, d.slug, ...(d.tags ?? [])].filter(Boolean).join(" • ")}
           revealDelay={index * 70}
         />
       ))}
@@ -79,13 +83,16 @@ const actions = (await getCollection("actions"))
       />
     </div>
 
-    <div class="grid gap-5 md:grid-cols-2">
+    <SearchBar targetId="home-protocols-grid" placeholder="Search protocols…" ariaLabel="Search protocols" />
+
+    <div id="home-protocols-grid" class="grid gap-5 md:grid-cols-2">
       {protocols.map((p, index) => (
         <ProtocolCard
           title={p.title}
           short={p.short}
           slug={p.slug}
           heroTagline={p.heroTagline}
+          searchText={[p.title, p.short, p.heroTagline, p.slug, ...(p.tags ?? [])].filter(Boolean).join(" • ")}
           revealDelay={index * 70}
         />
       ))}
@@ -102,13 +109,16 @@ const actions = (await getCollection("actions"))
       />
     </div>
 
-    <div class="grid gap-5 md:grid-cols-2">
+    <SearchBar targetId="home-actions-grid" placeholder="Search actions…" ariaLabel="Search actions" />
+
+    <div id="home-actions-grid" class="grid gap-5 md:grid-cols-2">
       {actions.map((a, index) => (
         <ActionCard
           title={a.title}
           short={a.short}
           slug={a.slug}
           heroTagline={a.heroTagline}
+          searchText={[a.title, a.short, a.heroTagline, a.slug, ...(a.tags ?? [])].filter(Boolean).join(" • ")}
           revealDelay={index * 70}
         />
       ))}

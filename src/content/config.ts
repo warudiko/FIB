@@ -6,6 +6,7 @@ const divisions = defineCollection({
     order: z.number().optional(),
     short: z.string().optional(),
     heroTagline: z.string().optional(),
+    tags: z.array(z.string()).optional(),
   }),
 });
 
@@ -15,6 +16,7 @@ const protocols = defineCollection({
     order: z.number().optional(),
     short: z.string().optional(),
     heroTagline: z.string().optional(),
+    tags: z.array(z.string()).optional(),
   }),
 });
 
@@ -24,6 +26,7 @@ const actions = defineCollection({
     order: z.number().optional(),
     short: z.string().optional(),
     heroTagline: z.string().optional(),
+    tags: z.array(z.string()).optional(),
   }),
 });
 

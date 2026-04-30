@@ -1,13 +1,13 @@
 ---
 import { withBase } from "../utils/urls";
 
-const { title, short, slug, heroTagline, revealDelay = 0 } = Astro.props;
+const { title, short, slug, heroTagline, revealDelay = 0, searchText } = Astro.props;
 
 const href = withBase(import.meta.env.BASE_URL, `/actions/${slug}`);
 const revealStyle = revealDelay ? `transition-delay: ${Number(revealDelay)}ms;` : undefined;
 ---
 
-<div class="fib-reveal h-full" style={revealStyle}>
+<div class="fib-reveal h-full" style={revealStyle} data-search={searchText}>
   <a
     href={href}
     class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 shadow-sm"

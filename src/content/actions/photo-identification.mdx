@@ -2,7 +2,7 @@
 title: "ფოტო იდენტიფიკაცია"
 slug: "photo-identification"
 order: 2
-short: "PDA მომზადება, ფოტოს გადაღება და ფოტოს დამუშავება."
+short: "აპარატურის მომზადება, ფოტოს გადაღება და ფოტოს დამუშავება."
 heroTagline: "საჭირო ბრძანებები ინდივიდის ფოტო იდენტიფიკაციისთვის."
 ---
 
@@ -11,7 +11,7 @@ import CommandLines from "../../components/CommandLines.astro";
 <CommandLines
   groups={[
     {
-      heading: "PDA მომზადება",
+      heading: "აპარატურის მომზადება",
       lines: [
         { kind: "do", text: 'ტაქტიკურ ქამარზე ამაგრია "PDA".' },
         { kind: "me", text: 'მოიხსნა ტაქტიკური ქამრიდან "PDA" და გაააქტიურა' },
@@ -38,6 +38,7 @@ import CommandLines from "../../components/CommandLines.astro";
           text: '"Face Recognition" სისტემამ ამოიცნო ინდივიდის სახე და ასახავს ეკრანზე ინდივიდის პროფილს.',
         },
         { kind: "do", text: 'რა წერია ეკრანზე ნაჩვენები ინდივიდის პროფილის "სახელი, გვარი" სექციაში?' },
+        { kind: "wait", text: "დაელოდეთ ინდივიდის პასუხს და შემდეგ გააგრძელეთ." },
       ],
     },
   ]}
