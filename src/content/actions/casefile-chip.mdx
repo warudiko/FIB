@@ -1,0 +1,62 @@
+---
+title: "Casefile და ჩიპი"
+slug: "casefile-chip"
+order: 7
+short: "Casefile-ის ჩიპზე გადატანა და Desktop-ზე დაბრუნება."
+heroTagline: "Database • Casefile • ჩიპი"
+---
+
+import CommandLines from "../../components/CommandLines.astro";
+
+<CommandLines
+  groups={[
+    {
+      heading: "Casefile → ჩიპი",
+      lines: [
+        { kind: "do", text: "კომპიუტერი Sleep Mode-შია." },
+        { kind: "me", text: "გაამოძრავა მაუსი" },
+        { kind: "do", text: "კომპიუტერი გამოფხიზლდა." },
+        { kind: "me", text: "ჩართო ბრაუზერი და საძიებო ველში ჩაწერა CID დატაბაზის ოფიციალური ვებ-საიტის ელფოსტა" },
+        { kind: "do", text: "CID დეპარტამენტის დატაბაზის ოფიციალური ვებ-საიტი ჩართულია." },
+        { kind: "me", text: "ჩაწერა ავტორიზირებული მომხმარებლის ელფოსტა და პაროლი" },
+        { kind: "do", text: "პროფილი ავტორიზირებულია და Database მზად არის მოსახმარებლად." },
+        { kind: "me", text: 'შევიდა Casefile-ების კატეგორიაში და გახსნა Casefile-ს სახელად: "XXXXX"' },
+        { kind: "do", text: "Casefile ნაპოვნია." },
+        { kind: "me", text: "გახსნა Casefile-ის საქაღალდე, გადმოწერა Casefile-ის Doc ფაილი და გადმოიტანა Desktop-ზე" },
+        { kind: "do", text: "Casefile-ი მოთავსებულია Desktop-ზე." },
+        { kind: "do", text: "ჯიბეში უდევს ჩიპი." },
+        { kind: "me", text: "ამოიღო ჩიპი და შეაერთა კომპიუტერის USB პორტში" },
+        { kind: "do", text: "ჩიპი შეერთებულია კომპიუტერის USB პორტში." },
+        { kind: "me", text: "გახსნა ჩიპის საქაღალდე" },
+        { kind: "do", text: "ჩიპის საქაღალდე გახსნილია." },
+        { kind: "me", text: "გადაიტანა Casefile-ი ჩიპის საქაღალდეში" },
+        { kind: "do", text: "Casefile-ი ჩიპის საქაღალდეშია." },
+        { kind: "me", text: "გამოაძრო ჩიპი კომპიუტერის USB პორტიდან და ჩაიდო ზურგჩანთაში" },
+        { kind: "do", text: "ჩიპი ზურგჩანთაშია." },
+        { kind: "me", text: "დააბრუნა კომპიუტერი Sleep Mode-ში" },
+        { kind: "do", text: "კომპიუტერი Sleep Mode-შია." },
+      ],
+    },
+    {
+      heading: "Casefile ჩიპი → Desktop",
+      lines: [
+        { kind: "do", text: "ზურგჩანთაში აქვს ჩიპი." },
+        { kind: "me", text: "ამოიღო ჩიპი ზუსგჩანთიდან და შეაერთა კომპიუტერში" },
+        { kind: "do", text: "ჩიპი კომპიუტერის USB პორტშია შეერთებული." },
+        { kind: "me", text: "გახსნა ჩიპის საქაღალდე" },
+        { kind: "do", text: "ჩიპის საქაღალდე გახსნილია." },
+        { kind: "me", text: 'იპოვნა Doc ფაილი სახელად "XXXXX"' },
+        { kind: "do", text: 'Doc ფაილი სახელად "XXXXX" ნაპოვნია.' },
+        { kind: "me", text: "გადაიტანა Casefile-ის Doc ფაილი კომპიუტერის Desktop-ზე" },
+        { kind: "do", text: "Casefile-ის Doc ფაილი კომპიუტერის Desktop-ზეა მოთავსებული." },
+        { kind: "me", text: "გახნა Casefile-ის Doc ფაილი" },
+        { kind: "do", text: "Casefile-ის Doc ფაილი გახსნილია." },
+        {
+          kind: "do",
+          text: "კომპიუტერის ეკრანზე ასახულია მთლიანი Casefile-ის Doc ფაილი და მზად არის გადასახედად.",
+        },
+      ],
+    },
+  ]}
+/>
+

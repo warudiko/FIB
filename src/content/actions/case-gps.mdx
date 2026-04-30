@@ -1,0 +1,41 @@
+---
+title: "GPS-ი Casefile-ში"
+slug: "case-gps"
+order: 10
+short: "ქეისში AXON GPS-ის ჩადება და აქტივაცია."
+heroTagline: "ქეისი • AXON GPS"
+---
+
+import CommandLines from "../../components/CommandLines.astro";
+
+<CommandLines
+  groups={[
+    {
+      heading: "ქეისის დადება",
+      lines: [
+        { kind: "do", text: "ხელში უჭირავს ფულით სავსე დახურული ქეისი." },
+        { kind: "me", text: "დადო ქეისი ძირს" },
+        { kind: "do", text: "ქეისი ძირსაა." },
+      ],
+    },
+    {
+      heading: "GPS აღება",
+      lines: [
+        { kind: "me", text: 'გამოაღო მანქანის საბარგული და აიღო "AXON GPS"' },
+        { kind: "do", text: '"AXON GPS" ხელშია.' },
+      ],
+    },
+    {
+      heading: "ქეისში ჩადება / გააქტიურება",
+      lines: [
+        { kind: "me", text: "გახსნა ქეისი" },
+        { kind: "do", text: "ქეისი ღიაა." },
+        { kind: "me", text: 'გაააქტიურა "AXON GPS" და ჩადო კუპიურებში' },
+        { kind: "do", text: '"AXON GPS" გააქტიურებულია და საიმედოდ ჩამალულია კუპიურებში.' },
+        { kind: "me", text: "დახურა ქეისი" },
+        { kind: "do", text: "ქეისი დახურულია." },
+      ],
+    },
+  ]}
+/>
+

@@ -1,5 +1,5 @@
 ---
-type CommandKind = "do" | "me" | "try";
+type CommandKind = "do" | "me" | "try" | "note";
 
 type CommandLine = {
   kind: CommandKind;
@@ -22,12 +22,14 @@ const {
 };
 
 function previewText(line: CommandLine): string {
+  if (line.kind === "note") return line.text;
   if (line.kind === "do") return `${line.text} (${actorLabel})`;
   if (line.kind === "me") return `${actorLabel}: ${line.text}`;
   return `${actorLabel}: ${line.text} | წარმატებულად / წარუმატებლად`;
 }
 
 function copyValue(line: CommandLine): string {
+  if (line.kind === "note") return "";
   return `/${line.kind} ${line.text}`;
 }
 ---
@@ -43,7 +45,7 @@ function copyValue(line: CommandLine): string {
         <div class="mt-3 space-y-2">
           {group.lines.map((line) => (
             <div class="fib-cmd-row">
-              <div class="fib-cmd-text">
+              <div class={line.kind === "note" ? "fib-cmd-note" : "fib-cmd-text"}>
                 {line.kind === "try" ? (
                   <>
                     <span>{`${actorLabel}: ${line.text} | `}</span>
@@ -51,19 +53,23 @@ function copyValue(line: CommandLine): string {
                     <span>{" / "}</span>
                     <span class="fib-cmd-bad">წარუმატებლად</span>
                   </>
+                ) : line.kind === "note" ? (
+                  <span>{line.text}</span>
                 ) : (
                   <span>{previewText(line)}</span>
                 )}
               </div>
 
-              <button
-                type="button"
-                class="fib-cmd-copy"
-                data-copy={copyValue(line)}
-                aria-label={`Copy /${line.kind} command`}
-              >
-                Copy
-              </button>
+              {line.kind !== "note" ? (
+                <button
+                  type="button"
+                  class="fib-cmd-copy"
+                  data-copy={copyValue(line)}
+                  aria-label={`Copy /${line.kind} command`}
+                >
+                  Copy
+                </button>
+              ) : null}
             </div>
           ))}
         </div>

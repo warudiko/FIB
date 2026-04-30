@@ -1,0 +1,33 @@
+---
+title: "GPS"
+slug: "gps"
+order: 8
+short: "AXON GPS ლოკატორის ამოღება და მანქანაზე მიმაგრება."
+heroTagline: "AXON GPS • მიმაგრება"
+---
+
+import CommandLines from "../../components/CommandLines.astro";
+
+<CommandLines
+  groups={[
+    {
+      heading: "მანქანიდან ამოღება",
+      lines: [
+        { kind: "me", text: 'გახსნა მანქანის საბარგული და ამოიღო "X" "AXON GPS"' },
+        { kind: "do", text: '"X" "AXON GPS" ლოკატორი ხელშია.' },
+        {
+          kind: "note",
+          text: "X - GPS ლოკატორების რაოდენობა (დაითვალეთ რამდენი მანქანა ყავთ კრიმინალებს).",
+        },
+      ],
+    },
+    {
+      heading: "მანქანაზე მიმაგრება",
+      lines: [
+        { kind: "me", text: 'გაააქტიურა "AXON GPS" და მიამაგრა ავტომობილის ბორბლის კრილოზე' },
+        { kind: "do", text: '"AXON GPS" ავტომობილის ბორბლის კრილოზეა მიმაგრებული და გააქტიურებულია.' },
+      ],
+    },
+  ]}
+/>
+

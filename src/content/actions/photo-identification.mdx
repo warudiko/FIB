@@ -1,0 +1,45 @@
+---
+title: "ფოტო იდენტიფიკაცია"
+slug: "photo-identification"
+order: 2
+short: "PDA-ით ფოტოს გადაღება და Face Recognition."
+heroTagline: "PDA • ფოტო • Face Recognition"
+---
+
+import CommandLines from "../../components/CommandLines.astro";
+
+<CommandLines
+  groups={[
+    {
+      heading: "PDA მომზადება",
+      lines: [
+        { kind: "do", text: 'ტაქტიკურ ქამარზე ამაგრია "PDA".' },
+        { kind: "me", text: 'მოიხსნა ტაქტიკური ქამრიდან "PDA" და გაააქტიურა' },
+        { kind: "do", text: '"PDA" მზად არის მოსახმარებლად.' },
+      ],
+    },
+    {
+      heading: "ფოტოს გადაღება",
+      lines: [
+        {
+          kind: "me",
+          text: 'გახსნა "Camera" აპლიკაცია და გადაუღო წინ მდგომ ინდივიდს ფოტო-სურათი',
+        },
+        { kind: "do", text: "ფოტოსურათი გადაღებულია." },
+      ],
+    },
+    {
+      heading: "ფოტოს დამუშავება",
+      lines: [
+        { kind: "me", text: 'გახსნა ფოტო-სურათი და გაააქტიურა "Face Recognition" სისტემა' },
+        { kind: "do", text: '"Face Recognition" სისტემა გააქტიურებულია და ამუშავებს ფოტო-სურათს.' },
+        {
+          kind: "do",
+          text: '"Face Recognition" სისტემამ ამოიცნო ინდივიდის სახე და ასახავს ეკრანზე ინდივიდის პროფილს.',
+        },
+        { kind: "do", text: 'რა წერია ეკრანზე ნაჩვენები ინდივიდის პროფილის "სახელი, გვარი" სექციაში?' },
+      ],
+    },
+  ]}
+/>
+
