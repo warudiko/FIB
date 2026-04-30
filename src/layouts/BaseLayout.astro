@@ -17,7 +17,7 @@ const resolvedTitle =
     ? title
     : typeof pageTitle === "string" && pageTitle.trim().length
       ? `${baseTitle} - ${pageTitle}`
-      : "FIB - Federal Investigation Department";
+      : "FIB - Federal Investigation Bureau";
 
 const site = (Astro.site ?? "https://warudiko.github.io/FIB/").toString();
 const base = import.meta.env.BASE_URL ?? "/";
