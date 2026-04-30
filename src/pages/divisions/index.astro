@@ -19,7 +19,7 @@ const divisions = (await getCollection("divisions"))
     accentInitials={false}
   />
 
-  <SearchBar targetId="divisions-grid" placeholder="Search divisions…" ariaLabel="Search divisions" />
+  <SearchBar targetId="divisions-grid" placeholder="Search…" ariaLabel="Search divisions" />
 
   <div id="divisions-grid" class="grid gap-5 md:grid-cols-2">
     {divisions.map((d, index) => (

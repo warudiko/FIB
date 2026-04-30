@@ -19,7 +19,7 @@ const actions = (await getCollection("actions"))
     accentInitials={false}
   />
 
-  <SearchBar targetId="actions-grid" placeholder="Search actions…" ariaLabel="Search actions" />
+  <SearchBar targetId="actions-grid" placeholder="Search…" ariaLabel="Search actions" />
 
   <div id="actions-grid" class="grid gap-5 md:grid-cols-2">
     {actions.map((a, index) => (

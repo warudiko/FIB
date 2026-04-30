@@ -19,7 +19,7 @@ const protocols = (await getCollection("protocols"))
     accentInitials={false}
   />
 
-  <SearchBar targetId="protocols-grid" placeholder="Search protocols…" ariaLabel="Search protocols" />
+  <SearchBar targetId="protocols-grid" placeholder="Search…" ariaLabel="Search protocols" />
 
   <div id="protocols-grid" class="grid gap-5 md:grid-cols-2">
     {protocols.map((p, index) => (
