@@ -12,17 +12,17 @@ const revealStyle = revealDelay ? `transition-delay: ${Number(revealDelay)}ms;` 
 <div class="fib-reveal h-full" style={revealStyle} data-search={searchText}>
   <a
     href={href}
-    class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 pr-24 sm:pr-28 shadow-sm"
+    class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 pr-32 sm:pr-40 shadow-sm"
   >
     <span aria-hidden="true" class="fib-card-glare"></span>
 
-    <div aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-0 w-36 sm:w-40 overflow-hidden">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-0 w-48 sm:w-56 overflow-hidden">
       <img
         src={emblemSrc}
         alt=""
         loading="lazy"
         decoding="async"
-        class="absolute right-0 top-1/2 w-40 -translate-y-1/2 translate-x-6 opacity-30 blur-[1.5px] saturate-150"
+        class="absolute right-0 top-1/2 w-56 sm:w-64 -translate-y-1/2 translate-x-8 opacity-30 blur-[1.5px] saturate-150"
         onerror="this.style.display='none'"
       />
     </div>
