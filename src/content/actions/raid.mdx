@@ -1,0 +1,35 @@
+---
+title: "RAID"
+slug: "raid"
+order: 12
+short: "ყუთების აღება, ჩალაგება და საბარგულის გატეხვა."
+heroTagline: "ყუთები • საბარგული • /try"
+tags: ["raid", "box", "vehicle", "combat"]
+---
+
+import CommandLines from "../../components/CommandLines.astro";
+
+<CommandLines
+  groups={[
+    {
+      heading: "ყუთების აღება",
+      lines: [
+        { kind: "do", text: "ძირს დევს მატერილებით სავსე ყუთი." },
+        { kind: "me", text: "აიღო ყუთი ხელში" },
+        { kind: "do", text: "ყუთი ხელშია." },
+      ],
+    },
+    {
+      heading: "ყუთების ჩალაგება",
+      lines: [
+        { kind: "me", text: "გამოაღო მანქანის საბარგული და ჩადო მატერიალებით სავსე ყუთი შიგნით" },
+        { kind: "do", text: "მატერიალებით სავსე ყუთი მანქანის საბარგულშია." },
+      ],
+    },
+    {
+      heading: "საბარგულის გატეხვა",
+      lines: [{ kind: "try", text: "სროლის შედეგად ფურგონის საბარგულის საკეტი გატყდა" }],
+    },
+  ]}
+/>
+
