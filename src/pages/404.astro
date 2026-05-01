@@ -7,12 +7,9 @@ import ButtonLink from "../components/ButtonLink.astro";
 <BaseLayout pageTitle="Not Found" description="The requested page does not exist.">
   <section class="rounded-3xl border border-white/10 bg-black/25 p-8 sm:p-10">
     <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">404</h1>
-    <p class="mt-3 text-white/70">
-      This page doesn’t exist (yet). Use the navigation above to find what
-      you need.
-    </p>
+    <p class="mt-3 text-white/70">ეს გვერდი (ჯერ) არ არსებობს. გამოიყენეთ ზემოთ მოცემული ნავიგაცია, რომ იპოვოთ ის, რაც გჭირდებათ.</p>
     <div class="mt-6">
-      <ButtonLink href={withBase(import.meta.env.BASE_URL, "/")}>Back to home</ButtonLink>
+      <ButtonLink href={withBase(import.meta.env.BASE_URL, "/")}>მთავარი გვერდი</ButtonLink>
     </div>
   </section>
 </BaseLayout>
