@@ -21,11 +21,14 @@ const revealStyle = revealDelay ? `transition-delay: ${Number(revealDelay)}ms;` 
         alt=""
         loading="lazy"
         decoding="async"
-        class="absolute inset-0 h-full w-full scale-105 object-cover object-[82%_center] opacity-52 blur-sm saturate-125"
+        class="absolute inset-0 h-full w-full scale-105 object-cover object-[82%_center] opacity-38 blur-sm saturate-125"
         onerror="if (this.dataset.artFallback) { this.src = this.dataset.artFallback; delete this.dataset.artFallback; return; } this.closest('[data-protocol-art]')?.remove()"
       />
       <div class="absolute inset-0 bg-gradient-to-b from-black/25 to-black/15"></div>
       <div class="absolute inset-0 bg-gradient-to-r from-black/88 via-black/55 to-black/28"></div>
+      <div
+        class="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.5),transparent_34%),linear-gradient(to_bottom,rgba(0,0,0,0.5),transparent_34%),linear-gradient(to_left,rgba(0,0,0,0.5),transparent_34%),linear-gradient(to_right,rgba(0,0,0,0.5),transparent_34%)]"
+      ></div>
     </div>
 
     <span aria-hidden="true" class="fib-card-glare z-[1]"></span>
