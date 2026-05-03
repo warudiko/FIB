@@ -1,0 +1,125 @@
+---
+const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL ?? "";
+const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY ?? "";
+const statsUrl = import.meta.env.PUBLIC_VISITOR_STATS_URL ?? "";
+
+const mode =
+  supabaseUrl && supabaseKey ? "supabase" : statsUrl.trim() ? "poll" : "none";
+
+const idleTitle =
+  "Live count: set PUBLIC_SUPABASE_URL + PUBLIC_SUPABASE_ANON_KEY (Supabase Realtime presence), or PUBLIC_VISITOR_STATS_URL returning JSON { \"count\": number } with CORS enabled.";
+---
+
+<div
+  id="fib-live-visitors"
+  class:list={[
+    "flex shrink-0 items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1.5 text-[11px] font-medium text-white/75 sm:px-3 sm:text-xs",
+    mode === "none" && "opacity-75",
+  ]}
+  data-mode={mode}
+  data-supabase-url={supabaseUrl}
+  data-supabase-key={supabaseKey}
+  data-stats-url={statsUrl}
+  title={mode === "none" ? idleTitle : "Estimated viewers on this site right now"}
+>
+  <span class="relative flex h-2 w-2 shrink-0">
+    {
+      mode === "none" ? (
+        <span class="inline-flex h-2 w-2 rounded-full bg-white/30" />
+      ) : (
+        <>
+          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/40 opacity-75" />
+          <span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400/90" />
+        </>
+      )
+    }
+  </span>
+  <span class="whitespace-nowrap tabular-nums">
+    <span id="fib-live-count" class="text-white/90">
+      {mode === "none" ? "—" : "…"}
+    </span>
+    <span class="text-white/55"> on site</span>
+  </span>
+</div>
+
+{
+  mode !== "none" ? (
+    <script>
+      async function runLiveVisitors() {
+        const root = document.getElementById("fib-live-visitors");
+        const countEl = document.getElementById("fib-live-count");
+        if (!(root instanceof HTMLElement) || !(countEl instanceof HTMLElement)) return;
+
+        const mode = root.dataset.mode;
+
+        if (mode === "poll") {
+          const url = root.dataset.statsUrl?.trim();
+          if (!url) return;
+
+          const tick = async () => {
+            try {
+              const res = await fetch(url, { cache: "no-store" });
+              if (!res.ok) throw new Error("bad status");
+              const data = await res.json();
+              const raw = data?.count ?? data?.visitors;
+              const n = typeof raw === "number" ? raw : Number(raw);
+              countEl.textContent = Number.isFinite(n) ? String(n) : "—";
+            } catch {
+              countEl.textContent = "—";
+            }
+          };
+
+          await tick();
+          window.setInterval(tick, 20_000);
+          return;
+        }
+
+        if (mode === "supabase") {
+          const url = root.dataset.supabaseUrl?.trim();
+          const key = root.dataset.supabaseKey?.trim();
+          if (!url || !key) return;
+
+          const { createClient } = await import("@supabase/supabase-js");
+          const supabase = createClient(url, key);
+
+          let uid = localStorage.getItem("fib_site_visitor_id");
+          if (!uid) {
+            uid = crypto.randomUUID();
+            localStorage.setItem("fib_site_visitor_id", uid);
+          }
+
+          const channel = supabase.channel("fib-global-presence", {
+            config: { presence: { key: uid } },
+          });
+
+          const syncCount = () => {
+            const state = channel.presenceState();
+            const n = Object.keys(state).length;
+            countEl.textContent = n > 0 ? String(n) : "1";
+          };
+
+          channel.on("presence", { event: "sync" }, syncCount);
+
+          channel.subscribe(async (status) => {
+            if (status === "SUBSCRIBED") {
+              await channel.track({ online_at: Date.now() });
+              syncCount();
+            }
+          });
+
+          window.addEventListener("beforeunload", () => {
+            void supabase.removeChannel(channel);
+          });
+        }
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () => void runLiveVisitors(), {
+          once: true,
+        });
+      } else {
+        void runLiveVisitors();
+      }
+    </script>
+  ) : null
+}

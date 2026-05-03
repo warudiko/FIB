@@ -1,5 +1,6 @@
 ---
 import { withBase } from "../utils/urls";
+import LiveVisitors from "./LiveVisitors.astro";
 
 const baseRaw = import.meta.env.BASE_URL;
 
@@ -22,35 +23,38 @@ const current = normalize(currentPath);
 ---
 
 <nav class="sticky top-0 z-50 border-b border-white/5 bg-black/40 backdrop-blur">
-  <div class="relative mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-    <a href={withBase(baseRaw, "/")} class="flex items-center gap-3">
+  <div class="relative mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4 sm:px-6 lg:px-8">
+    <a href={withBase(baseRaw, "/")} class="flex min-w-0 shrink items-center gap-3">
       <span class="text-fibGoldDeep font-semibold tracking-[0.18em] uppercase">FIB</span>
       <span class="hidden text-xs font-medium text-white/60 sm:block">
         Federal Investigation Bureau
       </span>
     </a>
 
-    <ul class="hidden items-center gap-6 text-sm text-white/75 lg:flex">
-      {items.map((item) => {
-        const href = normalize(item.href);
-        const active = current === href;
-        return (
-          <li>
-            <a
-              href={item.href}
-              class={`relative pb-1 transition-colors hover:text-white ${active ? "text-white" : ""}`}
-            >
-              <span class={active ? "fib-accent" : ""}>{item.label}</span>
-              {active ? (
-                <span class="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-fibGoldDeep" />
-              ) : null}
-            </a>
-          </li>
-        );
-      })}
-    </ul>
+    <div class="flex min-w-0 flex-1 items-center justify-end gap-3 sm:gap-5 lg:gap-6">
+      <ul class="hidden items-center gap-6 text-sm text-white/75 lg:flex">
+        {items.map((item) => {
+          const href = normalize(item.href);
+          const active = current === href;
+          return (
+            <li>
+              <a
+                href={item.href}
+                class={`relative pb-1 transition-colors hover:text-white ${active ? "text-white" : ""}`}
+              >
+                <span class={active ? "fib-accent" : ""}>{item.label}</span>
+                {active ? (
+                  <span class="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-fibGoldDeep" />
+                ) : null}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
 
-    <details class="lg:hidden">
+      <LiveVisitors />
+
+      <details class="shrink-0 lg:hidden">
       <summary
         aria-label="Open menu"
         class="cursor-pointer list-none rounded-md border border-white/10 bg-white/5 p-2.5 text-white/80"
@@ -82,6 +86,7 @@ const current = normalize(currentPath);
         </ul>
       </div>
     </details>
+    </div>
   </div>
 </nav>
 

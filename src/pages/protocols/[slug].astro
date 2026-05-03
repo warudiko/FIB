@@ -3,6 +3,7 @@ import { getCollection, getEntryBySlug } from "astro:content";
 
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
+import PageTextSearch from "../../components/PageTextSearch.astro";
 
 export async function getStaticPaths() {
   const protocols = await getCollection("protocols");
@@ -30,8 +31,10 @@ const { Content } = await entry.render();
       accentInitials={false}
     />
 
+    <PageTextSearch />
+
     <div class="prose-fib max-w-3xl">
-      <article class="fib-reveal space-y-4">
+      <article id="page-search-root" class="fib-reveal space-y-4">
         <Content />
       </article>
     </div>

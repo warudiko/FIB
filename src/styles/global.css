@@ -256,7 +256,7 @@ html {
   align-items: center;
   gap: 0.55rem;
   border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(0, 0, 0, 0.22);
   padding: 0.55rem 0.7rem;
 }
@@ -274,6 +274,19 @@ html {
   outline: none;
   color: rgba(255, 255, 255, 0.9);
   font-size: 0.95rem;
+}
+
+/* One clear control: hide native search cancel (we use .fib-search-clear). */
+.fib-search-input::-webkit-search-decoration,
+.fib-search-input::-webkit-search-cancel-button,
+.fib-search-input::-webkit-search-results-button,
+.fib-search-input::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.fib-search-input::-ms-clear {
+  display: none;
 }
 
 .fib-search-input::placeholder {
@@ -296,8 +309,8 @@ html {
 }
 
 .fib-search-inputWrap:focus-within {
-  box-shadow: 0 0 0 3px var(--fib-ring);
-  border-color: rgba(245, 200, 75, 0.25);
+  border-color: rgba(245, 200, 75, 0.32);
+  box-shadow: 0 0 0 1px rgba(245, 200, 75, 0.22);
 }
 
 .fib-search-meta {
@@ -308,6 +321,19 @@ html {
 
 .fib-search-hidden {
   display: none !important;
+}
+
+/* In-page text search highlights */
+.fib-page-text-search {
+  margin-top: 0;
+}
+
+mark.fib-page-hit {
+  background: rgba(245, 200, 75, 0.28);
+  color: inherit;
+  border-radius: 0.2em;
+  padding: 0.05em 0.1em;
+  box-decoration-break: clone;
 }
 
 /* Command line blocks (/do, /me, /try) */

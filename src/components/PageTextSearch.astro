@@ -1,0 +1,185 @@
+---
+const {
+  targetId = "page-search-root",
+  placeholder = "Search this page…",
+  ariaLabel = "Search this page",
+} = Astro.props as {
+  targetId?: string;
+  placeholder?: string;
+  ariaLabel?: string;
+};
+---
+
+<div
+  class="fib-page-text-search fib-reveal mb-6"
+  data-fib-page-text-search
+  data-target={targetId}
+>
+  <div class="fib-search-inputWrap max-w-md">
+    <svg
+      class="fib-search-icon"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      width="16"
+      height="16"
+      aria-hidden="true"
+    >
+      <circle cx="11" cy="11" r="7"></circle>
+      <path d="M21 21l-4.3-4.3"></path>
+    </svg>
+    <input
+      class="fib-search-input"
+      type="search"
+      inputmode="search"
+      autocomplete="off"
+      spellcheck="false"
+      aria-label={ariaLabel}
+      placeholder={placeholder}
+    />
+    <button type="button" class="fib-search-clear" aria-label="Clear search" hidden>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        width="16"
+        height="16"
+        aria-hidden="true"
+      >
+        <path d="M18 6L6 18"></path>
+        <path d="M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+  <div class="fib-search-meta" aria-live="polite"></div>
+</div>
+
+<script>
+  const escapeRegExp = (value) => String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+  const clearHighlights = (root) => {
+    const marks = root.querySelectorAll("mark.fib-page-hit");
+    marks.forEach((mark) => {
+      const parent = mark.parentNode;
+      if (!parent) return;
+      while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+      parent.removeChild(mark);
+      parent.normalize();
+    });
+  };
+
+  const collectTextNodes = (root) => {
+    const skip = new Set(["SCRIPT", "STYLE", "TEXTAREA", "NOSCRIPT"]);
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        let el = node.parentElement;
+        while (el && el !== root) {
+          if (skip.has(el.tagName)) return NodeFilter.FILTER_REJECT;
+          if (el.classList?.contains("fib-page-hit")) return NodeFilter.FILTER_REJECT;
+          el = el.parentElement;
+        }
+        return NodeFilter.FILTER_ACCEPT;
+      },
+    });
+
+    const out = [];
+    let n;
+    while ((n = walker.nextNode())) out.push(n);
+    return out;
+  };
+
+  const highlightNeedleInTextNode = (textNode, needle) => {
+    const text = textNode.nodeValue ?? "";
+    const re = new RegExp(`(${escapeRegExp(needle)})`, "giu");
+    const parts = text.split(re);
+    if (parts.length < 2) return 0;
+
+    const frag = document.createDocumentFragment();
+    let hits = 0;
+    for (let i = 0; i < parts.length; i += 1) {
+      const part = parts[i];
+      if (!part) continue;
+      if (i % 2 === 1) {
+        const mark = document.createElement("mark");
+        mark.className = "fib-page-hit";
+        mark.appendChild(document.createTextNode(part));
+        frag.appendChild(mark);
+        hits += 1;
+      } else {
+        frag.appendChild(document.createTextNode(part));
+      }
+    }
+
+    textNode.parentNode?.replaceChild(frag, textNode);
+    return hits;
+  };
+
+  const applyHighlights = (root, needle) => {
+    clearHighlights(root);
+    const trimmed = needle.trim();
+    if (!trimmed) return 0;
+
+    const nodes = collectTextNodes(root);
+    let total = 0;
+    for (const textNode of nodes) {
+      total += highlightNeedleInTextNode(textNode, trimmed);
+    }
+
+    const first = root.querySelector("mark.fib-page-hit");
+    if (first instanceof HTMLElement) {
+      first.scrollIntoView({ block: "center", behavior: "smooth" });
+    }
+
+    return total;
+  };
+
+  const init = () => {
+    document.querySelectorAll("[data-fib-page-text-search]").forEach((wrap) => {
+      const targetId = wrap.getAttribute("data-target");
+      const input = wrap.querySelector("input");
+      const clearBtn = wrap.querySelector("button");
+      const meta = wrap.querySelector(".fib-search-meta");
+      const root = targetId ? document.getElementById(targetId) : null;
+      if (!(input instanceof HTMLInputElement) || !(clearBtn instanceof HTMLButtonElement) || !meta || !root)
+        return;
+
+      let t = 0;
+      const refresh = () => {
+        const value = input.value ?? "";
+        clearBtn.hidden = !value.length;
+        const hits = applyHighlights(root, value);
+        meta.textContent = value.trim().length ? `Matches: ${hits}` : "";
+      };
+
+      const schedule = () => {
+        window.clearTimeout(t);
+        t = window.setTimeout(refresh, 140);
+      };
+
+      input.addEventListener("input", schedule);
+      clearBtn.addEventListener("click", () => {
+        input.value = "";
+        input.focus();
+        window.clearTimeout(t);
+        refresh();
+      });
+
+      refresh();
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+</script>
