@@ -22,20 +22,15 @@ const current = normalize(currentPath);
 ---
 
 <nav class="sticky top-0 z-50 border-b border-white/5 bg-black/40 backdrop-blur">
-  <div
-    class="relative mx-auto grid w-full max-w-6xl grid-cols-[minmax(0,auto)_1fr_auto] items-center gap-x-3 px-4 py-4 sm:px-6 lg:px-8"
-  >
-    <a href={withBase(baseRaw, "/")} class="flex min-w-0 items-center gap-3 justify-self-start">
+  <div class="relative mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+    <a href={withBase(baseRaw, "/")} class="flex items-center gap-3">
       <span class="text-fibGoldDeep font-semibold tracking-[0.18em] uppercase">FIB</span>
       <span class="hidden text-xs font-medium text-white/60 sm:block">
         Federal Investigation Bureau
       </span>
     </a>
 
-    <ul
-      class="hidden min-w-0 items-center justify-center justify-self-center gap-6 text-sm text-white/75 lg:flex"
-      aria-label="Primary"
-    >
+    <ul class="hidden items-center gap-6 text-sm text-white/75 lg:flex" aria-label="Primary">
       {items.map((item) => {
         const href = normalize(item.href);
         const active = current === href;
@@ -55,39 +50,37 @@ const current = normalize(currentPath);
       })}
     </ul>
 
-    <div class="flex items-center justify-end justify-self-end">
-      <details class="shrink-0 lg:hidden">
-        <summary
-          aria-label="Open menu"
-          class="cursor-pointer list-none rounded-md border border-white/10 bg-white/5 p-2.5 text-white/80"
-        >
-          <span aria-hidden="true" class="block h-4 w-5">
-            <span class="block h-0.5 w-full rounded-full bg-white/80"></span>
-            <span class="mt-1.5 block h-0.5 w-full rounded-full bg-white/70"></span>
-            <span class="mt-1.5 block h-0.5 w-full rounded-full bg-white/60"></span>
-          </span>
-        </summary>
-        <div class="absolute right-4 top-full z-50 mt-3 w-56 rounded-lg border border-white/10 bg-black/80 p-3 shadow-lg backdrop-blur sm:right-6">
-          <ul class="flex flex-col gap-2">
-            {items.map((item) => {
-              const href = normalize(item.href);
-              const active = current === href;
-              return (
-                <li>
-                  <a
-                    href={item.href}
-                    class={`block rounded-md px-3 py-2 text-sm transition-colors hover:bg-white/5 ${
-                      active ? "bg-white/5 text-white" : "text-white/75"
-                    }`}
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </details>
-    </div>
+    <details class="lg:hidden">
+      <summary
+        aria-label="Open menu"
+        class="cursor-pointer list-none rounded-md border border-white/10 bg-white/5 p-2.5 text-white/80"
+      >
+        <span aria-hidden="true" class="block h-4 w-5">
+          <span class="block h-0.5 w-full rounded-full bg-white/80"></span>
+          <span class="mt-1.5 block h-0.5 w-full rounded-full bg-white/70"></span>
+          <span class="mt-1.5 block h-0.5 w-full rounded-full bg-white/60"></span>
+        </span>
+      </summary>
+      <div class="absolute right-4 top-full z-50 mt-3 w-56 rounded-lg border border-white/10 bg-black/80 p-3 shadow-lg backdrop-blur sm:right-6">
+        <ul class="flex flex-col gap-2">
+          {items.map((item) => {
+            const href = normalize(item.href);
+            const active = current === href;
+            return (
+              <li>
+                <a
+                  href={item.href}
+                  class={`block rounded-md px-3 py-2 text-sm transition-colors hover:bg-white/5 ${
+                    active ? "bg-white/5 text-white" : "text-white/75"
+                  }`}
+                >
+                  {item.label}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </details>
   </div>
 </nav>
