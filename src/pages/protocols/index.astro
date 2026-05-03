@@ -5,10 +5,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
 import ProtocolCard from "../../components/ProtocolCard.astro";
 import SearchBar from "../../components/SearchBar.astro";
+import { cardSearchTextFromEntry } from "../../utils/cardSearchText";
 
-const protocols = (await getCollection("protocols"))
-  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
-  .map((entry) => ({ ...entry.data, slug: entry.slug }));
+const protocols = (await getCollection("protocols")).sort(
+  (a, b) => (a.data.order ?? 999) - (b.data.order ?? 999),
+);
 ---
 
 <BaseLayout pageTitle="Protocols" description="Browse operational protocols.">
@@ -22,13 +23,13 @@ const protocols = (await getCollection("protocols"))
   <SearchBar targetId="protocols-grid" placeholder="Search…" ariaLabel="Search protocols" />
 
   <div id="protocols-grid" class="grid gap-5 md:grid-cols-2">
-    {protocols.map((p, index) => (
+    {protocols.map((entry, index) => (
       <ProtocolCard
-        title={p.title}
-        short={p.short}
-        slug={p.slug}
-        heroTagline={p.heroTagline}
-        searchText={[p.title, p.short, p.heroTagline, p.slug, ...(p.tags ?? [])].filter(Boolean).join(" • ")}
+        title={entry.data.title}
+        short={entry.data.short}
+        slug={entry.slug}
+        heroTagline={entry.data.heroTagline}
+        searchText={cardSearchTextFromEntry(entry)}
         revealDelay={index * 70}
       />
     ))}

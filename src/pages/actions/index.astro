@@ -5,10 +5,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
 import ActionCard from "../../components/ActionCard.astro";
 import SearchBar from "../../components/SearchBar.astro";
+import { cardSearchTextFromEntry } from "../../utils/cardSearchText";
 
-const actions = (await getCollection("actions"))
-  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
-  .map((entry) => ({ ...entry.data, slug: entry.slug }));
+const actions = (await getCollection("actions")).sort(
+  (a, b) => (a.data.order ?? 999) - (b.data.order ?? 999),
+);
 ---
 
 <BaseLayout pageTitle="Actions" description="Browse actions (roleplay command sets).">
@@ -22,13 +23,13 @@ const actions = (await getCollection("actions"))
   <SearchBar targetId="actions-grid" placeholder="Search…" ariaLabel="Search actions" />
 
   <div id="actions-grid" class="grid gap-5 md:grid-cols-2">
-    {actions.map((a, index) => (
+    {actions.map((entry, index) => (
       <ActionCard
-        title={a.title}
-        short={a.short}
-        slug={a.slug}
-        heroTagline={a.heroTagline}
-        searchText={[a.title, a.short, a.heroTagline, a.slug, ...(a.tags ?? [])].filter(Boolean).join(" • ")}
+        title={entry.data.title}
+        short={entry.data.short}
+        slug={entry.slug}
+        heroTagline={entry.data.heroTagline}
+        searchText={cardSearchTextFromEntry(entry)}
         revealDelay={index * 70}
       />
     ))}

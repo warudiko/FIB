@@ -9,7 +9,6 @@
     "check": "astro check"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.49.4",
     "zod": "^3.25.0"
   },
   "devDependencies": {

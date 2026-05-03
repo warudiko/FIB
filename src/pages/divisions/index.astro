@@ -5,10 +5,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
 import DivisionCard from "../../components/DivisionCard.astro";
 import SearchBar from "../../components/SearchBar.astro";
+import { cardSearchTextFromEntry } from "../../utils/cardSearchText";
 
-const divisions = (await getCollection("divisions"))
-  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
-  .map((entry) => ({ ...entry.data, slug: entry.slug }));
+const divisions = (await getCollection("divisions")).sort(
+  (a, b) => (a.data.order ?? 999) - (b.data.order ?? 999),
+);
 ---
 
 <BaseLayout pageTitle="Divisions" description="Browse all FIB divisions.">
@@ -22,13 +23,13 @@ const divisions = (await getCollection("divisions"))
   <SearchBar targetId="divisions-grid" placeholder="Search…" ariaLabel="Search divisions" />
 
   <div id="divisions-grid" class="grid gap-5 md:grid-cols-2">
-    {divisions.map((d, index) => (
+    {divisions.map((entry, index) => (
       <DivisionCard
-        title={d.title}
-        short={d.short}
-        slug={d.slug}
-        heroTagline={d.heroTagline}
-        searchText={[d.title, d.short, d.heroTagline, d.slug, ...(d.tags ?? [])].filter(Boolean).join(" • ")}
+        title={entry.data.title}
+        short={entry.data.short}
+        slug={entry.slug}
+        heroTagline={entry.data.heroTagline}
+        searchText={cardSearchTextFromEntry(entry)}
         revealDelay={index * 70}
       />
     ))}
