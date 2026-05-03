@@ -1,0 +1,70 @@
+---
+/**
+ * Persists the card-grid search query when opening a division/protocol detail page
+ * so PageTextSearch can restore it. Lives in BaseLayout so the listener is always
+ * registered (not only on pages that render SearchBar).
+ */
+---
+
+<script is:inline>
+  (function () {
+    var PENDING_PAGE_SEARCH_KEY = "fib-pending-page-search";
+
+    function shouldPersistSearchForDetailNav(href) {
+      try {
+        var u = new URL(href, window.location.href);
+        var p = u.pathname.replace(/\/+$/, "") || "/";
+        return /\/divisions\/[^/]+$/.test(p) || /\/protocols\/[^/]+$/.test(p);
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function findCardGridSearchInput(card) {
+      if (card.closest("#home-search-scope")) {
+        return document.querySelector('[data-fib-search][data-scope="#home-search-scope"] input');
+      }
+      var grids = [
+        ["#divisions-grid", "divisions-grid"],
+        ["#protocols-grid", "protocols-grid"],
+      ];
+      for (var i = 0; i < grids.length; i++) {
+        if (card.closest(grids[i][0])) {
+          return document.querySelector('[data-fib-search][data-target="' + grids[i][1] + '"] input');
+        }
+      }
+      return null;
+    }
+
+    if (typeof document === "undefined") return;
+    // Per-document guard: `window` survives MPA navigations but `document` is new each load.
+    if (document.documentElement.dataset.fibDetailSearchHandoff === "1") return;
+    document.documentElement.dataset.fibDetailSearchHandoff = "1";
+
+    document.addEventListener(
+      "click",
+      function (e) {
+        if (e.defaultPrevented) return;
+        if (typeof e.button === "number" && e.button !== 0) return;
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        var t = e.target;
+        if (!t || typeof t.closest !== "function") return;
+        var link = t.closest("a[href]");
+        if (!link || link.nodeName !== "A") return;
+        if (link.target === "_blank" || link.hasAttribute("download")) return;
+        if (!shouldPersistSearchForDetailNav(link.href)) return;
+
+        var card = link.closest("[data-search]");
+        if (!card) return;
+        var input = findCardGridSearchInput(card);
+        if (!input || input.nodeName !== "INPUT") return;
+        var q = (input.value || "").trim();
+        if (!q) return;
+        try {
+          sessionStorage.setItem(PENDING_PAGE_SEARCH_KEY, input.value);
+        } catch (err) {}
+      },
+      true,
+    );
+  })();
+</script>

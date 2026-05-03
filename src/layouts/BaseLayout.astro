@@ -2,6 +2,7 @@
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import RevealOnScroll from "../components/RevealOnScroll.astro";
+import CardSearchToPageHandoff from "../components/CardSearchToPageHandoff.astro";
 
 import "../styles/global.css";
 
@@ -48,6 +49,7 @@ const ogImageHref = new URL(`${base}og-fib-card.svg`, site).toString();
   </head>
 
   <body>
+    <CardSearchToPageHandoff />
     <a
       href="#main"
       class="sr-only focus:not-sr-only fib-focus-ring fib-border rounded-md px-3 py-2"
