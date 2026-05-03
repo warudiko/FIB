@@ -1,0 +1,76 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#07070a"><title>FIB - Hostage Rescue Team</title><meta name="description" content="Hostage Rescue Team (HRT) — ელიტარული სპეცდანიშნულების დანაყოფი მაღალი რისკის ოპერაციებისთვის."><link rel="canonical" href="https://warudiko.github.io/FIB/divisions/hostage-rescue-team/"><meta property="og:title" content="FIB - Hostage Rescue Team"><meta property="og:description" content="Hostage Rescue Team (HRT) — ელიტარული სპეცდანიშნულების დანაყოფი მაღალი რისკის ოპერაციებისთვის."><meta property="og:type" content="website"><meta property="og:url" content="https://warudiko.github.io/FIB/divisions/hostage-rescue-team/"><meta property="og:image" content="https://warudiko.github.io/FIB/og-fib-card.svg"><link rel="icon" href="/FIB/favicon.svg"><link rel="stylesheet" href="/FIB/_astro/_slug_.pEXgevUr.css"><script type="module" src="/FIB/_astro/hoisted.CNp7VLKP.js"></script></head> <body> <script>
+  (function () {
+    var PENDING_PAGE_SEARCH_KEY = "fib-pending-page-search";
+
+    function shouldPersistSearchForDetailNav(href) {
+      try {
+        var u = new URL(href, window.location.href);
+        var p = u.pathname.replace(/\/+$/, "") || "/";
+        return /\/divisions\/[^/]+$/.test(p) || /\/protocols\/[^/]+$/.test(p);
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function findCardGridSearchInput(card) {
+      if (card.closest("#home-search-scope")) {
+        return document.querySelector('[data-fib-search][data-scope="#home-search-scope"] input');
+      }
+      var grids = [
+        ["#divisions-grid", "divisions-grid"],
+        ["#protocols-grid", "protocols-grid"],
+      ];
+      for (var i = 0; i < grids.length; i++) {
+        if (card.closest(grids[i][0])) {
+          return document.querySelector('[data-fib-search][data-target="' + grids[i][1] + '"] input');
+        }
+      }
+      return null;
+    }
+
+    if (typeof document === "undefined") return;
+    // Per-document guard: `window` survives MPA navigations but `document` is new each load.
+    if (document.documentElement.dataset.fibDetailSearchHandoff === "1") return;
+    document.documentElement.dataset.fibDetailSearchHandoff = "1";
+
+    document.addEventListener(
+      "click",
+      function (e) {
+        if (e.defaultPrevented) return;
+        if (typeof e.button === "number" && e.button !== 0) return;
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        var t = e.target;
+        if (!t || typeof t.closest !== "function") return;
+        var link = t.closest("a[href]");
+        if (!link || link.nodeName !== "A") return;
+        if (link.target === "_blank" || link.hasAttribute("download")) return;
+        if (!shouldPersistSearchForDetailNav(link.href)) return;
+
+        var card = link.closest("[data-search]");
+        if (!card) return;
+        var input = findCardGridSearchInput(card);
+        if (!input || input.nodeName !== "INPUT") return;
+        var q = (input.value || "").trim();
+        if (!q) return;
+        try {
+          sessionStorage.setItem(PENDING_PAGE_SEARCH_KEY, input.value);
+        } catch (err) {}
+      },
+      true,
+    );
+  })();
+</script> <a href="#main" class="sr-only focus:not-sr-only fib-focus-ring fib-border rounded-md px-3 py-2">Skip to content</a> <div class="min-h-screen flex flex-col"> <nav class="sticky top-0 z-50 border-b border-white/5 bg-black/40 backdrop-blur"> <div class="relative mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8"> <a href="/FIB/" class="flex items-center gap-3"> <span class="text-fibGoldDeep font-semibold tracking-[0.18em] uppercase">FIB</span> <span class="hidden text-xs font-medium text-white/60 sm:block">
+Federal Investigation Bureau
+</span> </a> <ul class="hidden items-center gap-6 text-sm text-white/75 lg:flex" aria-label="Primary"> <li> <a href="/FIB/" class="relative pb-1 transition-colors hover:text-white "> <span class="">Home</span>  </a> </li><li> <a href="/FIB/divisions" class="relative pb-1 transition-colors hover:text-white "> <span class="">Departments</span>  </a> </li><li> <a href="/FIB/protocols" class="relative pb-1 transition-colors hover:text-white "> <span class="">Protocols</span>  </a> </li><li> <a href="/FIB/actions" class="relative pb-1 transition-colors hover:text-white "> <span class="">Actions</span>  </a> </li> </ul> <details class="lg:hidden"> <summary aria-label="Open menu" class="cursor-pointer list-none rounded-md border border-white/10 bg-white/5 p-2.5 text-white/80"> <span aria-hidden="true" class="block h-4 w-5"> <span class="block h-0.5 w-full rounded-full bg-white/80"></span> <span class="mt-1.5 block h-0.5 w-full rounded-full bg-white/70"></span> <span class="mt-1.5 block h-0.5 w-full rounded-full bg-white/60"></span> </span> </summary> <div class="absolute right-4 top-full z-50 mt-3 w-56 rounded-lg border border-white/10 bg-black/80 p-3 shadow-lg backdrop-blur sm:right-6"> <ul class="flex flex-col gap-2"> <li> <a href="/FIB/" class="block rounded-md px-3 py-2 text-sm transition-colors hover:bg-white/5 text-white/75"> Home </a> </li><li> <a href="/FIB/divisions" class="block rounded-md px-3 py-2 text-sm transition-colors hover:bg-white/5 text-white/75"> Departments </a> </li><li> <a href="/FIB/protocols" class="block rounded-md px-3 py-2 text-sm transition-colors hover:bg-white/5 text-white/75"> Protocols </a> </li><li> <a href="/FIB/actions" class="block rounded-md px-3 py-2 text-sm transition-colors hover:bg-white/5 text-white/75"> Actions </a> </li> </ul> </div> </details> </div> </nav> <main id="main" class="mx-auto w-full max-w-6xl flex-1 px-4 py-10 sm:px-6 lg:px-8">  <div class="fib-reveal rounded-3xl border border-white/10 bg-black/35 px-5 py-6 shadow-lg shadow-black/40 sm:px-8 sm:py-8 lg:px-10 lg:py-10"> <section class="fib-reveal mb-8">  <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">  <span class="fib-accent">H</span><span>ostage</span>   <span class="fib-accent">R</span><span>escue</span>   <span class="fib-accent">T</span><span>eam</span>  </h2> <p class="mt-3 max-w-2xl text-sm leading-relaxed text-white/75">ელიტარული ტაქტიკური რაზმი მძევლების გათავისუფლებისა და კრიტიკული ოპერაციების შესრულებისთვის.</p> </section> <div class="fib-page-text-search fib-reveal mb-6" data-fib-page-text-search data-target="page-search-root"> <div class="fib-search-inputWrap max-w-md"> <svg class="fib-search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle> <path d="M21 21l-4.3-4.3"></path> </svg> <input class="fib-search-input" type="search" inputmode="search" autocomplete="off" spellcheck="false" aria-label="Search this page" placeholder="Search this page…"> <button type="button" class="fib-search-clear" aria-label="Clear search" hidden> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"> <path d="M18 6L6 18"></path> <path d="M6 6l12 12"></path> </svg> </button> </div> <div class="fib-search-meta" aria-live="polite"></div> </div>  <div class="prose-fib max-w-3xl"> <article id="page-search-root" class="fib-reveal space-y-4"> <p>Hostage Rescue Team (HRT) — წარმოადგენს ფედერალური საგამოძიებო ბიუროს ელიტარულ ანტიტერორისტულ სპეცდანიშნულების დანაყოფს.</p>
+<p>დეპარტამენტი პასუხისმგებელია მაღალი რისკის ტაქტიკურ ოპერაციებზე, მძევლების გათავისუფლებასა და მაღალი საფრთხის მქონე ორდერების შესრულებაზე. ასევე, HRT უზრუნველყოფს მაღალი რანგის ოფიციალური პირებისა და ვიზიტორი დელეგაციების უსაფრთხოებას.</p>
+<hr/>
+<h2 id="hrt---ძირითადი-მოვალეობები">HRT - ძირითადი მოვალეობები</h2>
+<ul>
+<li>ტერორიზმსა და ორგანიზებულ დანაშაულთან ბრძოლა</li>
+<li>მძევლების გათავისუფლების მიზნით სპეციალური ოპერაციების ჩატარება</li>
+<li>რეიდული ოპერაციების განხორციელება და მაღალი რისკის ეჭვმიტანილების დაკავება</li>
+<li>ბიუროსა და მაღალი თანამდებობის პირების უსაფრთხოების უზრუნველყოფა</li>
+</ul> </article> </div> </div>  </main> <footer class="mt-14 border-t border-white/5 bg-black/40"> <div class="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8"> <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"> <div> <div class="text-sm text-white/75"> <span class="fib-accent font-semibold">FIB</span> — Federal Investigation Bureau
+</div> <div class="mt-2 text-xs text-white/50">
+© 2026 FIB. წარმოდგენილი ინფორმაცია განკუთვნილია დემონსტრაციისა და საჯარო ცნობარისთვის.
+</div> <div class="mt-1 text-xs text-white/45">Last updated: 03 May 2026</div> <div class="mt-1 flex items-center gap-2 text-xs text-white/45"> <svg aria-hidden="true" viewBox="0 0 24 24" class="h-3.5 w-3.5 fib-accent" fill="currentColor">  <g transform="translate(0.4 0)"> <path d="M20.317 4.369A19.791 19.791 0 0 0 15.885 3c-.191.328-.403.77-.554 1.116a18.27 18.27 0 0 0-5.487 0A12.64 12.64 0 0 0 9.29 3a19.736 19.736 0 0 0-4.434 1.37C2.05 8.56 1.288 12.646 1.67 16.675a19.9 19.9 0 0 0 5.993 3.031c.485-.667.917-1.37 1.288-2.11a12.955 12.955 0 0 1-2.03-.97c.17-.126.336-.258.497-.396c3.919 1.84 8.18 1.84 12.052 0c.162.138.328.27.498.396a12.9 12.9 0 0 1-2.032.971c.371.739.803 1.442 1.288 2.109a19.875 19.875 0 0 0 5.995-3.03c.478-4.669-.817-8.718-3.906-12.307ZM9.813 14.247c-1.182 0-2.154-1.085-2.154-2.419c0-1.333.953-2.418 2.154-2.418c1.21 0 2.173 1.095 2.154 2.418c0 1.334-.953 2.419-2.154 2.419Zm4.374 0c-1.182 0-2.154-1.085-2.154-2.419c0-1.333.953-2.418 2.154-2.418c1.21 0 2.173 1.095 2.154 2.418c0 1.334-.944 2.419-2.154 2.419Z"></path> </g> </svg> <span class="fib-accent">@warudiko</span> </div> </div> <div class="flex items-center gap-4 text-sm"></div> </div> </div> </footer> </div>  </body></html>

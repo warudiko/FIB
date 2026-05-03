@@ -1,0 +1,737 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#07070a"><title>FIB - Federal Investigation Bureau</title><meta name="description" content="Explore FIB divisions and official public-facing information."><link rel="canonical" href="https://warudiko.github.io/FIB/"><meta property="og:title" content="FIB - Federal Investigation Bureau"><meta property="og:description" content="Explore FIB divisions and official public-facing information."><meta property="og:type" content="website"><meta property="og:url" content="https://warudiko.github.io/FIB/"><meta property="og:image" content="https://warudiko.github.io/FIB/og-fib-card.svg"><link rel="icon" href="/FIB/favicon.svg"><link rel="stylesheet" href="/FIB/_astro/_slug_.pEXgevUr.css"><script type="module" src="/FIB/_astro/hoisted.CfXcBtOf.js"></script></head> <body> <script>
+  (function () {
+    var PENDING_PAGE_SEARCH_KEY = "fib-pending-page-search";
+
+    function shouldPersistSearchForDetailNav(href) {
+      try {
+        var u = new URL(href, window.location.href);
+        var p = u.pathname.replace(/\/+$/, "") || "/";
+        return /\/divisions\/[^/]+$/.test(p) || /\/protocols\/[^/]+$/.test(p);
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function findCardGridSearchInput(card) {
+      if (card.closest("#home-search-scope")) {
+        return document.querySelector('[data-fib-search][data-scope="#home-search-scope"] input');
+      }
+      var grids = [
+        ["#divisions-grid", "divisions-grid"],
+        ["#protocols-grid", "protocols-grid"],
+      ];
+      for (var i = 0; i < grids.length; i++) {
+        if (card.closest(grids[i][0])) {
+          return document.querySelector('[data-fib-search][data-target="' + grids[i][1] + '"] input');
+        }
+      }
+      return null;
+    }
+
+    if (typeof document === "undefined") return;
+    // Per-document guard: `window` survives MPA navigations but `document` is new each load.
+    if (document.documentElement.dataset.fibDetailSearchHandoff === "1") return;
+    document.documentElement.dataset.fibDetailSearchHandoff = "1";
+
+    document.addEventListener(
+      "click",
+      function (e) {
+        if (e.defaultPrevented) return;
+        if (typeof e.button === "number" && e.button !== 0) return;
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        var t = e.target;
+        if (!t || typeof t.closest !== "function") return;
+        var link = t.closest("a[href]");
+        if (!link || link.nodeName !== "A") return;
+        if (link.target === "_blank" || link.hasAttribute("download")) return;
+        if (!shouldPersistSearchForDetailNav(link.href)) return;
+
+        var card = link.closest("[data-search]");
+        if (!card) return;
+        var input = findCardGridSearchInput(card);
+        if (!input || input.nodeName !== "INPUT") return;
+        var q = (input.value || "").trim();
+        if (!q) return;
+        try {
+          sessionStorage.setItem(PENDING_PAGE_SEARCH_KEY, input.value);
+        } catch (err) {}
+      },
+      true,
+    );
+  })();
+</script> <a href="#main" class="sr-only focus:not-sr-only fib-focus-ring fib-border rounded-md px-3 py-2">Skip to content</a> <div class="min-h-screen flex flex-col"> <nav class="sticky top-0 z-50 border-b border-white/5 bg-black/40 backdrop-blur"> <div class="relative mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8"> <a href="/FIB/" class="flex items-center gap-3"> <span class="text-fibGoldDeep font-semibold tracking-[0.18em] uppercase">FIB</span> <span class="hidden text-xs font-medium text-white/60 sm:block">
+Federal Investigation Bureau
+</span> </a> <ul class="hidden items-center gap-6 text-sm text-white/75 lg:flex" aria-label="Primary"> <li> <a href="/FIB/" class="relative pb-1 transition-colors hover:text-white text-white"> <span class="fib-accent">Home</span> <span class="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-fibGoldDeep"></span> </a> </li><li> <a href="/FIB/divisions" class="relative pb-1 transition-colors hover:text-white "> <span class="">Departments</span>  </a> </li><li> <a href="/FIB/protocols" class="relative pb-1 transition-colors hover:text-white "> <span class="">Protocols</span>  </a> </li><li> <a href="/FIB/actions" class="relative pb-1 transition-colors hover:text-white "> <span class="">Actions</span>  </a> </li> </ul> <details class="lg:hidden"> <summary aria-label="Open menu" class="cursor-pointer list-none rounded-md border border-white/10 bg-white/5 p-2.5 text-white/80"> <span aria-hidden="true" class="block h-4 w-5"> <span class="block h-0.5 w-full rounded-full bg-white/80"></span> <span class="mt-1.5 block h-0.5 w-full rounded-full bg-white/70"></span> <span class="mt-1.5 block h-0.5 w-full rounded-full bg-white/60"></span> </span> </summary> <div class="absolute right-4 top-full z-50 mt-3 w-56 rounded-lg border border-white/10 bg-black/80 p-3 shadow-lg backdrop-blur sm:right-6"> <ul class="flex flex-col gap-2"> <li> <a href="/FIB/" class="block rounded-md px-3 py-2 text-sm transition-colors hover:bg-white/5 bg-white/5 text-white"> Home </a> </li><li> <a href="/FIB/divisions" class="block rounded-md px-3 py-2 text-sm transition-colors hover:bg-white/5 text-white/75"> Departments </a> </li><li> <a href="/FIB/protocols" class="block rounded-md px-3 py-2 text-sm transition-colors hover:bg-white/5 text-white/75"> Protocols </a> </li><li> <a href="/FIB/actions" class="block rounded-md px-3 py-2 text-sm transition-colors hover:bg-white/5 text-white/75"> Actions </a> </li> </ul> </div> </details> </div> </nav> <main id="main" class="mx-auto w-full max-w-6xl flex-1 px-4 py-10 sm:px-6 lg:px-8">  <section class="fib-reveal relative overflow-hidden rounded-3xl border border-white/10 bg-black/25 p-8 pr-40 sm:p-10 sm:pr-56"> <div class="pointer-events-none absolute inset-0 opacity-90"> <div class="absolute -top-24 left-10 h-56 w-56 rounded-full bg-fibGold/10 blur-3xl"></div> <div class="absolute -bottom-28 right-8 h-72 w-72 rounded-full bg-fibGoldDeep/10 blur-3xl"></div> <div class="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.08)_1px,transparent_0)] [background-size:26px_26px] opacity-20"></div> </div> <div aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-0 w-72 sm:w-96 overflow-hidden"> <img src="/FIB/division-emblems/federal-investigation-bureau.png" alt="" loading="eager" decoding="async" class="absolute right-0 top-1/2 w-96 sm:w-112 -translate-y-1/2 translate-x-6 opacity-30 blur-[1.5px] saturate-150" onerror="this.style.display='none'"> </div> <div class="relative"> <h1 class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl"> <span class="fib-accent">F</span>ederal  <span class="fib-accent">I</span>nvestigation  <span class="fib-accent">B</span>ureau
+</h1> <p class="mt-5 max-w-2xl text-white/70">ფედერალური იურისდიქციის მქონე სამართალდამცავ ორგანო, რომელიც ახორციელებს წინასწარ გამოძიებას, შიდა სადაზვერვო და საზედამხედველო ფუნქციებს.</p> </div> </section> <div class="fib-search fib-reveal" data-fib-search data-scope="#home-search-scope"> <div class="fib-search-inputWrap"> <svg class="fib-search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle> <path d="M21 21l-4.3-4.3"></path> </svg> <input class="fib-search-input" type="search" inputmode="search" autocomplete="off" spellcheck="false" aria-label="Search site cards" placeholder="Search…"> <button type="button" class="fib-search-clear" aria-label="Clear search" hidden> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"> <path d="M18 6L6 18"></path> <path d="M6 6l12 12"></path> </svg> </button> </div> <div class="fib-search-meta" aria-live="polite"></div> </div>  <div id="home-search-scope"> <section class="mt-10" data-search-section> <div class="flex items-start justify-between gap-6"> <section class="fib-reveal mb-8"> <p class="mb-2 text-xs font-semibold tracking-widest text-fibGoldDeep uppercase"> DEPARTMENTS </p> <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl"> დივიზიების მიმოხილვა </h2> <p class="mt-3 max-w-2xl text-sm leading-relaxed text-white/75">გაეცანით დეპარტამენტებს და მათ საჯარო პასუხისმგებლობებს.</p> </section> </div> <div id="home-divisions-grid" class="grid gap-5 md:grid-cols-2"> <div class="fib-reveal h-full" data-search="Anti Terrorist Force • Anti Terrorist Force (ATF) — სახელმწიფო სტრუქტურებში გამორჩეული თანამშრომლებით დაკომპლექტებული სპეციალური დეპარტამენტი. • ტერორისტული და კრიმინალური საფრთხეების წინააღმდეგ მოქმედი ელიტური დანაყოფი. • anti-terrorist-force • Anti Terrorist Force (ATF) - წარმოადგენს დეპარტამენტს, დაკომპლექტებულს სახელმწიფო სტრუქტურებში მომუშავე კვალიფიციური თანამშრომლებით, რომლის მთავარი მიზანია ტერორისტული და მძიმე კრიმინალური საფრთხეების პრევენცია და აღმოფხვრა.
+
+დეპარტამენტი ახორციელებს ტერორისტული საქმიანობის მონიტორინგს, დაზვერვას და ოპერატიული ინფორმაციის მოპოვებას მათი დროული განეიტრალების მიზნით.
+
+რაზმი ფუნქციონირებს ერთიანი პრინციპით და აერთიანებს სხვადასხვა ასაკისა და ეროვნების თანამშრომლებს, თანასწორობისა და პროფესიონალიზმის საფუძველზე.
+
+---
+
+## ATF - ძირითადი მოვალეობები
+
+- ტერორიზმის წინააღმდეგ ბრძოლა  
+- განსაკუთრებით საშიში დამნაშავეების დაკავება  
+- საზოგადოებრივი არეულობის მართვა და აღკვეთა
+- სახელმწიფოს სასიცოცხლო ინტერესებისათვის მნიშვნელოვანი საფრთხეების იდენტიფიცირება და პრევენცია 
+- სადაზვერვო საქმიანობა და ოპერატიული ინფორმაციის მოპოვება 
+- საგანგებო მდგომარეობისას მთავრობისა და სტრატეგიული ობიექტების დაცვა"> <a href="/FIB/divisions/anti-terrorist-force" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 pr-32 sm:pr-40 shadow-sm"> <span aria-hidden="true" class="fib-card-glare"></span> <div aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-0 w-48 sm:w-56 overflow-hidden"> <img src="/FIB/division-emblems/anti-terrorist-force.png" alt="" loading="lazy" decoding="async" class="absolute right-0 top-1/2 w-56 sm:w-64 -translate-y-1/2 translate-x-8 opacity-30 blur-[1.5px] saturate-150" onerror="this.style.display='none'"> </div> <div> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white">  <span class="fib-accent">A</span><span>nti</span>   <span class="fib-accent">T</span><span>errorist</span>   <span class="fib-accent">F</span><span>orce</span>  </h3> </div> <p class="mt-4 text-sm text-white/80">ტერორისტული და კრიმინალური საფრთხეების წინააღმდეგ მოქმედი ელიტური დანაყოფი.</p> <p class="mt-2 text-sm text-white/65">Anti Terrorist Force (ATF) — სახელმწიფო სტრუქტურებში გამორჩეული თანამშრომლებით დაკომპლექტებული სპეციალური დეპარტამენტი.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">
+→
+</span> </div> </a> </div> <div class="fib-reveal h-full" style="transition-delay: 70ms;" data-search="National Security Branch • National Security Branch (NSB) — ფედერალური საგამოძიებო ბიუროს ძირითადი სტრუქტურული განყოფილება ახალი და აღდგენილი აგენტებისთვის. • სამართალდაცვითი, კონტრტერორისტული და მართლმსაჯულების ოპერაციების შესრულება. • national-security-branch • National Security Branch (NSB) — წარმოადგენს ფედერალური საგამოძიებო ბიუროს ძირითად სტრუქტურულ დანაყოფს, სადაც გადანაწილდებიან აგენტები ფედერალური აკადემიის დასრულების ან თანამდებობაზე აღდგენის შემდეგ.
+
+დეპარტამენტი პასუხისმგებელია სამართალდამცავ საქმიანობაზე, კონტრტერორისტულ ოპერაციებსა და მართლმსაჯულების უზრუნველყოფაზე.
+
+---
+
+## NSB - ძირითადი მოვალეობები
+
+- სახელმწიფოს მოსახლეობის უსაფრთხოების უზრუნველყოფა და დანაშაულის წინააღმდეგ ბრძოლა
+- დამნაშავეთა დაკავების მიზნით საპროცესო მოქმედებების განხორციელება
+- კრიმინალური დაჯგუფებების საქმიანობის შესახებ ინფორმაციის შეგროვება
+- სხვა დანაყოფების ოპერატიული მხარდაჭერა დავალებების შესრულებისას"> <a href="/FIB/divisions/national-security-branch" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 pr-32 sm:pr-40 shadow-sm"> <span aria-hidden="true" class="fib-card-glare"></span> <div aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-0 w-48 sm:w-56 overflow-hidden"> <img src="/FIB/division-emblems/national-security-branch.png" alt="" loading="lazy" decoding="async" class="absolute right-0 top-1/2 w-56 sm:w-64 -translate-y-1/2 translate-x-8 opacity-30 blur-[1.5px] saturate-150" onerror="this.style.display='none'"> </div> <div> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white">  <span class="fib-accent">N</span><span>ational</span>   <span class="fib-accent">S</span><span>ecurity</span>   <span class="fib-accent">B</span><span>ranch</span>  </h3> </div> <p class="mt-4 text-sm text-white/80">სამართალდაცვითი, კონტრტერორისტული და მართლმსაჯულების ოპერაციების შესრულება.</p> <p class="mt-2 text-sm text-white/65">National Security Branch (NSB) — ფედერალური საგამოძიებო ბიუროს ძირითადი სტრუქტურული განყოფილება ახალი და აღდგენილი აგენტებისთვის.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">
+→
+</span> </div> </a> </div> <div class="fib-reveal h-full" style="transition-delay: 140ms;" data-search="Federal National Academy • Federal National Academy (FNA) — პასუხისმგებელია ფედერალური საგამოძიებო ბიუროს აკადემიის ორგანიზებასა და შიდა პერსონალის მართვაზე. • ახალი აგენტების მომზადება და ინსპექტირება. • federal-national-academy • Federal National Academy (FNA) — წარმოადგენს ფედერალური საგამოძიებო ბიუროს ადამიანური რესურსებისა და აკადემიური მომზადების სტრუქტურას. იგი პასუხისმგებელია ბიუროს პერსონალის მართვასა და ახალი აგენტების მომზადების პროცესის ორგანიზებაზე.
+
+დეპარტამენტი ასევე ახორციელებს ფედერალური საგამოძიებო ბიუროს დანაყოფების ინსპექტირებას და ატარებს შიდა შემოწმებებს.
+
+---
+
+## FNA - ძირითადი მოვალეობები
+
+- ახალი თანამშრომლების რეკრუტირება
+- აგენტების თეორიული და პრაქტიკული ცოდნის შეფასება
+- შიდა შემოწმებისა და აუდიტის განხორციელება
+- ბიუროს თანამშრომლების პრაქტიკული მომზადება და გადამზადება"> <a href="/FIB/divisions/federal-national-academy" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 pr-32 sm:pr-40 shadow-sm"> <span aria-hidden="true" class="fib-card-glare"></span> <div aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-0 w-48 sm:w-56 overflow-hidden"> <img src="/FIB/division-emblems/federal-national-academy.png" alt="" loading="lazy" decoding="async" class="absolute right-0 top-1/2 w-56 sm:w-64 -translate-y-1/2 translate-x-8 opacity-30 blur-[1.5px] saturate-150" onerror="this.style.display='none'"> </div> <div> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white">  <span class="fib-accent">F</span><span>ederal</span>   <span class="fib-accent">N</span><span>ational</span>   <span class="fib-accent">A</span><span>cademy</span>  </h3> </div> <p class="mt-4 text-sm text-white/80">ახალი აგენტების მომზადება და ინსპექტირება.</p> <p class="mt-2 text-sm text-white/65">Federal National Academy (FNA) — პასუხისმგებელია ფედერალური საგამოძიებო ბიუროს აკადემიის ორგანიზებასა და შიდა პერსონალის მართვაზე.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">
+→
+</span> </div> </a> </div> <div class="fib-reveal h-full" style="transition-delay: 210ms;" data-search="Hostage Rescue Team • Hostage Rescue Team (HRT) — ელიტარული სპეცდანიშნულების დანაყოფი მაღალი რისკის ოპერაციებისთვის. • ელიტარული ტაქტიკური რაზმი მძევლების გათავისუფლებისა და კრიტიკული ოპერაციების შესრულებისთვის. • hostage-rescue-team • Hostage Rescue Team (HRT) — წარმოადგენს ფედერალური საგამოძიებო ბიუროს ელიტარულ ანტიტერორისტულ სპეცდანიშნულების დანაყოფს.
+
+დეპარტამენტი პასუხისმგებელია მაღალი რისკის ტაქტიკურ ოპერაციებზე, მძევლების გათავისუფლებასა და მაღალი საფრთხის მქონე ორდერების შესრულებაზე. ასევე, HRT უზრუნველყოფს მაღალი რანგის ოფიციალური პირებისა და ვიზიტორი დელეგაციების უსაფრთხოებას.
+
+---
+
+## HRT - ძირითადი მოვალეობები
+
+- ტერორიზმსა და ორგანიზებულ დანაშაულთან ბრძოლა
+- მძევლების გათავისუფლების მიზნით სპეციალური ოპერაციების ჩატარება
+- რეიდული ოპერაციების განხორციელება და მაღალი რისკის ეჭვმიტანილების დაკავება
+- ბიუროსა და მაღალი თანამდებობის პირების უსაფრთხოების უზრუნველყოფა"> <a href="/FIB/divisions/hostage-rescue-team" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 pr-32 sm:pr-40 shadow-sm"> <span aria-hidden="true" class="fib-card-glare"></span> <div aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-0 w-48 sm:w-56 overflow-hidden"> <img src="/FIB/division-emblems/hostage-rescue-team.png" alt="" loading="lazy" decoding="async" class="absolute right-0 top-1/2 w-56 sm:w-64 -translate-y-1/2 translate-x-8 opacity-30 blur-[1.5px] saturate-150" onerror="this.style.display='none'"> </div> <div> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white">  <span class="fib-accent">H</span><span>ostage</span>   <span class="fib-accent">R</span><span>escue</span>   <span class="fib-accent">T</span><span>eam</span>  </h3> </div> <p class="mt-4 text-sm text-white/80">ელიტარული ტაქტიკური რაზმი მძევლების გათავისუფლებისა და კრიტიკული ოპერაციების შესრულებისთვის.</p> <p class="mt-2 text-sm text-white/65">Hostage Rescue Team (HRT) — ელიტარული სპეცდანიშნულების დანაყოფი მაღალი რისკის ოპერაციებისთვის.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">
+→
+</span> </div> </a> </div> <div class="fib-reveal h-full" style="transition-delay: 280ms;" data-search="Criminal Investigation Department • Criminal Investigation Department (CID) — დანაყოფი, რომელიც პასუხისმგებელია კრიმინალური დანაშაულების გამოძიებასა და ზედამხედველობაზე. • კრიმინალური და ანტიტერორისტული დანაშაულების წინააღმდეგ ბრძოლის წამყვანი სტრუქტურა. • criminal-investigation-department • Criminal Investigation Department (CID) — წარმოადგენს FIB-ის ძირითად დანაყოფს, რომელიც პასუხისმგებელია კრიმინალური დანაშაულების გამოძიებასა და ზედამხედველობაზე. იგი იძიებს მძიმე და ორგანიზებულ დანაშაულებს, მათ შორის ძალადობრივ დანაშაულებს და ნარკოტიკულ დანაშაულებრივ საქმიანობას.
+
+დეპარტამენტი ასევე ახორციელებს სადაზვერვო ფუნქციებს, მათ შორის ოპერატიული ინფორმაციის შეგროვებას, ანალიზს და უწყებათაშორისი ინფორმაციის გაცვლის კოორდინაციას ეროვნული უსაფრთხოებისა და სამართალდამცავი მიზნებისთვის.
+
+---
+
+## CID - ძირითადი მოვალეობები
+
+- სერიული დანაშაულების გამოძიება
+- ორგანიზებულ დანაშაულებრივ ჯგუფებში ოპერატიული საქმიანობა
+- საშიში დამნაშავეების მოძიება და დაკავება
+- სპეციალური ოპერაციების ჩატარება ინფორმატორებისა და ფარული აგენტების მონაწილეობით
+- ინფორმატორების მოზიდვა და ოპერატიული ქსელის გაფართოება
+- სახელმწიფო ინფორმაციის უსაფრთხოების დაცვა
+- კრიმინალური დაჯგუფებების წინააღმდეგ რეიდული ოპერაციების ჩატარება"> <a href="/FIB/divisions/criminal-investigation-department" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 pr-32 sm:pr-40 shadow-sm"> <span aria-hidden="true" class="fib-card-glare"></span> <div aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-0 w-48 sm:w-56 overflow-hidden"> <img src="/FIB/division-emblems/criminal-investigation-department.png" alt="" loading="lazy" decoding="async" class="absolute right-0 top-1/2 w-56 sm:w-64 -translate-y-1/2 translate-x-8 opacity-30 blur-[1.5px] saturate-150" onerror="this.style.display='none'"> </div> <div> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white">  <span class="fib-accent">C</span><span>riminal</span>   <span class="fib-accent">I</span><span>nvestigation</span>   <span class="fib-accent">D</span><span>epartment</span>  </h3> </div> <p class="mt-4 text-sm text-white/80">კრიმინალური და ანტიტერორისტული დანაშაულების წინააღმდეგ ბრძოლის წამყვანი სტრუქტურა.</p> <p class="mt-2 text-sm text-white/65">Criminal Investigation Department (CID) — დანაყოფი, რომელიც პასუხისმგებელია კრიმინალური დანაშაულების გამოძიებასა და ზედამხედველობაზე.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">
+→
+</span> </div> </a> </div> <div class="fib-reveal h-full" style="transition-delay: 350ms;" data-search="Drug Enforcement Administration • Drug Enforcement Administration (DEA) — ნარკოტიკების კონტროლზე პასუხისმგებელი მთავარი სააგენტო. • ანტინარკოტიკული ოპერაციები, პრევენცია და ნარკოდანაშაულის გამოძიება. • drug-enforcement-administration • Drug Enforcement Administration (DEA) — წარმოადგენს ნარკოტიკული ნივთიერებების კონტროლზე პასუხისმგებელ მთავარ უწყებას.
+
+დეპარტამენტის უფლებამოსილება მოიცავს ნარკოტიკებით უკანონო ვაჭრობის წინააღმდეგ ბრძოლას როგორც ქვეყნის შიგნით, ასევე საერთაშორისო დონეზე, მათ შორის ნარკოტიკული ნივთიერებების წარმოებისა და გავრცელების აღკვეთას. DEA ასევე ახორციელებს ანტინარკოტიკულ ოპერაციებსა და პრევენციულ ღონისძიებებს.
+
+---
+
+## DEA - ძირითადი მოვალეობები
+
+- ნარკოტიკული ნივთიერებების წარმოებისა და კულტივაციის გამოვლენა
+- ნარკოტიკული საშუალებების უკანონო რეალიზაციის აღკვეთა
+- ნარკოტიკების დისტრიბუციაში ჩართული პირების ოპერატიული მონიტორინგი
+- საზოგადოებრივ სივრცეებში ნარკოტიკული ნივთიერებების უკანონო შენახვისა და გამოყენების პრევენცია"> <a href="/FIB/divisions/drug-enforcement-administration" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 pr-32 sm:pr-40 shadow-sm"> <span aria-hidden="true" class="fib-card-glare"></span> <div aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-0 w-48 sm:w-56 overflow-hidden"> <img src="/FIB/division-emblems/drug-enforcement-administration.png" alt="" loading="lazy" decoding="async" class="absolute right-0 top-1/2 w-56 sm:w-64 -translate-y-1/2 translate-x-8 opacity-30 blur-[1.5px] saturate-150" onerror="this.style.display='none'"> </div> <div> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white">  <span class="fib-accent">D</span><span>rug</span>   <span class="fib-accent">E</span><span>nforcement</span>   <span class="fib-accent">A</span><span>dministration</span>  </h3> </div> <p class="mt-4 text-sm text-white/80">ანტინარკოტიკული ოპერაციები, პრევენცია და ნარკოდანაშაულის გამოძიება.</p> <p class="mt-2 text-sm text-white/65">Drug Enforcement Administration (DEA) — ნარკოტიკების კონტროლზე პასუხისმგებელი მთავარი სააგენტო.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">
+→
+</span> </div> </a> </div> <div class="fib-reveal h-full" style="transition-delay: 420ms;" data-search="Intelligence Branch • Intelligence Branch (IB) — შიდა ზედამხედველობისა და გამოძიების დეპარტამენტი, რომელიც იძიებს კორუფციასა და შიდა დარღვევებს. • შიდა უსაფრთხოებისა და კორუფციის პრევენციაზე ორიენტირებული სადაზვერვო სტრუქტურა. • intelligence-branch • Intelligence Branch (IB) — წარმოადგენს ფედერალური საგამოძიებო ბიუროს შიდა ზედამხედველობისა და სადაზვერვო დეპარტამენტს, რომელიც ახორციელებს თანამშრომელთა საქმიანობის მონიტორინგს და იძიებს კორუფციისა და სხვა შიდა დარღვევების ფაქტებს.
+
+---
+
+## IB - ძირითადი მოვალეობები
+
+- სამართალდამცავი ორგანოებისა და თანამდებობის პირების საქმიანობაზე პროცედურული ზედამხედველობა
+- სახელმწიფო (ფედერალურ) სტრუქტურებში შიდა აუდიტისა და გამოძიებების ჩატარება სამართალდარღვევების გამოვლენის მიზნით 
+-სამთავრობო უწყებების მონიტორინგი და ზედამხედველობა
+- შიდა შემოწმებების განხორციელება შესაძლო დარღვევების იდენტიფიცირებისა და პრევენციის მიზნით"> <a href="/FIB/divisions/intelligence-branch" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 pr-32 sm:pr-40 shadow-sm"> <span aria-hidden="true" class="fib-card-glare"></span> <div aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-0 w-48 sm:w-56 overflow-hidden"> <img src="/FIB/division-emblems/intelligence-branch.png" alt="" loading="lazy" decoding="async" class="absolute right-0 top-1/2 w-56 sm:w-64 -translate-y-1/2 translate-x-8 opacity-30 blur-[1.5px] saturate-150" onerror="this.style.display='none'"> </div> <div> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white">  <span class="fib-accent">I</span><span>ntelligence</span>   <span class="fib-accent">B</span><span>ranch</span>  </h3> </div> <p class="mt-4 text-sm text-white/80">შიდა უსაფრთხოებისა და კორუფციის პრევენციაზე ორიენტირებული სადაზვერვო სტრუქტურა.</p> <p class="mt-2 text-sm text-white/65">Intelligence Branch (IB) — შიდა ზედამხედველობისა და გამოძიების დეპარტამენტი, რომელიც იძიებს კორუფციასა და შიდა დარღვევებს.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">
+→
+</span> </div> </a> </div> <div class="fib-reveal h-full" style="transition-delay: 490ms;" data-search="Free Agent • Free Agent (FA) — ფედერალური საგამოძიებო ბიუროს მრავალმხრივი ოპერატიული დანაყოფი. • ოპერაციული მხარდაჭერა და უწყებათაშორისი კოორდინაცია. • free-agent • Free Agent (FA) — წარმოადგენს ფედერალური საგამოძიებო ბიუროს ოპერატიულ დანაყოფს, რომელიც პასუხისმგებელია მრავალმხრივი ამოცანების შესრულებაზე და სხვა დეპარტამენტების მხარდაჭერაზე.
+
+---
+
+## FA - ძირითადი მოვალეობები
+
+- სხვა დეპარტამენტების ოპერაციული მხარდაჭერა
+- ბიუროს დირექტორისა და მოადგილეების მითითებების შესრულება"> <a href="/FIB/divisions/free-agent" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 pr-32 sm:pr-40 shadow-sm"> <span aria-hidden="true" class="fib-card-glare"></span> <div aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-0 w-48 sm:w-56 overflow-hidden"> <img src="/FIB/division-emblems/free-agent.png" alt="" loading="lazy" decoding="async" class="absolute right-0 top-1/2 w-56 sm:w-64 -translate-y-1/2 translate-x-8 opacity-30 blur-[1.5px] saturate-150" onerror="this.style.display='none'"> </div> <div> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white">  <span class="fib-accent">F</span><span>ree</span>   <span class="fib-accent">A</span><span>gent</span>  </h3> </div> <p class="mt-4 text-sm text-white/80">ოპერაციული მხარდაჭერა და უწყებათაშორისი კოორდინაცია.</p> <p class="mt-2 text-sm text-white/65">Free Agent (FA) — ფედერალური საგამოძიებო ბიუროს მრავალმხრივი ოპერატიული დანაყოფი.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">
+→
+</span> </div> </a> </div>  </div> </section> <section class="mt-10" data-search-section> <div class="flex items-start justify-between gap-6"> <section class="fib-reveal mb-8"> <p class="mb-2 text-xs font-semibold tracking-widest text-fibGoldDeep uppercase"> PROTOCOLS </p> <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl"> ოპერაციული პროტოკოლები </h2> <p class="mt-3 max-w-2xl text-sm leading-relaxed text-white/75">სწრაფი წვდომა სცენარზე დაფუძნებულ პროცედურებსა და კოდურ დანიშნულებებზე.</p> </section> </div> <div id="home-protocols-grid" class="grid gap-5 md:grid-cols-2"> <div class="fib-reveal h-full" data-search="თეთრი სახლი • მერიაზე თავდასხმისას მოქმედი პროტოკოლი. • white-house • ## აქტივაციის პირობები
+
+სახელმწიფოს სტრატეგიულად მნიშვნელოვანი ობიექტის, მერიის აღებისას მოქმედებს პროტოკოლი – თეთრი სახლი.
+
+---
+
+## საერთო მოთხოვნები
+
+- ყველა არამორიგე, შვებულებაში მყოფი ან შესვენებაზე მყოფი თანამშრომელი ვალდებულია დაუყოვნებლივ გამოცხადდეს თავის შესაბამის განყოფილებაში.
+- კაპიტოლიუმის გათავისუფლების ოპერაციის ხელმძღვანელობას ახორციელებს FIB-ის უფროსი პერსონალი.
+
+---
+
+## უწყებების დავალებები
+
+- **USSS**: მაღალი რანგის სახელმწიფო პირების დაცვა და მათი ევაკუაცია ფორტ ზანკუდოში.
+- **NG**: საგუშაგო-1 და საგუშაგო-2-ის გაძლიერება; ციხე-სიმაგრის პერიმეტრის კონტროლი; საჰაერო მხარდაჭერის გამოყენება; კაპიტოლიუმის ირგვლივ ძალების განთავსება.
+
+---
+
+## დროითი მოთხოვნები
+
+- ყველა აქტიური პოლიციის დეპარტამენტის თანამშრომელი ვალდებულია 6–8 წუთში გამოცხადდეს ინციდენტის ადგილზე, უზრუნველყოს პერიმეტრის დაცვა და მოახდინოს მშვიდობიანი მოქალაქეების ევაკუაცია.
+- სწრაფი რეაგირების დანაყოფები (SWAT, ATF, HRT, DEA) ვალდებულნი არიან კაპიტოლიუმის ტერიტორიაზე გამოცხადდნენ არაუგვიანეს 12 წუთისა.
+
+---
+
+## დამატებითი მოთხოვნა
+
+- სხვა სახელმწიფო უწყებების თანამშრომლები ვალდებულნი არიან დაუყოვნებლივ გამოცხადდნენ კაპიტოლიუმის ტერიტორიაზე და დაემორჩილონ ოპერაციის ხელმძღვანელის მითითებებს.
+
+---
+
+## პასუხისმგებლობა
+
+> პროტოკოლის შეუსრულებლობა გამოიწვევს შიდა გამოძიებას და შესაბამის სამართლებრივ პასუხისმგებლობას, მათ შორის სისხლის სამართლის ან ფედერალური საქმის აღძვრას."> <a href="/FIB/protocols/white-house" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/35 p-5 shadow-sm"> <div aria-hidden="true" data-protocol-art class="pointer-events-none absolute inset-0 z-0 overflow-hidden"> <img src="/FIB/protocol-art/white-house.png" data-art-fallback="/FIB/protocol-art/white-house.jpg" alt="" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full scale-105 object-cover object-[82%_center] opacity-38 blur-sm saturate-125" onerror="if (this.dataset.artFallback) { this.src = this.dataset.artFallback; delete this.dataset.artFallback; return; } this.closest('[data-protocol-art]')?.remove()"> <div class="absolute inset-0 bg-gradient-to-b from-black/25 to-black/15"></div> <div class="absolute inset-0 bg-gradient-to-r from-black/88 via-black/55 to-black/28"></div> <div class="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.5),transparent_34%),linear-gradient(to_bottom,rgba(0,0,0,0.5),transparent_34%),linear-gradient(to_left,rgba(0,0,0,0.5),transparent_34%),linear-gradient(to_right,rgba(0,0,0,0.5),transparent_34%)]"></div> </div> <span aria-hidden="true" class="fib-card-glare z-[1]"></span> <div class="relative z-[2] flex min-h-0 flex-1 flex-col"> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white"> თეთრი სახლი </h3>  <p class="mt-2 text-sm text-white/65">მერიაზე თავდასხმისას მოქმედი პროტოკოლი.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span> </div> </div> </a> </div> <div class="fib-reveal h-full" style="transition-delay: 70ms;" data-search="კოდი მწვანე • მთავარ ბანკზე თავდასხმისას მოქმედი პროტოკოლი. • code-green • ## აქტივაციის პირობები
+
+მთავარი ბანკის აღების დროს მოქმედებს პროტოკოლი – „კოდი მწვანე“.
+
+---
+
+## მოთხოვნები / მოქმედებები
+
+1. ყველა არამორიგე, შვებულებაში მყოფი ან შესვენებაზე მყოფი თანამშრომელი ვალდებულია დაუყოვნებლივ გამოცხადდეს თავის შესაბამის განყოფილებაში.
+
+2. მთავარი ბანკის გათავისუფლების ოპერაციის ხელმძღვანელობას ახორციელებს FIB-ის უფროსი პერსონალი.
+
+3. LSPD-ის აქტიური პატრულები ვალდებულნი არიან 6–8 წუთში გამოცხადდნენ ინციდენტის ადგილზე, უზრუნველყონ ტერიტორიის დაცვა და მშვიდობიანი მოქალაქეების ევაკუაცია მოქმედების ზონიდან.
+
+4. სხვა სახელმწიფო უწყებების თანამშრომლები ვალდებულნი არიან დაუყოვნებლივ გამოცხადდნენ მთავარ ბანკის ტერიტორიაზე და შეასრულონ ოპერაციის ხელმძღვანელის მითითებები.
+
+---
+
+## სანქციები
+
+> პროტოკოლის დარღვევის შემთხვევაში სახელმწიფო სტრუქტურას დაეკისრება ჯარიმა შტატის მიერ დადგენილი წესების შესაბამისად."> <a href="/FIB/protocols/code-green" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/35 p-5 shadow-sm"> <div aria-hidden="true" data-protocol-art class="pointer-events-none absolute inset-0 z-0 overflow-hidden"> <img src="/FIB/protocol-art/code-green.png" data-art-fallback="/FIB/protocol-art/code-green.jpg" alt="" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full scale-105 object-cover object-[82%_center] opacity-38 blur-sm saturate-125" onerror="if (this.dataset.artFallback) { this.src = this.dataset.artFallback; delete this.dataset.artFallback; return; } this.closest('[data-protocol-art]')?.remove()"> <div class="absolute inset-0 bg-gradient-to-b from-black/25 to-black/15"></div> <div class="absolute inset-0 bg-gradient-to-r from-black/88 via-black/55 to-black/28"></div> <div class="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.5),transparent_34%),linear-gradient(to_bottom,rgba(0,0,0,0.5),transparent_34%),linear-gradient(to_left,rgba(0,0,0,0.5),transparent_34%),linear-gradient(to_right,rgba(0,0,0,0.5),transparent_34%)]"></div> </div> <span aria-hidden="true" class="fib-card-glare z-[1]"></span> <div class="relative z-[2] flex min-h-0 flex-1 flex-col"> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white"> კოდი მწვანე </h3>  <p class="mt-2 text-sm text-white/65">მთავარ ბანკზე თავდასხმისას მოქმედი პროტოკოლი.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span> </div> </div> </a> </div> <div class="fib-reveal h-full" style="transition-delay: 140ms;" data-search="კოდი წითელი • ფორტ ზანკუდოს ბაზაზე თავდასხმისას მოქმედი პროტოკოლი. • code-red • ## აქტივაციის პირობები
+
+ფორტ ზანკუდოს სპეციალურად დაცულ ბაზაზე თავდასხმის დროს მოქმედებს პროტოკოლი – „კოდი წითელი“.
+
+---
+
+## მოთხოვნები / მოქმედებები
+
+1. ყველა სამართალდამცავი უწყება ვალდებულია 5 წუთის განმავლობაში გამოცხადდეს ციხესიმაგრის დასაცავად და დაეხმაროს NG-ის პერსონალს საფრთხის აღმოფხვრაში.
+
+---
+
+## სანქციები
+
+> პროტოკოლის დარღვევის შემთხვევაში სახელმწიფო სტრუქტურას დაეკისრება ჯარიმა შტატის მიერ დადგენილი წესების შესაბამისად."> <a href="/FIB/protocols/code-red" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/35 p-5 shadow-sm"> <div aria-hidden="true" data-protocol-art class="pointer-events-none absolute inset-0 z-0 overflow-hidden"> <img src="/FIB/protocol-art/code-red.png" data-art-fallback="/FIB/protocol-art/code-red.jpg" alt="" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full scale-105 object-cover object-[82%_center] opacity-38 blur-sm saturate-125" onerror="if (this.dataset.artFallback) { this.src = this.dataset.artFallback; delete this.dataset.artFallback; return; } this.closest('[data-protocol-art]')?.remove()"> <div class="absolute inset-0 bg-gradient-to-b from-black/25 to-black/15"></div> <div class="absolute inset-0 bg-gradient-to-r from-black/88 via-black/55 to-black/28"></div> <div class="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.5),transparent_34%),linear-gradient(to_bottom,rgba(0,0,0,0.5),transparent_34%),linear-gradient(to_left,rgba(0,0,0,0.5),transparent_34%),linear-gradient(to_right,rgba(0,0,0,0.5),transparent_34%)]"></div> </div> <span aria-hidden="true" class="fib-card-glare z-[1]"></span> <div class="relative z-[2] flex min-h-0 flex-1 flex-col"> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white"> კოდი წითელი </h3>  <p class="mt-2 text-sm text-white/65">ფორტ ზანკუდოს ბაზაზე თავდასხმისას მოქმედი პროტოკოლი.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span> </div> </div> </a> </div> <div class="fib-reveal h-full" style="transition-delay: 210ms;" data-search="კოდი ზერო • კაზინოზე თავდასხმისას მოქმედი პროტოკოლი. • code-zero • ## აქტივაციის პირობები
+
+კაზინოს აღების დროს მოქმედებს პროტოკოლი – „კოდი ზერო“.
+
+---
+
+## მოთხოვნები / მოქმედებები
+
+1. ყველა არამორიგე, შვებულებაში მყოფი ან შესვენებაზე მყოფი თანამშრომელი ვალდებულია დაუყოვნებლივ გამოცხადდეს თავის შესაბამის განყოფილებაში.
+
+2. კაზინოს გათავისუფლების ოპერაციის ხელმძღვანელობას ახორციელებს FIB-ის უფროსი პერსონალი.
+
+3. LSPD-ის აქტიური პატრულები ვალდებულნი არიან 6–8 წუთში გამოცხადდნენ ინციდენტის ადგილზე, უზრუნველყონ ტერიტორიის დაცვა და მშვიდობიანი მოქალაქეების ევაკუაცია მოქმედების ზონიდან.
+
+4. სხვა სახელმწიფო უწყებების თანამშრომლები ვალდებულნი არიან დაუყოვნებლივ გამოცხადდნენ კაზინოს ტერიტორიაზე და შეასრულონ ოპერაციის ხელმძღვანელის მითითებები.
+
+---
+
+## სანქციები
+
+> პროტოკოლის დარღვევის შემთხვევაში სახელმწიფო სტრუქტურას დაეკისრება ჯარიმა შტატის მიერ დადგენილი წესების შესაბამისად."> <a href="/FIB/protocols/code-zero" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/35 p-5 shadow-sm"> <div aria-hidden="true" data-protocol-art class="pointer-events-none absolute inset-0 z-0 overflow-hidden"> <img src="/FIB/protocol-art/code-zero.png" data-art-fallback="/FIB/protocol-art/code-zero.jpg" alt="" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full scale-105 object-cover object-[82%_center] opacity-38 blur-sm saturate-125" onerror="if (this.dataset.artFallback) { this.src = this.dataset.artFallback; delete this.dataset.artFallback; return; } this.closest('[data-protocol-art]')?.remove()"> <div class="absolute inset-0 bg-gradient-to-b from-black/25 to-black/15"></div> <div class="absolute inset-0 bg-gradient-to-r from-black/88 via-black/55 to-black/28"></div> <div class="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.5),transparent_34%),linear-gradient(to_bottom,rgba(0,0,0,0.5),transparent_34%),linear-gradient(to_left,rgba(0,0,0,0.5),transparent_34%),linear-gradient(to_right,rgba(0,0,0,0.5),transparent_34%)]"></div> </div> <span aria-hidden="true" class="fib-card-glare z-[1]"></span> <div class="relative z-[2] flex min-h-0 flex-1 flex-col"> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white"> კოდი ზერო </h3>  <p class="mt-2 text-sm text-white/65">კაზინოზე თავდასხმისას მოქმედი პროტოკოლი.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span> </div> </div> </a> </div>  </div> </section> <section class="mt-10" data-search-section> <div class="flex items-start justify-between gap-6"> <section class="fib-reveal mb-8"> <p class="mb-2 text-xs font-semibold tracking-widest text-fibGoldDeep uppercase"> ACTIONS </p> <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl"> გათამაშებები </h2> <p class="mt-3 max-w-2xl text-sm leading-relaxed text-white/75">გამზადებული ბრძანებები სწრაფი როლური თამაშისთვის.</p> </section> </div> <div id="home-actions-grid" class="grid gap-5 md:grid-cols-2"> <div class="fib-reveal h-full" data-search="პოლიგრაფი • აპარატურის შეერთება, აპარატურის გამოერთება და აპარატურის გააქტიურება. • საჭირო ბრძანებები პოლიგრაფის გამოყენებისთვის. • polygraph • import CommandLines from &#34;../../components/CommandLines.astro&#34;;
+
+<CommandLines
+  groups={[
+    {
+      heading: &#34;აპარატურის შეერთება&#34;,
+      lines: [
+        { kind: &#34;do&#34;, text: &#34;მაგიდაზე დევს პოლიგრაფი და USB კაბელი.&#34; },
+        { kind: &#34;me&#34;, text: &#34;შეაერთა პოლიგრაფის კაბელი დენცქვიტაში&#34; },
+        { kind: &#34;do&#34;, text: &#34;პოლიგრაფი დაკავშირებულია დენთან.&#34; },
+        { kind: &#34;me&#34;, text: &#34;დაუკავშირა USB კაბელით პოლიგრაფი კომპიუტერს&#34; },
+        { kind: &#34;do&#34;, text: &#34;პოლიგრაფი დაკავშირებულია კომპიუტერთან და ინფორმაცია ასახულია მონიტორზე.&#34; },
+        { kind: &#34;me&#34;, text: &#34;დაამაგრა პოლიგრაფზე არსებული სადენები წინ მყოფ ინდივიდს&#34; },
+        {
+          kind: &#34;do&#34;,
+          text: &#34;პოლიგრაფის სადენები დამაგრებულია ინდივიდის სხეულზე და აღიქვავს ოფლის გამოყოფას ორგანიზმში, სისხლის წნევას და გულის აჩქარებას.&#34;,
+        },
+      ],
+    },
+    {
+      heading: &#34;აპარატურის გამოერთება&#34;,
+      lines: [
+        { kind: &#34;me&#34;, text: &#34;შეხსნა ინდივიდს პოლიგრაფის სადენები და დადო მაგიდაზე&#34; },
+        {
+          kind: &#34;do&#34;,
+          text: &#34;სადენები დევს მაგიდაზე და აღარ აღიქვავს ორგანიზმში ოფლის გამოყოფას, სისხლის წნევას და გულის აჩქარებას.&#34;,
+        },
+      ],
+    },
+    {
+      heading: &#34;აპარატურის გააქტიურება&#34;,
+      lines: [{ kind: &#34;try&#34;, text: &#34;პოლიგრაფმა სიცრუე აღმოაჩინა&#34; }],
+    },
+  ]}
+/>"> <a href="/FIB/actions/polygraph" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 shadow-sm"> <span aria-hidden="true" class="fib-card-glare"></span> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white"> პოლიგრაფი </h3> <p class="mt-4 text-sm text-white/80">საჭირო ბრძანებები პოლიგრაფის გამოყენებისთვის.</p> <p class="mt-2 text-sm text-white/65">აპარატურის შეერთება, აპარატურის გამოერთება და აპარატურის გააქტიურება.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span> </div> </a> </div> <div class="fib-reveal h-full" style="transition-delay: 70ms;" data-search="ფოტო იდენტიფიკაცია • აპარატურის მომზადება, ფოტოს გადაღება და ფოტოს დამუშავება. • საჭირო ბრძანებები ინდივიდის ფოტო იდენტიფიკაციისთვის. • photo-identification • import CommandLines from &#34;../../components/CommandLines.astro&#34;;
+
+<CommandLines
+  groups={[
+    {
+      heading: &#34;აპარატურის მომზადება&#34;,
+      lines: [
+        { kind: &#34;do&#34;, text: 'ტაქტიკურ ქამარზე ამაგრია &#34;PDA&#34;.' },
+        { kind: &#34;me&#34;, text: 'მოიხსნა ტაქტიკური ქამრიდან &#34;PDA&#34; და გაააქტიურა' },
+        { kind: &#34;do&#34;, text: '&#34;PDA&#34; მზად არის მოსახმარებლად.' },
+      ],
+    },
+    {
+      heading: &#34;ფოტოს გადაღება&#34;,
+      lines: [
+        {
+          kind: &#34;me&#34;,
+          text: 'გახსნა &#34;Camera&#34; აპლიკაცია და გადაუღო წინ მდგომ ინდივიდს ფოტო-სურათი',
+        },
+        { kind: &#34;do&#34;, text: &#34;ფოტოსურათი გადაღებულია.&#34; },
+      ],
+    },
+    {
+      heading: &#34;ფოტოს დამუშავება&#34;,
+      lines: [
+        { kind: &#34;me&#34;, text: 'გახსნა ფოტო-სურათი და გაააქტიურა &#34;Face Recognition&#34; სისტემა' },
+        { kind: &#34;do&#34;, text: '&#34;Face Recognition&#34; სისტემა გააქტიურებულია და ამუშავებს ფოტო-სურათს.' },
+        {
+          kind: &#34;do&#34;,
+          text: '&#34;Face Recognition&#34; სისტემამ ამოიცნო ინდივიდის სახე და ასახავს ეკრანზე ინდივიდის პროფილს.',
+        },
+        { kind: &#34;do&#34;, text: 'რა წერია ეკრანზე ნაჩვენები ინდივიდის პროფილის &#34;სახელი, გვარი&#34; სექციაში?' },
+        { kind: &#34;wait&#34;, text: &#34;დაელოდეთ ინდივიდის პასუხს და შემდეგ გააგრძელეთ.&#34; },
+      ],
+    },
+  ]}
+/>"> <a href="/FIB/actions/photo-identification" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 shadow-sm"> <span aria-hidden="true" class="fib-card-glare"></span> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white"> ფოტო იდენტიფიკაცია </h3> <p class="mt-4 text-sm text-white/80">საჭირო ბრძანებები ინდივიდის ფოტო იდენტიფიკაციისთვის.</p> <p class="mt-2 text-sm text-white/65">აპარატურის მომზადება, ფოტოს გადაღება და ფოტოს დამუშავება.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span> </div> </a> </div> <div class="fib-reveal h-full" style="transition-delay: 140ms;" data-search="თმით იდენტიფიკაცია • აპარატურის მომზადება, ნიმუშის აღება და პროფილის მოძებნა. • საჭირო ბრძანებები ინდივიდის თმით იდენთიფიკაციისთვის. • hair-identification • import CommandLines from &#34;../../components/CommandLines.astro&#34;;
+
+<CommandLines
+  groups={[
+    {
+      heading: &#34;აპარატურის მომზადება&#34;,
+      lines: [
+        { kind: &#34;do&#34;, text: 'კარადაში ალაგია პინცეტი და &#34;DNA Analyzer&#34;.' },
+        { kind: &#34;me&#34;, text: 'გამოიღო კარადიდან &#34;DNA Analyzer&#34;' },
+        { kind: &#34;do&#34;, text: '&#34;DNA Analyzer&#34; ხელშია.' },
+        {
+          kind: &#34;me&#34;,
+          text: 'დადო &#34;DNA Analyzer&#34; მაგიდაზე და დააკავშირა კაბელები კომპიუტერსა და დენის წყაროში',
+        },
+        { kind: &#34;do&#34;, text: '&#34;DNA Analyzer&#34; კაბელი დაკავშირებულია კომპიუტერსა და დენის წყაროში.' },
+        { kind: &#34;me&#34;, text: &#34;გამოიღო კარადიდან პინცეტი&#34; },
+        { kind: &#34;do&#34;, text: &#34;პინცეტი ხელშია.&#34; },
+      ],
+    },
+    {
+      heading: &#34;ნიმუშის აღება&#34;,
+      lines: [
+        { kind: &#34;me&#34;, text: &#34;ამოაცალა ინდივიდს თავიდან ფესვიანად თმის ღერი&#34; },
+        { kind: &#34;do&#34;, text: &#34;თმის ღერი პინცეტზეა.&#34; },
+        { kind: &#34;me&#34;, text: 'დადო თმის ღერი &#34;DNA Analyzer&#34;-ის პლატაზე' },
+        { kind: &#34;do&#34;, text: 'თმის ღერი &#34;DNA Analyzer&#34;-ის პლატაზეა.' },
+        { kind: &#34;me&#34;, text: 'გაააქტიურა &#34;DNA Analyzer&#34;' },
+        { kind: &#34;do&#34;, text: '&#34;DNA Analyzer&#34; გააქტიურებულია და ამუშავებს თმის ღერის პროფილს.' },
+        { kind: &#34;do&#34;, text: &#34;თმის ღერის პროფილი მზადაა და ასახულია მონიტორზე&#34; },
+      ],
+    },
+    {
+      heading: &#34;პროფილის მოძებნა&#34;,
+      lines: [
+        {
+          kind: &#34;me&#34;,
+          text: &#34;შეადარა თმის ღერის პროფილი მონაცემთა ბაზებში არსებულ სხვა თმის ღერის პროფილებთან&#34;,
+        },
+        { kind: &#34;do&#34;, text: &#34;მონაცემთა ბაზებში თმის ღერის პროფილი ნაპოვნია და ინდივიდზე ინფორმაცია ასახულია ეკრანზე.&#34; },
+        { kind: &#34;do&#34;, text: 'ეკრანზე ნაჩვენებ პროფილში &#34;სახელი, გვარი&#34; სექციაში წერია ინდივიდის სახელი და გვარი.' },
+        { kind: &#34;do&#34;, text: 'რა წერია ეკრანზე ნაჩვენები პროფილის &#34;სახელი, გვარი&#34; სექციაში?' },
+        { kind: &#34;wait&#34;, text: &#34;დაელოდეთ ინდივიდის პასუხს და შემდეგ გააგრძელეთ.&#34; },
+        { kind: &#34;do&#34;, text: 'ეკრანზე ნაჩვენებ პროფილში &#34;პასპორტის No&#34; სექციაში წერია ინდივიდის პასპორტის ნომერი.' },
+        { kind: &#34;do&#34;, text: 'რა წერია ეკრანზე ნაჩვენები პროფილის &#34;პასპორტის No&#34; სექციაში?' },
+        { kind: &#34;wait&#34;, text: &#34;დაელოდეთ ინდივიდის პასუხს და შემდეგ გააგრძელეთ.&#34; },
+      ],
+    },
+  ]}
+/>"> <a href="/FIB/actions/hair-identification" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 shadow-sm"> <span aria-hidden="true" class="fib-card-glare"></span> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white"> თმით იდენტიფიკაცია </h3> <p class="mt-4 text-sm text-white/80">საჭირო ბრძანებები ინდივიდის თმით იდენთიფიკაციისთვის.</p> <p class="mt-2 text-sm text-white/65">აპარატურის მომზადება, ნიმუშის აღება და პროფილის მოძებნა.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span> </div> </a> </div> <div class="fib-reveal h-full" style="transition-delay: 210ms;" data-search="ნერწყვით იდენტიფიკაცია • აპარატურის მომზადება, ნიმუშის აღება და პროფილის მოძებნა. • საჭირო ბრძანებები ინდივიდის ნერწყვის ნიმუშით იდენთიფიკაციისთვის. • saliva-identification • import CommandLines from &#34;../../components/CommandLines.astro&#34;;
+
+<CommandLines
+  groups={[
+    {
+      heading: &#34;აპარატურის მომზადება&#34;,
+      lines: [
+        { kind: &#34;do&#34;, text: 'კარადაში ალაგია პინცეტი, სინჯარის სადგამი და &#34;DNA Analyzer&#34;.' },
+        { kind: &#34;me&#34;, text: 'გამოიღო კარადიდან &#34;DNA Analyzer&#34;' },
+        { kind: &#34;do&#34;, text: '&#34;DNA Analyzer&#34; ხელშია.' },
+        {
+          kind: &#34;me&#34;,
+          text: 'დადო &#34;DNA Analyzer&#34; მაგიდაზე და დააკავშირა კაბელები კომპიუტერსა და დენის წყაროში',
+        },
+        { kind: &#34;do&#34;, text: '&#34;DNA Analyzer&#34; კაბელი დაკავშირებულია კომპიუტერსა და დენის წყაროში.' },
+        { kind: &#34;me&#34;, text: &#34;გამოიღო კარადიდან პინცეტი და სინჯარის სადგამი&#34; },
+        { kind: &#34;do&#34;, text: &#34;პინცეტი და სინჯარის სადგამი ხელშია.&#34; },
+      ],
+    },
+    {
+      heading: &#34;ნიმუშის აღება&#34;,
+      lines: [
+        { kind: &#34;me&#34;, text: &#34;გადასცა ინდივიდს სტერილური სინჯარა&#34; },
+        { kind: &#34;wait&#34;, text: &#34;დაელოდეთ ინდივიდის პასუხს და შემდეგ გააგრძელეთ.&#34; },
+        { kind: &#34;do&#34;, text: &#34;სინჯარში ნერწყვი მოთავსებულია.&#34; },
+        { kind: &#34;me&#34;, text: 'აიღო სინჯარი და დადო &#34;DNA Analyzer&#34;-ის პლატაზე.' },
+        { kind: &#34;do&#34;, text: 'სინჯარი &#34;DNA Analyzer&#34;-ის პლატაზეა.' },
+        { kind: &#34;me&#34;, text: 'გაააქტიურა &#34;DNA Analyzer&#34;' },
+        { kind: &#34;do&#34;, text: '&#34;DNA Analyzer&#34; გააქტიურებულია და ამუშავებს ნერწყვის პროფილს.' },
+        { kind: &#34;do&#34;, text: &#34;ნერწყვის პროფილი მზადაა და ასახულია მონიტორზე.&#34; },
+      ],
+    },
+    {
+      heading: &#34;პროფილის მოძებნა&#34;,
+      lines: [
+        { kind: &#34;me&#34;, text: &#34;შეადარა ნერწყვის პროფილი მონაცემთა ბაზებში არსებულ სხვა პროფილებთან&#34; },
+        { kind: &#34;do&#34;, text: &#34;მონაცემთა ბაზებში ნერწყვის პროფილი ნაპოვნია და ინდივიდზე ინფორმაცია ასახულია ეკრანზე.&#34; },
+        { kind: &#34;do&#34;, text: 'ეკრანზე ნაჩვენებ პროფილში &#34;სახელი, გვარი&#34; სექციაში წერია ინდივიდის სახელი და გვარი.' },
+        { kind: &#34;do&#34;, text: 'რა წერია ეკრანზე ნაჩვენები პროფილის &#34;სახელი, გვარი&#34; სექციაში?' },
+        { kind: &#34;wait&#34;, text: &#34;დაელოდეთ ინდივიდის პასუხს და შემდეგ გააგრძელეთ.&#34; },
+        { kind: &#34;do&#34;, text: 'ეკრანზე ნაჩვენებ პროფილში &#34;პასპორტის No&#34; სექციაში წერია ინდივიდის პასპორტის ნომერი.' },
+        { kind: &#34;do&#34;, text: 'რა წერია ეკრანზე ნაჩვენები პროფილის &#34;პასპორტის No&#34; სექციაში?' },
+        { kind: &#34;wait&#34;, text: &#34;დაელოდეთ ინდივიდის პასუხს და შემდეგ გააგრძელეთ.&#34; },
+      ],
+    },
+  ]}
+/>"> <a href="/FIB/actions/saliva-identification" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 shadow-sm"> <span aria-hidden="true" class="fib-card-glare"></span> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white"> ნერწყვით იდენტიფიკაცია </h3> <p class="mt-4 text-sm text-white/80">საჭირო ბრძანებები ინდივიდის ნერწყვის ნიმუშით იდენთიფიკაციისთვის.</p> <p class="mt-2 text-sm text-white/65">აპარატურის მომზადება, ნიმუშის აღება და პროფილის მოძებნა.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span> </div> </a> </div> <div class="fib-reveal h-full" style="transition-delay: 280ms;" data-search="შარდით იდენტიფიკაცია • აპარატურის მომზადება, ნიმუშის აღება და პროფილის მოძებნა. • საჭირო გათამაშებები ინდივიდის შარდის ნიმუშით იდენთიფიკაციისთვის. • urine-identification • import CommandLines from &#34;../../components/CommandLines.astro&#34;;
+
+<CommandLines
+  groups={[
+    {
+      heading: &#34;აპარატურის მომზადება&#34;,
+      lines: [
+        { kind: &#34;do&#34;, text: 'კარადაში ალაგია სტერილური კონტეინერი, სინჯარის სადგამი და &#34;DNA Analyzer&#34;.' },
+        { kind: &#34;me&#34;, text: 'გამოიღო კარადიდან &#34;DNA Analyzer&#34;.' },
+        { kind: &#34;do&#34;, text: '&#34;DNA Analyzer&#34; ხელშია.' },
+        {
+          kind: &#34;me&#34;,
+          text: 'დადო &#34;DNA Analyzer&#34; მაგიდაზე და დააკავშირა კაბელები კომპიუტერსა და დენის წყაროში.',
+        },
+        { kind: &#34;do&#34;, text: '&#34;DNA Analyzer&#34; კაბელი დაკავშირებულია კომპიუტერსა და დენის წყაროში.' },
+        { kind: &#34;me&#34;, text: &#34;გამოიღო კარადიდან სტერილური კონტეინერი და სინჯარის სადგამი.&#34; },
+        { kind: &#34;do&#34;, text: &#34;სტერილური კონტეინერი და სინჯარის სადგამი ხელშია.&#34; },
+      ],
+    },
+    {
+      heading: &#34;ნიმუშის აღება&#34;,
+      lines: [
+        { kind: &#34;me&#34;, text: &#34;ინდივიდს გადასცა სტერილური კონტეინერი შარდის ნიმუშისთვის.&#34; },
+        { kind: &#34;wait&#34;, text: &#34;დაელოდეთ ინდივიდის პასუხს და შემდეგ გააგრძელეთ.&#34; },
+        { kind: &#34;do&#34;, text: &#34;კონტეინერში შარდის ნიმუში მოთავსებულია.&#34; },
+        { kind: &#34;me&#34;, text: &#34;აიღო კონტეინერი და ამოიღო მცირე რაოდენობით შარდი სინჯარაში.&#34; },
+        { kind: &#34;do&#34;, text: &#34;სინჯარში შარდის ნიმუში მოთავსებულია.&#34; },
+        { kind: &#34;me&#34;, text: 'დადო სინჯარი &#34;DNA Analyzer&#34;-ის პლატაზე.' },
+        { kind: &#34;do&#34;, text: 'სინჯარი &#34;DNA Analyzer&#34;-ის პლატაზეა.' },
+        { kind: &#34;me&#34;, text: 'გაააქტიურა &#34;DNA Analyzer&#34;.' },
+        { kind: &#34;do&#34;, text: '&#34;DNA Analyzer&#34; გააქტიურებულია და ამუშავებს შარდის პროფილს.' },
+        { kind: &#34;do&#34;, text: &#34;შარდის პროფილი მზადაა და ასახულია მონიტორზე.&#34; },
+      ],
+    },
+    {
+      heading: &#34;პროფილის მოძენა&#34;,
+      lines: [
+        { kind: &#34;me&#34;, text: &#34;შეადარა შარდის პროფილი მონაცემთა ბაზებში არსებულ სხვა პროფილებთან.&#34; },
+        { kind: &#34;do&#34;, text: &#34;მონაცემთა ბაზებში შარდის პროფილი ნაპოვნია და ინდივიდზე ინფორმაცია ასახულია ეკრანზე.&#34; },
+        { kind: &#34;do&#34;, text: 'ეკრანზე ნაჩვენებ პროფილში &#34;სახელი, გვარი&#34; სექციაში წერია ინდივიდის სახელი და გვარი.' },
+        { kind: &#34;do&#34;, text: 'რა წერია ეკრანზე ნაჩვენები პროფილის &#34;სახელი, გვარი&#34; სექციაში?' },
+        { kind: &#34;wait&#34;, text: &#34;დაელოდეთ ინდივიდის პასუხს და შემდეგ გააგრძელეთ.&#34; },
+        { kind: &#34;do&#34;, text: 'ეკრანზე ნაჩვენებ პროფილში &#34;პასპორტის No&#34; სექციაში წერია ინდივიდის პასპორტის ნომერი.' },
+        { kind: &#34;do&#34;, text: 'რა წერია ეკრანზე ნაჩვენები პროფილის &#34;პასპორტის No&#34; სექციაში?' },
+        { kind: &#34;wait&#34;, text: &#34;დაელოდეთ ინდივიდის პასუხს და შემდეგ გააგრძელეთ.&#34; },
+      ],
+    },
+  ]}
+/>"> <a href="/FIB/actions/urine-identification" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 shadow-sm"> <span aria-hidden="true" class="fib-card-glare"></span> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white"> შარდით იდენტიფიკაცია </h3> <p class="mt-4 text-sm text-white/80">საჭირო გათამაშებები ინდივიდის შარდის ნიმუშით იდენთიფიკაციისთვის.</p> <p class="mt-2 text-sm text-white/65">აპარატურის მომზადება, ნიმუშის აღება და პროფილის მოძებნა.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span> </div> </a> </div> <div class="fib-reveal h-full" style="transition-delay: 350ms;" data-search="თითის ანაბეჭდით იდენტიფიკაცია • აპარატურის მომზადება, ანაბეჭდის აღება და პროფილის მოძებნა. • საჭირო ბრძანებები ინდივიდის თითის ანაბეჭდით იდენთიფიკაციისთვის. • fingerprint-identification • import CommandLines from &#34;../../components/CommandLines.astro&#34;;
+
+<CommandLines
+  groups={[
+    {
+      heading: &#34;აპარატურის მომზადება&#34;,
+      lines: [
+        { kind: &#34;do&#34;, text: &#34;კარადაში ალაგია თითის ანაბეჭდის სკანერი და ხელთათმანები.&#34; },
+        { kind: &#34;me&#34;, text: &#34;გამოიღო კარადიდან თითის ანაბეჭდის სკანერი&#34; },
+        { kind: &#34;do&#34;, text: &#34;თითის ანაბეჭდის სკანერი ხელშია.&#34; },
+        {
+          kind: &#34;me&#34;,
+          text: &#34;დადო თითის ანაბეჭდის სკანერი მაგიდაზე და დააკავშირა კაბელები კომპიუტერსა და დენის წყაროში&#34;,
+        },
+        { kind: &#34;do&#34;, text: &#34;თითის ანაბეჭდის სკანერი დაკავშირებულია კომპიუტერსა და დენის წყაროში.&#34; },
+      ],
+    },
+    {
+      heading: &#34;ანაბეჭდის აღება&#34;,
+      lines: [
+        { kind: &#34;note&#34;, text: &#34;დაავალეთ თითის დადება სკანერზე ან დაადებინეთ&#34; },
+        { kind: &#34;do&#34;, text: &#34;ინდივიდის თითი მოთავსებულია სკანერზე.&#34; },
+        { kind: &#34;me&#34;, text: &#34;გაააქტიურა თითის ანაბეჭდის სკანერი&#34; },
+        { kind: &#34;do&#34;, text: &#34;თითის ანაბეჭდის სკანერი გააქტიურებულია და სკანირებას იწყებს.&#34; },
+        { kind: &#34;do&#34;, text: &#34;თითის ანაბეჭდის სკანირება დასრულებულია და მონაცემები ასახულია მონიტორზე.&#34; },
+      ],
+    },
+    {
+      heading: &#34;პროფილის მოძენა&#34;,
+      lines: [
+        {
+          kind: &#34;me&#34;,
+          text: &#34;შეადარა თითის ანაბეჭდის მონაცემები მონაცემთა ბაზებში არსებულ სხვა ანაბეჭდებთან&#34;,
+        },
+        { kind: &#34;do&#34;, text: &#34;მონაცემთა ბაზებში თითის ანაბეჭდის პროფილი ნაპოვნია და ინდივიდზე ინფორმაცია ასახულია ეკრანზე.&#34; },
+        { kind: &#34;do&#34;, text: 'ეკრანზე ნაჩვენებ პროფილში &#34;სახელი, გვარი&#34; სექციაში წერია ინდივიდის სახელი და გვარი.' },
+        { kind: &#34;do&#34;, text: 'რა წერია ეკრანზე ნაჩვენები პროფილის &#34;სახელი, გვარი&#34; სექციაში?' },
+        { kind: &#34;wait&#34;, text: &#34;დაელოდეთ ინდივიდის პასუხს და შემდეგ გააგრძელეთ.&#34; },
+        { kind: &#34;do&#34;, text: 'ეკრანზე ნაჩვენებ პროფილში &#34;პასპორტის No&#34; სექციაში წერია ინდივიდის პასპორტის ნომერი.' },
+        { kind: &#34;do&#34;, text: 'რა წერია ეკრანზე ნაჩვენები პროფილის &#34;პასპორტის No&#34; სექციაში?' },
+        { kind: &#34;wait&#34;, text: &#34;დაელოდეთ ინდივიდის პასუხს და შემდეგ გააგრძელეთ.&#34; },
+      ],
+    },
+  ]}
+/>"> <a href="/FIB/actions/fingerprint-identification" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 shadow-sm"> <span aria-hidden="true" class="fib-card-glare"></span> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white"> თითის ანაბეჭდით იდენტიფიკაცია </h3> <p class="mt-4 text-sm text-white/80">საჭირო ბრძანებები ინდივიდის თითის ანაბეჭდით იდენთიფიკაციისთვის.</p> <p class="mt-2 text-sm text-white/65">აპარატურის მომზადება, ანაბეჭდის აღება და პროფილის მოძებნა.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span> </div> </a> </div> <div class="fib-reveal h-full" style="transition-delay: 420ms;" data-search="Casefile და ჩიპი • Casefile-ის Desktop-იდან ჩიპზე ჩამოტვირთვა, Casefile-ის ჩიპიდან Desktop-ზე ატვირთვა. • საჭირო ბრძანებები Casefile-ის ჩამოსატვირთად და ასატვირთად. • casefile-chip • import CommandLines from &#34;../../components/CommandLines.astro&#34;;
+
+<CommandLines
+  groups={[
+    {
+      heading: &#34;Casefile → ჩიპი&#34;,
+      lines: [
+        { kind: &#34;do&#34;, text: &#34;კომპიუტერი Sleep Mode-შია.&#34; },
+        { kind: &#34;me&#34;, text: &#34;გაამოძრავა მაუსი&#34; },
+        { kind: &#34;do&#34;, text: &#34;კომპიუტერი გამოფხიზლდა.&#34; },
+        { kind: &#34;me&#34;, text: &#34;ჩართო ბრაუზერი და საძიებო ველში ჩაწერა CID დატაბაზის ოფიციალური ვებ-საიტის ელფოსტა&#34; },
+        { kind: &#34;do&#34;, text: &#34;CID დეპარტამენტის დატაბაზის ოფიციალური ვებ-საიტი ჩართულია.&#34; },
+        { kind: &#34;me&#34;, text: &#34;ჩაწერა ავტორიზირებული მომხმარებლის ელფოსტა და პაროლი&#34; },
+        { kind: &#34;do&#34;, text: &#34;პროფილი ავტორიზირებულია და Database მზად არის მოსახმარებლად.&#34; },
+        { kind: &#34;me&#34;, text: 'შევიდა Casefile-ების კატეგორიაში და გახსნა Casefile-ს სახელად: &#34;XXXXX&#34;' },
+        { kind: &#34;do&#34;, text: &#34;Casefile ნაპოვნია.&#34; },
+        { kind: &#34;me&#34;, text: &#34;გახსნა Casefile-ის საქაღალდე, გადმოწერა Casefile-ის Doc ფაილი და გადმოიტანა Desktop-ზე&#34; },
+        { kind: &#34;do&#34;, text: &#34;Casefile-ი მოთავსებულია Desktop-ზე.&#34; },
+        { kind: &#34;do&#34;, text: &#34;ჯიბეში უდევს ჩიპი.&#34; },
+        { kind: &#34;me&#34;, text: &#34;ამოიღო ჩიპი და შეაერთა კომპიუტერის USB პორტში&#34; },
+        { kind: &#34;do&#34;, text: &#34;ჩიპი შეერთებულია კომპიუტერის USB პორტში.&#34; },
+        { kind: &#34;me&#34;, text: &#34;გახსნა ჩიპის საქაღალდე&#34; },
+        { kind: &#34;do&#34;, text: &#34;ჩიპის საქაღალდე გახსნილია.&#34; },
+        { kind: &#34;me&#34;, text: &#34;გადაიტანა Casefile-ი ჩიპის საქაღალდეში&#34; },
+        { kind: &#34;do&#34;, text: &#34;Casefile-ი ჩიპის საქაღალდეშია.&#34; },
+        { kind: &#34;me&#34;, text: &#34;გამოაძრო ჩიპი კომპიუტერის USB პორტიდან და ჩაიდო ზურგჩანთაში&#34; },
+        { kind: &#34;do&#34;, text: &#34;ჩიპი ზურგჩანთაშია.&#34; },
+        { kind: &#34;me&#34;, text: &#34;დააბრუნა კომპიუტერი Sleep Mode-ში&#34; },
+        { kind: &#34;do&#34;, text: &#34;კომპიუტერი Sleep Mode-შია.&#34; },
+      ],
+    },
+    {
+      heading: &#34;Casefile ჩიპი → Desktop&#34;,
+      lines: [
+        { kind: &#34;do&#34;, text: &#34;ზურგჩანთაში აქვს ჩიპი.&#34; },
+        { kind: &#34;me&#34;, text: &#34;ამოიღო ჩიპი ზუსგჩანთიდან და შეაერთა კომპიუტერში&#34; },
+        { kind: &#34;do&#34;, text: &#34;ჩიპი კომპიუტერის USB პორტშია შეერთებული.&#34; },
+        { kind: &#34;me&#34;, text: &#34;გახსნა ჩიპის საქაღალდე&#34; },
+        { kind: &#34;do&#34;, text: &#34;ჩიპის საქაღალდე გახსნილია.&#34; },
+        { kind: &#34;me&#34;, text: 'იპოვნა Doc ფაილი სახელად &#34;XXXXX&#34;' },
+        { kind: &#34;do&#34;, text: 'Doc ფაილი სახელად &#34;XXXXX&#34; ნაპოვნია.' },
+        { kind: &#34;me&#34;, text: &#34;გადაიტანა Casefile-ის Doc ფაილი კომპიუტერის Desktop-ზე&#34; },
+        { kind: &#34;do&#34;, text: &#34;Casefile-ის Doc ფაილი კომპიუტერის Desktop-ზეა მოთავსებული.&#34; },
+        { kind: &#34;me&#34;, text: &#34;გახნა Casefile-ის Doc ფაილი&#34; },
+        { kind: &#34;do&#34;, text: &#34;Casefile-ის Doc ფაილი გახსნილია.&#34; },
+        {
+          kind: &#34;do&#34;,
+          text: &#34;კომპიუტერის ეკრანზე ასახულია მთლიანი Casefile-ის Doc ფაილი და მზად არის გადასახედად.&#34;,
+        },
+      ],
+    },
+  ]}
+/>"> <a href="/FIB/actions/casefile-chip" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 shadow-sm"> <span aria-hidden="true" class="fib-card-glare"></span> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white"> Casefile და ჩიპი </h3> <p class="mt-4 text-sm text-white/80">საჭირო ბრძანებები Casefile-ის ჩამოსატვირთად და ასატვირთად.</p> <p class="mt-2 text-sm text-white/65">Casefile-ის Desktop-იდან ჩიპზე ჩამოტვირთვა, Casefile-ის ჩიპიდან Desktop-ზე ატვირთვა.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span> </div> </a> </div> <div class="fib-reveal h-full" style="transition-delay: 490ms;" data-search="GPS-ი და მანქანა • მანქანიდან ამოღება, მანქანაზე მიმაგრება და გააქტიურება. • საჭირო გათამაშებები GPS-ის მანქანაზე მისამაგრებლად. • gps-car • import CommandLines from &#34;../../components/CommandLines.astro&#34;;
+
+<CommandLines
+  groups={[
+    {
+      heading: &#34;მანქანიდან ამოღება&#34;,
+      lines: [
+        { kind: &#34;me&#34;, text: 'გახსნა მანქანის საბარგული და ამოიღო &#34;X&#34; &#34;AXON GPS&#34;' },
+        { kind: &#34;do&#34;, text: '&#34;X&#34; &#34;AXON GPS&#34; ლოკატორი ხელშია.' },
+        {
+          kind: &#34;note&#34;,
+          text: &#34;X - GPS ლოკატორების რაოდენობა (დაითვალეთ რამდენი მანქანა ყავთ კრიმინალებს).&#34;,
+        },
+      ],
+    },
+    {
+      heading: &#34;მანქანაზე მიმაგრება&#34;,
+      lines: [
+        { kind: &#34;me&#34;, text: 'გაააქტიურა &#34;AXON GPS&#34; და მიამაგრა ავტომობილის ბორბლის კრილოზე' },
+        { kind: &#34;do&#34;, text: '&#34;AXON GPS&#34; ავტომობილის ბორბლის კრილოზეა მიმაგრებული და გააქტიურებულია.' },
+      ],
+    },
+  ]}
+/>"> <a href="/FIB/actions/gps-car" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 shadow-sm"> <span aria-hidden="true" class="fib-card-glare"></span> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white"> GPS-ი და მანქანა </h3> <p class="mt-4 text-sm text-white/80">საჭირო გათამაშებები GPS-ის მანქანაზე მისამაგრებლად.</p> <p class="mt-2 text-sm text-white/65">მანქანიდან ამოღება, მანქანაზე მიმაგრება და გააქტიურება.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span> </div> </a> </div> <div class="fib-reveal h-full" style="transition-delay: 560ms;" data-search="მიკროკამერა • MiniSpy HD-ის ამოღება და მიმაგრება. • MiniSpy HD • მიმაგრება • microcamera • import CommandLines from &#34;../../components/CommandLines.astro&#34;;
+
+<CommandLines
+  groups={[
+    {
+      heading: &#34;მანქანიდან ამოღება&#34;,
+      lines: [
+        { kind: &#34;me&#34;, text: 'გახსნა მანქანის საბარგული და ამოიღო &#34;MiniSpy HD&#34;' },
+        { kind: &#34;do&#34;, text: '&#34;MiniSpy HD&#34; ხელშია.' },
+      ],
+    },
+    {
+      heading: &#34;მიმაგრება&#34;,
+      lines: [
+        { kind: &#34;me&#34;, text: 'გაააქტიურა &#34;MiniSpy HD&#34; და მიამაგრა წინ მდგომს პერანგზე' },
+        { kind: &#34;do&#34;, text: '&#34;MiniSpy HD&#34; პერანგზეა და გააქტიურებულია.' },
+      ],
+    },
+  ]}
+/>"> <a href="/FIB/actions/microcamera" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 shadow-sm"> <span aria-hidden="true" class="fib-card-glare"></span> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white"> მიკროკამერა </h3> <p class="mt-4 text-sm text-white/80">MiniSpy HD • მიმაგრება</p> <p class="mt-2 text-sm text-white/65">MiniSpy HD-ის ამოღება და მიმაგრება.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span> </div> </a> </div> <div class="fib-reveal h-full" style="transition-delay: 630ms;" data-search="GPS-ი და ქეისი • ქეისის დადება, GPS-ის აღება, ქეისში ჩადება და გააქტიურება. • საჭირო ბრძანებები GPS-ის Casefile-ში ჩასადებად. • gps-case • import CommandLines from &#34;../../components/CommandLines.astro&#34;;
+
+<CommandLines
+  groups={[
+    {
+      heading: &#34;ქეისის დადება&#34;,
+      lines: [
+        { kind: &#34;do&#34;, text: &#34;ხელში უჭირავს ფულით სავსე დახურული ქეისი.&#34; },
+        { kind: &#34;me&#34;, text: &#34;დადო ქეისი ძირს&#34; },
+        { kind: &#34;do&#34;, text: &#34;ქეისი ძირსაა.&#34; },
+      ],
+    },
+    {
+      heading: &#34;GPS-ის აღება&#34;,
+      lines: [
+        { kind: &#34;me&#34;, text: 'გამოაღო მანქანის საბარგული და აიღო &#34;AXON GPS&#34;' },
+        { kind: &#34;do&#34;, text: '&#34;AXON GPS&#34; ხელშია.' },
+      ],
+    },
+    {
+      heading: &#34;ქეისში ჩადება და გააქტიურება&#34;,
+      lines: [
+        { kind: &#34;me&#34;, text: &#34;გახსნა ქეისი&#34; },
+        { kind: &#34;do&#34;, text: &#34;ქეისი ღიაა.&#34; },
+        { kind: &#34;me&#34;, text: 'გაააქტიურა &#34;AXON GPS&#34; და ჩადო კუპიურებში' },
+        { kind: &#34;do&#34;, text: '&#34;AXON GPS&#34; გააქტიურებულია და საიმედოდ ჩამალულია კუპიურებში.' },
+        { kind: &#34;me&#34;, text: &#34;დახურა ქეისი&#34; },
+        { kind: &#34;do&#34;, text: &#34;ქეისი დახურულია.&#34; },
+      ],
+    },
+  ]}
+/>"> <a href="/FIB/actions/gps-case" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 shadow-sm"> <span aria-hidden="true" class="fib-card-glare"></span> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white"> GPS-ი და ქეისი </h3> <p class="mt-4 text-sm text-white/80">საჭირო ბრძანებები GPS-ის Casefile-ში ჩასადებად.</p> <p class="mt-2 text-sm text-white/65">ქეისის დადება, GPS-ის აღება, ქეისში ჩადება და გააქტიურება.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span> </div> </a> </div> <div class="fib-reveal h-full" style="transition-delay: 700ms;" data-search="სიხშირეების ჩახშობა • X1BBM Jammer-ის მომზადება და ჩართვა. • X1BBM Jammer • 500მ რადიუსი • signal-jammer • import CommandLines from &#34;../../components/CommandLines.astro&#34;;
+
+<CommandLines
+  groups={[
+    {
+      heading: &#34;მომზადება&#34;,
+      lines: [
+        { kind: &#34;me&#34;, text: 'მოამზადა &#34;X1BBM Jammer&#34;' },
+        { kind: &#34;do&#34;, text: '&#34;X1BBM Jammer&#34; მზადაა.' },
+      ],
+    },
+    {
+      heading: &#34;გააქტიურება&#34;,
+      lines: [
+        { kind: &#34;me&#34;, text: 'გაააქტიურა &#34;X1BBM Jammer&#34;' },
+        {
+          kind: &#34;do&#34;,
+          text: '&#34;X1BBM Jammer&#34; ჩართულია და ბლოკავს ნებისმიერ რადიოსიგნალს 500 მეტრის რადიუსში.',
+        },
+      ],
+    },
+  ]}
+/>"> <a href="/FIB/actions/signal-jammer" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 shadow-sm"> <span aria-hidden="true" class="fib-card-glare"></span> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white"> სიხშირეების ჩახშობა </h3> <p class="mt-4 text-sm text-white/80">X1BBM Jammer • 500მ რადიუსი</p> <p class="mt-2 text-sm text-white/65">X1BBM Jammer-ის მომზადება და ჩართვა.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span> </div> </a> </div> <div class="fib-reveal h-full" style="transition-delay: 770ms;" data-search="RAID • საბარგულის გატეხვა, ყუთების აღება და ჩალაგება. • CID დეპარტამენტისთგვის საჭირო ბრძანებები რეიდის დროს. • raid • raid • box • vehicle • combat • import CommandLines from &#34;../../components/CommandLines.astro&#34;;
+
+<CommandLines
+  groups={[
+    {
+      heading: &#34;ყუთების აღება&#34;,
+      lines: [
+        { kind: &#34;do&#34;, text: &#34;ძირს დევს მატერილებით სავსე ყუთი.&#34; },
+        { kind: &#34;me&#34;, text: &#34;აიღო ყუთი ხელში&#34; },
+        { kind: &#34;do&#34;, text: &#34;ყუთი ხელშია.&#34; },
+      ],
+    },
+    {
+      heading: &#34;ყუთების ჩალაგება&#34;,
+      lines: [
+        { kind: &#34;me&#34;, text: &#34;გამოაღო მანქანის საბარგული და ჩადო მატერიალებით სავსე ყუთი შიგნით&#34; },
+        { kind: &#34;do&#34;, text: &#34;მატერიალებით სავსე ყუთი მანქანის საბარგულშია.&#34; },
+      ],
+    },
+    {
+      heading: &#34;საბარგულის გატეხვა&#34;,
+      lines: [{ kind: &#34;try&#34;, text: &#34;სროლის შედეგად ფურგონის საბარგულის საკეტი გატყდა&#34; }],
+    },
+  ]}
+/>"> <a href="/FIB/actions/raid" class="fib-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-black/40 to-black/20 p-5 shadow-sm"> <span aria-hidden="true" class="fib-card-glare"></span> <h3 class="text-lg font-semibold tracking-tight text-white/90 group-hover:text-white"> RAID </h3> <p class="mt-4 text-sm text-white/80">CID დეპარტამენტისთგვის საჭირო ბრძანებები რეიდის დროს.</p> <p class="mt-2 text-sm text-white/65">საბარგულის გატეხვა, ყუთების აღება და ჩალაგება.</p> <div class="mt-auto pt-5 flex items-center gap-2 text-sm font-semibold text-fibGoldDeep">
+იხილეთ მეტი
+<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span> </div> </a> </div>  </div> </section> </div>  </main> <footer class="mt-14 border-t border-white/5 bg-black/40"> <div class="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8"> <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"> <div> <div class="text-sm text-white/75"> <span class="fib-accent font-semibold">FIB</span> — Federal Investigation Bureau
+</div> <div class="mt-2 text-xs text-white/50">
+© 2026 FIB. წარმოდგენილი ინფორმაცია განკუთვნილია დემონსტრაციისა და საჯარო ცნობარისთვის.
+</div> <div class="mt-1 text-xs text-white/45">Last updated: 03 May 2026</div> <div class="mt-1 flex items-center gap-2 text-xs text-white/45"> <svg aria-hidden="true" viewBox="0 0 24 24" class="h-3.5 w-3.5 fib-accent" fill="currentColor">  <g transform="translate(0.4 0)"> <path d="M20.317 4.369A19.791 19.791 0 0 0 15.885 3c-.191.328-.403.77-.554 1.116a18.27 18.27 0 0 0-5.487 0A12.64 12.64 0 0 0 9.29 3a19.736 19.736 0 0 0-4.434 1.37C2.05 8.56 1.288 12.646 1.67 16.675a19.9 19.9 0 0 0 5.993 3.031c.485-.667.917-1.37 1.288-2.11a12.955 12.955 0 0 1-2.03-.97c.17-.126.336-.258.497-.396c3.919 1.84 8.18 1.84 12.052 0c.162.138.328.27.498.396a12.9 12.9 0 0 1-2.032.971c.371.739.803 1.442 1.288 2.109a19.875 19.875 0 0 0 5.995-3.03c.478-4.669-.817-8.718-3.906-12.307ZM9.813 14.247c-1.182 0-2.154-1.085-2.154-2.419c0-1.333.953-2.418 2.154-2.418c1.21 0 2.173 1.095 2.154 2.418c0 1.334-.953 2.419-2.154 2.419Zm4.374 0c-1.182 0-2.154-1.085-2.154-2.419c0-1.333.953-2.418 2.154-2.418c1.21 0 2.173 1.095 2.154 2.418c0 1.334-.944 2.419-2.154 2.419Z"></path> </g> </svg> <span class="fib-accent">@warudiko</span> </div> </div> <div class="flex items-center gap-4 text-sm"></div> </div> </div> </footer> </div>  </body></html>

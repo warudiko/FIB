@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="100" y1="0" x2="1100" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#07070A"/>
+      <stop offset="1" stop-color="#0F1017"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="120" y1="0" x2="1080" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F5C84B"/>
+      <stop offset="1" stop-color="#D8A72F"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <circle cx="190" cy="110" r="160" fill="#F5C84B" opacity="0.10"/>
+  <circle cx="1030" cy="130" r="220" fill="#D8A72F" opacity="0.08"/>
+  <circle cx="900" cy="520" r="260" fill="#F5C84B" opacity="0.06"/>
+
+  <rect x="60" y="60" width="1080" height="510" rx="44" fill="rgba(255,255,255,0.02)" stroke="rgba(245,200,75,0.18)" stroke-width="2"/>
+
+  <text x="140" y="235" fill="#F5C84B" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI" font-size="96" font-weight="900" letter-spacing="4">
+    FIB
+  </text>
+
+  <text x="140" y="305" fill="rgba(232,233,241,0.86)" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI" font-size="44" font-weight="700">
+    Informational Divisions Directory
+  </text>
+
+  <rect x="140" y="360" width="520" height="3" fill="url(#gold)"/>
+
+  <text x="140" y="438" fill="rgba(232,233,241,0.74)" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI" font-size="28" font-weight="600">
+    Placeholder Open Graph image (replace with your own if desired)
+  </text>
+</svg>
+

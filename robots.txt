@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://warudiko.github.io/FIB/sitemap-index.xml
+Host: warudiko.github.io
