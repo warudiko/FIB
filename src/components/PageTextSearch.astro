@@ -152,6 +152,17 @@ const {
       if (!(input instanceof HTMLInputElement) || !(clearBtn instanceof HTMLButtonElement) || !meta || !root)
         return;
 
+      try {
+        const pending =
+          typeof sessionStorage !== "undefined" ? sessionStorage.getItem("fib-pending-page-search") : null;
+        if (pending != null && String(pending).trim() !== "") {
+          sessionStorage.removeItem("fib-pending-page-search");
+          input.value = pending;
+        }
+      } catch {
+        /* ignore */
+      }
+
       let t = 0;
       const refresh = () => {
         const value = input.value ?? "";
